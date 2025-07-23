@@ -1,0 +1,80 @@
+/* Global style overrides */
+html {
+  scroll-behavior: smooth;
+}
+
+.sticky {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 999;
+  background-color: #fff;
+  animation: slideInDown 0.5s ease-in-out;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes slideInDown {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.main-menu.show-menu {
+  display: block !important;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  padding: 10px 0;
+}/* src/styles/App.css */
+/* src/styles/App.css */
+
+/* --- DELETE ALL PREVIOUS CURSOR STYLES AND REPLACE WITH THIS --- */
+
+/* Final Correct Custom Cursor Styles */
+
+
+.mouse-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999999;
+  pointer-events: none;
+  border-radius: 50%;
+  will-change: transform; /* Performance optimization */
+}
+
+.cursor-inner {
+  width: 10px;
+  height: 10px;
+  background-color: #3c72fc;
+  /* The component handles the transform for centering */
+  transition: width 0.3s ease, height 0.3s ease, opacity 0.3s ease;
+}
+
+.cursor-outer {
+  width: 50px;
+  height: 50px;
+  background-color: rgba(60, 114, 252, 0.1); /* This is the transparent blue ring */
+  /* The component handles the transform for centering */
+  transition: width 0.3s ease, height 0.3s ease, opacity 0.3s ease;
+}
+
+/* This class is added on hover to the parent div */
+.cursor-hover .cursor-inner {
+  width: 0;
+  height: 0;
+  opacity: 0;
+}
+
+.cursor-hover .cursor-outer {
+  width: 80px;
+  height: 80px;
+  opacity: 0.3;
+}
