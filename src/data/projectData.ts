@@ -1,24 +1,24 @@
-// src/data/projectData.ts
-
+// Defines the structure of a single project
 export interface Project {
     slug: string;
     name: string;
     cardDescription: string;
-    image: string;
+    icon: string; // CHANGED: Replaced 'image' with 'icon' for the card
     delay: number;
     details: {
         title: string;
-        image: string;
         content: string[];
+        image: string; // This image is for the project detail page banner
     };
 }
 
+// The list of all projects with updated icon properties
 export const projectList: Project[] = [
-    { 
+    {
         slug: "human-resource-management",
-        name: "Human Resource Management (HRM)", 
+        name: "Human Resource Management (HRM)",
         cardDescription: "A centralized platform to streamline recruitment, payroll, and performance management.",
-        image: "/assets/img/project/hrm.jpg", 
+        icon: "/assets/img/service/icon/s-icon-1.svg", // ADDED icon property
         delay: 0.2,
         details: {
             title: "Comprehensive Human Resource Management System",
@@ -29,11 +29,11 @@ export const projectList: Project[] = [
             ]
         }
     },
-    { 
+    {
         slug: "shipping-company-models",
-        name: "Shipping Company Models", 
+        name: "Shipping Company Models",
         cardDescription: "Logistics management featuring fleet tracking, cargo scheduling, and route optimization.",
-        image: "/assets/img/project/shipping.jpg", 
+        icon: "/assets/img/service/icon/s-icon-4.svg", // ADDED icon property
         delay: 0.3,
         details: {
             title: "Advanced Logistics & Shipping Management",
@@ -44,11 +44,11 @@ export const projectList: Project[] = [
             ]
         }
     },
-    { 
+    {
         slug: "inventory-models",
-        name: "Inventory Models", 
+        name: "Inventory Models",
         cardDescription: "Enhance stock visibility, demand forecasting, and efficient distribution tracking.",
-        image: "/assets/img/project/inventory.jpg", 
+        icon: "/assets/img/service/icon/s-icon-11.svg", // ADDED icon property
         delay: 0.4,
         details: {
             title: "Intelligent Inventory Management",
@@ -59,11 +59,11 @@ export const projectList: Project[] = [
             ]
         }
     },
-    { 
+    {
         slug: "home-automation",
-        name: "Home Automation", 
+        name: "Home Automation",
         cardDescription: "A central IoT platform to manage smart devices, save energy, and enhance security.",
-        image: "/assets/img/project/home.jpg", 
+        icon: "/assets/img/service/icon/s-icon-13.svg", // ADDED icon property
         delay: 0.5,
         details: {
             title: "Smart Home Automation Platform",
@@ -74,11 +74,11 @@ export const projectList: Project[] = [
             ]
         }
     },
-    { 
+    {
         slug: "ai-based-models",
-        name: "AI Based Models", 
+        name: "AI Based Models",
         cardDescription: "Leverage custom Machine Learning models for NLP, computer vision, and data forecasting.",
-        image: "/assets/img/project/ai.jpg", 
+        icon: "/assets/img/service/icon/s-icon-13.svg", // ADDED icon property
         delay: 0.6,
         details: {
             title: "Custom Artificial Intelligence Solutions",
@@ -89,11 +89,11 @@ export const projectList: Project[] = [
             ]
         }
     },
-    { 
+    {
         slug: "learning-management-system",
-        name: "Learning Management System (LMS)", 
+        name: "Learning Management System (LMS)",
         cardDescription: "A complete e-learning platform with course creation, exams, and robust analytics.",
-        image: "/assets/img/project/lms.jpg", 
+        icon: "/assets/img/service/icon/s-icon-2.svg", // ADDED icon property
         delay: 0.7,
         details: {
             title: "Next-Generation Learning Management System",
@@ -104,11 +104,11 @@ export const projectList: Project[] = [
             ]
         }
     },
-    { 
+    {
         slug: "customer-relationship-management",
-        name: "Customer Relationship Management (CRM)", 
+        name: "Customer Relationship Management (CRM)",
         cardDescription: "Tools for lead capture, effective client communication, and sales pipeline automation.",
-        image: "/assets/img/project/crm.jpg", 
+        icon: "/assets/img/service/icon/s-icon-12.svg", // ADDED icon property
         delay: 0.8,
         details: {
             title: "Dynamic Customer Relationship Management",

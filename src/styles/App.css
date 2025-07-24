@@ -121,3 +121,56 @@ html {
 .main-menu nav ul li a.active {
   color: #3c72fc !important; /* This is the theme's primary blue color */
 }
+
+/* ===================================
+   Project Section Styles
+====================================== */
+/* ===================================================
+   Unified Info Card (Services & Projects) Styles
+====================================================== */
+
+/* Ensures equal height columns */
+.info-card-section .row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* Main card container for left-aligned layout */
+.info-card-section .service-box-items {
+    display: flex; /* Aligns icon and content side-by-side */
+    align-items: flex-start; /* Aligns items to the top */
+    text-align: left; /* Aligns all text to the left */
+    padding: 25px; /* Adds internal padding */
+    height: 100%; /* Ensures the card fills the column height */
+}
+
+/* Styling for the icon wrapper */
+.info-card-section .service-box-items .icon {
+    margin-right: 20px; /* Creates space between icon and text */
+    flex-shrink: 0; /* Prevents the icon from shrinking */
+}
+
+.info-card-section .service-box-items .icon img {
+    width: 50px; /* Sets a consistent size for all icons */
+    height: auto;
+}
+
+/* Styling for the content (title and description) wrapper */
+.info-card-section .service-box-items .content {
+    flex-grow: 1; /* Allows the content to fill the remaining space */
+}
+
+/* Title styling */
+.info-card-section .service-box-items .content h4 {
+    margin-bottom: 8px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+/* Description styling */
+.info-card-section .card-description {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #555; /* Soft color for readability */
+    margin-bottom: 0;
+}
