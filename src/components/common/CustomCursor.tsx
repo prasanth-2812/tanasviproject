@@ -1,24 +1,42 @@
-import React, { useState, useEffect } from 'react';
-import { motion, Variants } from 'framer-motion';
+// src/components/common/CustomCursor.tsx
+
+import React, { useEffect, useRef } from 'react';
 
 const CustomCursor: React.FC = () => {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [isHovering, setIsHovering] = useState(false);
+  const innerCursorRef = useRef<HTMLDivElement>(null);
+  const outerCursorRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const updateMousePosition = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
-    window.addEventListener('mousemove', updateMousePosition);
-    return () => {
-      window.removeEventListener('mousemove', updateMousePosition);
-    };
-  }, []);
+    const onMouseMove = (e: MouseEvent) => {
+      const { clientX, clientY } = e;
+      if (innerCursorRef.current && outerCursorRef.current) {
+        // Make cursors visible
+        innerCursorRef.current.style.visibility = 'visible';
+        outerCursorRef.current.style.visibility = 'visible';
 
-  useEffect(() => {
-    const onMouseEnterLink = () => setIsHovering(true);
-    const onMouseLeaveLink = () => setIsHovering(false);
+        // Update positions
+        innerCursorRef.current.style.left = `${clientX}px`;
+        innerCursorRef.current.style.top = `${clientY}px`;
+        outerCursorRef.current.style.left = `${clientX}px`;
+        outerCursorRef.current.style.top = `${clientY}px`;
+      }
+    };
 
+    const onMouseEnterLink = () => {
+        if(innerCursorRef.current && outerCursorRef.current) {
+            innerCursorRef.current.classList.add('cursor-hover');
+            outerCursorRef.current.classList.add('cursor-hover');
+        }
+    };
+    const onMouseLeaveLink = () => {
+        if(innerCursorRef.current && outerCursorRef.current) {
+            innerCursorRef.current.classList.remove('cursor-hover');
+            outerCursorRef.current.classList.remove('cursor-hover');
+        }
+    };
+
+    document.addEventListener('mousemove', onMouseMove);
+    
     const interactiveElements = document.querySelectorAll(
       'a, button, .theme-btn, .search-trigger, .array-button button'
     );
@@ -29,6 +47,7 @@ const CustomCursor: React.FC = () => {
     });
 
     return () => {
+      document.removeEventListener('mousemove', onMouseMove);
       interactiveElements.forEach(el => {
         el.removeEventListener('mouseenter', onMouseEnterLink);
         el.removeEventListener('mouseleave', onMouseLeaveLink);
@@ -36,36 +55,11 @@ const CustomCursor: React.FC = () => {
     };
   }, []);
 
-  const variants: Variants = {
-    default: {
-      x: mousePosition.x - 5,
-      y: mousePosition.y - 5,
-    },
-    outer: {
-      x: mousePosition.x - 25,
-      y: mousePosition.y - 25,
-      transition: { 
-        type: "spring", 
-        stiffness: 150, 
-        damping: 20,
-        mass: 0.1,
-      }
-    }
-  };
-
   return (
-    <div className={isHovering ? 'cursor-hover' : ''}>
-      <motion.div
-        className="mouse-cursor cursor-outer"
-        variants={variants}
-        animate="outer"
-      />
-      <motion.div
-        className="mouse-cursor cursor-inner"
-        variants={variants}
-        animate="default"
-      />
-    </div>
+    <>
+      <div ref={innerCursorRef} className="mouse-cursor cursor-inner" />
+      <div ref={outerCursorRef} className="mouse-cursor cursor-outer" />
+    </>
   );
 };
 

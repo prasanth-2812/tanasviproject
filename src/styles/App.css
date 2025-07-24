@@ -32,49 +32,92 @@ html {
   background-color: #fff;
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
   padding: 10px 0;
-}/* src/styles/App.css */
-/* src/styles/App.css */
-
-/* --- DELETE ALL PREVIOUS CURSOR STYLES AND REPLACE WITH THIS --- */
-
-/* Final Correct Custom Cursor Styles */
+}
 
 
 .mouse-cursor {
   position: fixed;
-  top: 0;
   left: 0;
-  z-index: 999999;
+  top: 0;
   pointer-events: none;
   border-radius: 50%;
-  will-change: transform; /* Performance optimization */
+  transform: translateZ(0);
+  visibility: hidden; /* JS will make this visible */
 }
 
 .cursor-inner {
-  width: 10px;
-  height: 10px;
-  background-color: #3c72fc;
-  /* The component handles the transform for centering */
-  transition: width 0.3s ease, height 0.3s ease, opacity 0.3s ease;
+  width: 6px;
+  height: 6px;
+  z-index: 10000001;
+  background-color: #3c72fc; /* Replaced var(--theme) */
+  transition: width 0.3s ease-in-out, height 0.3s ease-in-out, margin 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.cursor-inner.cursor-hover {
+  margin-left: -35px;
+  margin-top: -35px;
+  width: 70px;
+  height: 70px;
+  background-color: #3c72fc; /* Replaced var(--theme) */
+  opacity: 0.3;
 }
 
 .cursor-outer {
-  width: 50px;
-  height: 50px;
-  background-color: rgba(60, 114, 252, 0.1); /* This is the transparent blue ring */
-  /* The component handles the transform for centering */
-  transition: width 0.3s ease, height 0.3s ease, opacity 0.3s ease;
+  margin-left: -12px;
+  margin-top: -12px;
+  width: 30px;
+  height: 30px;
+  border: 1px solid #3c72fc; /* Replaced var(--theme) */
+  box-sizing: border-box;
+  z-index: 10000000;
+  opacity: 0.5;
+  transition: all 0.08s ease-out;
 }
 
-/* This class is added on hover to the parent div */
-.cursor-hover .cursor-inner {
-  width: 0;
-  height: 0;
+.cursor-outer.cursor-hover {
   opacity: 0;
 }
 
-.cursor-hover .cursor-outer {
-  width: 80px;
-  height: 80px;
-  opacity: 0.3;
+/* Marquee / Ticker Styles */
+.marque-section-3 {
+    padding-top: 120px;
+    padding-bottom: 120px;
+}
+
+.marquee-wrapper.style-2 .marquee-inner {
+    max-width: 100%;
+}
+
+.marquee-inner.to-left .marqee-list {
+    animation: marqueeInner 40s linear infinite;
+}
+
+.marquee-item.style-2 .text-slider {
+    font-size: 60px;
+    line-height: 1;
+    font-weight: 600;
+    margin: 0 40px;
+}
+
+.marquee-item.style-2 .text-slider.text-style {
+    font-family: var(--body-font);
+    color: var(--primary-color);
+}
+
+@keyframes marqueeInner {
+    from {
+        transform: translateX(0%);
+    }
+    to {
+        transform: translateX(-50%);
+    }
+}
+.text-slider{
+  
+  color: black;
+}
+
+/* Active Navigation Link Style */
+.main-menu nav ul li a.active {
+  color: #3c72fc !important; /* This is the theme's primary blue color */
 }

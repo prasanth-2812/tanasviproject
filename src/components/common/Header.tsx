@@ -1,3 +1,5 @@
+// src/components/common/Header.tsx
+
 import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 
@@ -7,7 +9,7 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ onSearchClick, isSticky }) => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
 
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
 
@@ -38,7 +40,6 @@ const Header: React.FC<HeaderProps> = ({ onSearchClick, isSticky }) => {
               <div className="header-left">
                 <div className="logo">
                   <Link to="/" className="header-logo">
-                    {/* CORRECTED PATH HERE */}
                     <img src="/assets/img/logo.jpg" alt="logo-img" /> 
                   </Link>
                 </div>
@@ -48,7 +49,8 @@ const Header: React.FC<HeaderProps> = ({ onSearchClick, isSticky }) => {
                   <div className={`main-menu ${isMobileMenuOpen ? 'show-menu' : ''}`}>
                     <nav id="mobile-menu">
                       <ul>
-                        <li><NavLink to="/" onClick={() => setIsMobileMenuOpen(false)}>Home</NavLink></li>
+                        {/* CORRECTED: Added the 'end' prop to the Home NavLink */}
+                        <li><NavLink to="/" end onClick={() => setIsMobileMenuOpen(false)}>Home</NavLink></li>
                         <li><NavLink to="/about.html" onClick={() => setIsMobileMenuOpen(false)}>About</NavLink></li>
                         <li><NavLink to="/service.html" onClick={() => setIsMobileMenuOpen(false)}>Services</NavLink></li>
                         <li><NavLink to="/project.html" onClick={() => setIsMobileMenuOpen(false)}>Projects</NavLink></li>

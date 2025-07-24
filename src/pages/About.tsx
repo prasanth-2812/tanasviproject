@@ -1,75 +1,124 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import PageTitle from '../components/common/PageTitle';
+import React, { useEffect, useRef, useState } from 'react';
+import { motion, useInView } from 'framer-motion';
+import Marquee from '../components/common/Marquee'; // This component is needed for the marquee section
 
-const About: React.FC = () => {
-  return (
-    <>
-      <PageTitle title="About Us" breadcrumb="About Us" />
+// Helper component for the animated counter
+const AnimatedCounter = ({ target }: { target: number }) => {
+    const [count, setCount] = useState(0);
+    const ref = useRef(null);
+    const isInView = useInView(ref, { once: true });
 
-      <section className="about-section section-padding fix">
-        <div className="container">
-          <div className="about-wrapper style-2">
-            <div className="row">
-              <div className="col-lg-6">
-                <motion.div 
-                  className="about-image-items"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.7 }}
-                  viewport={{ once: true }}
-                >
-                  <div className="circle-shape"><img src="assets/img/about/circle.png" alt="shape" /></div>
-                  <div className="counter-shape float-bob-y">
-                    <div className="icon"><img src="assets/img/about/icon-1.svg" alt="icon" /></div>
-                    <div className="content">
-                      <h3><span className="count">25</span>Years</h3>
-                      <p>Of Experience</p>
-                    </div>
-                  </div>
-                  <div className="about-image-1 bg-cover wow fadeInLeft" style={{ backgroundImage: "url('assets/img/about/03.jpg')" }}></div>
-                </motion.div>
-              </div>
-              <div className="col-lg-6 mt-4 mt-lg-0">
-                <div className="about-content">
-                  <div className="section-title">
-                    <motion.div className="subtitle" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }} viewport={{ once: true }}>
-                      <img src="assets/img/icon/arrowLeft.svg" alt="icon" />
-                      <span>ABOUT TANASVI TECHNOLOGIES PVT LTD</span>
-                      <img src="assets/img/icon/arrowRight.svg" alt="icon" />
-                    </motion.div>
-                    <motion.h2 className="title" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.3 }} viewport={{ once: true }}>
-                      We Are Increasing Business Success With <span>Technology</span>
-                    </motion.h2>
-                  </div>
-                  <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.5 }} viewport={{ once: true }}>
-                    Tanasvi Technologies is the best in Product development and IT consultancy firm that provides a wide range of services in various domains of information technology. We have expertise in IT software, data communication, automation, artificial intelligence and natural language processing. We are committed to excellence in research and development, innovation and leadership in computer science and modern mathematics. We also aim to foster universal understanding and communication through our work.
-                  </motion.p>
-                  <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.6 }} viewport={{ once: true }}>
-                    We believe that information technology is a powerful tool for transforming the world and creating a better future for humanity. We use our knowledge and skills to solve complex problems, create innovative solutions and deliver value to our clients.
-                  </motion.p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+    useEffect(() => {
+        if (isInView) {
+            let start: number | null = null;
+            const duration = 2000; // Animation duration in milliseconds
+            
+            const step = (timestamp: number) => {
+                if (!start) start = timestamp;
+                const progress = Math.min((timestamp - start) / duration, 1);
+                setCount(Math.floor(progress * target));
+                if (progress < 1) {
+                    requestAnimationFrame(step);
+                }
+            };
+            requestAnimationFrame(step);
+        }
+    }, [isInView, target]);
 
-      <section className="offer-section fix section-bg-2">
-            <div className="container">
-                <div className="section-title title-area  mx-auto mb-15">
-                    <div className="subtitle d-flex justify-content-center">
-                        <img src="assets/img/icon/arrowLeftWhite.svg" alt="icon"/> 
-                        <span className="text-white"> Our offering </span>
-                        <img src="assets/img/icon/arrowRightWhite.svg" alt="icon"/>
-                    </div>
-                    <h2 className="title text-center text-white">Enhance and Pioneer Using<br/>
-                        Technology Trends</h2>
-                </div>
-            </div>
-      </section>
-    </>
-  );
+    return <span ref={ref}>{count}</span>;
 };
+
+// Data for the "Our offering" icons
+const offerings = [
+    { icon: "/assets/img/offer/website.svg", title: "Website", delay: 0.2 },
+    { icon: "/assets/img/offer/android.svg", title: "Android", delay: 0.3 },
+    { icon: "/assets/img/offer/ios.svg", title: "IOS", delay: 0.4, active: true },
+    { icon: "/assets/img/offer/watch.svg", title: "Watch", delay: 0.5 },
+    { icon: "/assets/img/offer/tv.svg", title: "Tv", delay: 0.6 },
+    { icon: "/assets/img/offer/iot.svg", title: "IOT", delay: 0.7 }
+];
+
+const About: React.FC = () => (
+  <>
+    <section className="about-section section-padding fix bg-cover" style={{ backgroundImage: "url('/assets/img/service/service-bg-2.jpg')" }}>
+        <div className="container">
+            <div className="about-wrapper style-2">
+                <div className="row">
+                    <motion.div className="col-lg-6" initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
+                        <div className="about-image-items">
+                            <div className="circle-shape"><img alt="shape-img" src="/assets/img/about/circle.png" /></div>
+                            <div className="counter-shape float-bob-y">
+                                <div className="icon"><img alt="icon-img" src="/assets/img/about/icon-1.svg" /></div>
+                                <div className="content">
+                                    <h3><AnimatedCounter target={25} />Years</h3>
+                                    <p>Of Experience</p>
+                                </div>
+                            </div>
+                            <div className="about-image-1 bg-cover" style={{ backgroundImage: "url('/assets/img/about/03.jpg')" }}></div>
+                        </div>
+                    </motion.div>
+                    <div className="col-lg-6 mt-4 mt-lg-0">
+                        <div className="about-content">
+                            <motion.div className="section-title mb-3" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }}>
+                                <div className="subtitle"><img alt="icon" src="/assets/img/icon/arrowLeft.svg" /> <span>ABOUT TANASVI TECHNOLOGIES PVT LTD </span><img alt="icon" src="/assets/img/icon/arrowRight.svg" /></div>
+                                <h2 className="title">We Are Increasing Business Success With <span>Technology</span></h2>
+                            </motion.div>
+                            <motion.p className="mt-3" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.4 }}>
+                                Tanasvi Technologies is the best in Product development and IT consultancy firm that provides a wide range of services in various domains of information technology. We have expertise in IT software, data communication, automation, artificial intelligence and natural language processing. We are committed to excellence in research and development, innovation and leadership in computer science and modern mathematics. We also aim to foster universal understanding and communication through our work.
+                            </motion.p>
+                            <motion.p className="mt-3" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.5 }}>
+                                We believe that information technology is a powerful tool for transforming the world and creating a better future for humanity. We use our knowledge and skills to solve complex problems, create innovative solutions and deliver value to our clients. We work with various sectors and industries, such as education, healthcare, finance, manufacturing, retail, entertainment and more. We offer customized solutions that meet the specific needs and goals of our clients.
+                            </motion.p>
+                        </div>
+                    </div>
+                </div>
+                <div className="row mt-4">
+                    <div className="col-12">
+                        <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }}>
+                            <p>We conduct and participate in various events and activities to acquire and share technical knowledge, computer literature, technical data and best practices from both domestic and international sources. We use this information to enhance our standards and quality of manpower recruitment. We train and develop skilled personnel for developing, marketing and implementing systems, applications, software and related products for both domestic and export markets. We also provide IT services,consultancy, systems design, program implementation and training to our clients.</p>
+                        </motion.div>
+                        <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.3 }}>
+                            <p className="mt-3">Our current career-wise goal is to provide recruitment and placement of all kinds of personnel including managers, professionals, executives, skilled, semi-skilled, un-skilled workers, laborers and other technical personnel in India and abroad. We have a large network of contacts and partners in various countries and regions. We help our clients to find the best talent for their projects and operations. We also help our candidates to find the best opportunities for their careers and growth.</p>
+                        </motion.div>
+                        <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.4 }}>
+                            <p className="mt-3">We are a best IT Technology company that values integrity, professionalism, teamwork, diversity and customer satisfaction. We strive to maintain a high level of ethical standards and social responsibility in our business. We respect the culture, laws and regulations of the countries and regions where we operate. We also care for the environment and the society and contribute to their well-being.</p>
+                        </motion.div>
+                        <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.5 }}>
+                            <p className="mt-3">We invite you to join us in our journey of excellence and innovation. We look forward to working with you and serving you with our best. Thank you for choosing Tanasvi Technologies.</p>
+                        </motion.div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+
+    <section className="offer-section fix section-bg-2">
+        <div className="line-shape"><img alt="shape-img" src="/assets/img/team/line-shape.png" /></div>
+        <div className="mask-shape"><img alt="shape-img" src="/assets/img/team/mask-shape.png" /></div>
+        <div className="container">
+            <div className="section-title title-area mx-auto mb-15">
+                <div className="subtitle d-flex justify-content-center"><img alt="icon" src="/assets/img/icon/arrowLeftWhite.svg" /> <span className="text-white"> Our offering </span><img alt="icon" src="/assets/img/icon/arrowRightWhite.svg" /></div>
+                <h2 className="title text-center text-white">Enhance And Pioneer Using<br />Technology Trends</h2>
+            </div>
+            <div className="row">
+                {offerings.map((item) => (
+                    <motion.div className="col-xl-2 col-lg-4 col-md-4 col-sm-6" key={item.title} initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: item.delay }}>
+                        <div className={`offer-items ${item.active ? 'active' : ''}`}>
+                            <div className="shape-top"><img alt="shape-img" src="/assets/img/shape/offer-top.png" /></div>
+                            <div className="shape-bottom"><img alt="shape-img" src="/assets/img/shape/offer-bottom.png" /></div>
+                            <div className="icon"><img src={item.icon} alt={item.title} /></div>
+                            <div className="content"><h5>{item.title}</h5></div>
+                        </div>
+                    </motion.div>
+                ))}
+            </div>
+        </div>
+        
+    </section>
+    <Marquee />
+  </>
+);
 
 export default About;
