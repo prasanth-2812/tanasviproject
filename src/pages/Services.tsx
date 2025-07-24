@@ -1,22 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-
-// UPDATED: Added a description to each service object
-const servicesList = [
-    { icon: "/assets/img/service/icon/s-icon-13.svg", title: "AI DEVELOPMENT", description: "Custom AI solutions to automate processes and derive intelligent insights.", delay: 0.2 },
-    { icon: "/assets/img/service/icon/s-icon-2.svg", title: "IT CONSULTANCY", description: "Strategic guidance to optimize your IT infrastructure and digital transformation.", delay: 0.3 },
-    { icon: "/assets/img/service/icon/s-icon-3.svg", title: "CYBER SECURITY", description: "Protect your digital assets with our advanced cybersecurity services.", delay: 0.4 },
-    { icon: "/assets/img/service/icon/s-icon-4.svg", title: "MOBILE APP DEVELOPMENT", description: "Engaging and high-performance mobile applications for iOS and Android.", delay: 0.5 },
-    { icon: "/assets/img/service/icon/s-icon-11.svg", title: "WEB DEVELOPMENT", description: "Responsive and scalable web solutions tailored to your business needs.", delay: 0.6 },
-    { icon: "/assets/img/service/icon/s-icon-1.svg", title: "ERP APPLICATIONS", description: "Integrated ERP systems to streamline your core business operations.", delay: 0.7 },
-    { icon: "/assets/img/service/icon/s-icon-12.svg", title: "DIGITAL MARKETING", description: "Boost your online presence and reach your target audience effectively.", delay: 0.8 },
-    { icon: "/assets/img/service/icon/s-icon-10.svg", title: "BPO", description: "Reliable Business Process Outsourcing to enhance efficiency and reduce costs.", delay: 0.9 },
-];
+import { Link } from 'react-router-dom'; // Import Link
+import { servicesList } from '../data/serviceData'; // Import from the new data file
 
 const Services: React.FC = () => {
     return (
         <>
-            {/* ADDED a universal class for styling */}
             <section className="service-section info-card-section fix section-padding">
                 <div className="container">
                     <div className="section-title title-area mx-auto mb-20">
@@ -38,16 +27,18 @@ const Services: React.FC = () => {
                                     transition={{ duration: 0.5, delay: service.delay }}
                                     viewport={{ once: true }}
                                 >
-                                    {/* UPDATED: Card structure now supports left alignment */}
-                                    <div className="service-box-items box-shadow h-100">
-                                        <div className="icon">
-                                            <img src={service.icon} alt={`${service.title} icon`} />
+                                    {/* ===== WRAP a Link around the card ===== */}
+                                    <Link to={`/service/${service.slug}`} className="text-decoration-none d-block h-100">
+                                        <div className="service-box-items box-shadow h-100">
+                                            <div className="icon">
+                                                <img src={service.icon} alt={`${service.title} icon`} />
+                                            </div>
+                                            <div className="content">
+                                                <h4>{service.title}</h4>
+                                                <p className="card-description">{service.description}</p>
+                                            </div>
                                         </div>
-                                        <div className="content">
-                                            <h4>{service.title}</h4>
-                                            <p className="card-description">{service.description}</p>
-                                        </div>
-                                    </div>
+                                    </Link>
                                 </motion.div>
                             ))}
                         </div>

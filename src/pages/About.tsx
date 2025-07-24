@@ -1,6 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
-import Marquee from '../components/common/Marquee'; // This component is needed for the marquee section
+import Marquee from '../components/common/Marquee';
+
+// Import the SVG Icon components
+import WebsiteIcon from '../components/icons/WebsiteIcon';
+import AndroidIcon from '../components/icons/AndroidIcon';
+import IosIcon from '../components/icons/IosIcon';
+import WatchIcon from '../components/icons/WatchIcon';
+import TvIcon from '../components/icons/TvIcon';
+import IotIcon from '../components/icons/IotIcon';
 
 // Helper component for the animated counter
 const AnimatedCounter = ({ target }: { target: number }) => {
@@ -11,15 +19,12 @@ const AnimatedCounter = ({ target }: { target: number }) => {
     useEffect(() => {
         if (isInView) {
             let start: number | null = null;
-            const duration = 2000; // Animation duration in milliseconds
-            
+            const duration = 2000;
             const step = (timestamp: number) => {
                 if (!start) start = timestamp;
                 const progress = Math.min((timestamp - start) / duration, 1);
                 setCount(Math.floor(progress * target));
-                if (progress < 1) {
-                    requestAnimationFrame(step);
-                }
+                if (progress < 1) requestAnimationFrame(step);
             };
             requestAnimationFrame(step);
         }
@@ -28,14 +33,14 @@ const AnimatedCounter = ({ target }: { target: number }) => {
     return <span ref={ref}>{count}</span>;
 };
 
-// Data for the "Our offering" icons
+// Data for the "Our offering" icons, now using the imported components
 const offerings = [
-    { icon: "/assets/img/offer/website.svg", title: "Website", delay: 0.2 },
-    { icon: "/assets/img/offer/android.svg", title: "Android", delay: 0.3 },
-    { icon: "/assets/img/offer/ios.svg", title: "IOS", delay: 0.4, active: true },
-    { icon: "/assets/img/offer/watch.svg", title: "Watch", delay: 0.5 },
-    { icon: "/assets/img/offer/tv.svg", title: "Tv", delay: 0.6 },
-    { icon: "/assets/img/offer/iot.svg", title: "IOT", delay: 0.7 }
+    { icon: WebsiteIcon, title: "Website", delay: 0.2 },
+    { icon: AndroidIcon, title: "Android", delay: 0.3 },
+    { icon: IosIcon, title: "IOS", delay: 0.4, active: true },
+    { icon: WatchIcon, title: "Watch", delay: 0.5 },
+    { icon: TvIcon, title: "Tv", delay: 0.6 },
+    { icon: IotIcon, title: "IOT", delay: 0.7 }
 ];
 
 const About: React.FC = () => (
@@ -72,6 +77,9 @@ const About: React.FC = () => (
                         </div>
                     </div>
                 </div>
+                {/* ==================================================== */}
+                {/* START: The Missing Text Content is now RESTORED     */}
+                {/* ==================================================== */}
                 <div className="row mt-4">
                     <div className="col-12">
                         <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }}>
@@ -88,11 +96,12 @@ const About: React.FC = () => (
                         </motion.div>
                     </div>
                 </div>
+                {/* ==================================================== */}
+                {/* END: Restored Text Content Section                 */}
+                {/* ==================================================== */}
             </div>
         </div>
     </section>
-
-    
 
     <section className="offer-section fix section-bg-2">
         <div className="line-shape"><img alt="shape-img" src="/assets/img/team/line-shape.png" /></div>
@@ -103,19 +112,23 @@ const About: React.FC = () => (
                 <h2 className="title text-center text-white">Enhance And Pioneer Using<br />Technology Trends</h2>
             </div>
             <div className="row">
-                {offerings.map((item) => (
-                    <motion.div className="col-xl-2 col-lg-4 col-md-4 col-sm-6" key={item.title} initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: item.delay }}>
-                        <div className={`offer-items ${item.active ? 'active' : ''}`}>
-                            <div className="shape-top"><img alt="shape-img" src="/assets/img/shape/offer-top.png" /></div>
-                            <div className="shape-bottom"><img alt="shape-img" src="/assets/img/shape/offer-bottom.png" /></div>
-                            <div className="icon"><img src={item.icon} alt={item.title} /></div>
-                            <div className="content"><h5>{item.title}</h5></div>
-                        </div>
-                    </motion.div>
-                ))}
+                {offerings.map((item) => {
+                    const IconComponent = item.icon;
+                    return (
+                        <motion.div className="col-xl-2 col-lg-4 col-md-4 col-sm-6" key={item.title} initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: item.delay }}>
+                            <div className={`offer-items ${item.active ? 'active' : ''}`}>
+                                <div className="shape-top"><img alt="shape-img" src="/assets/img/shape/offer-top.png" /></div>
+                                <div className="shape-bottom"><img alt="shape-img" src="/assets/img/shape/offer-bottom.png" /></div>
+                                <div className="icon">
+                                    <IconComponent />
+                                </div>
+                                <div className="content"><h5>{item.title}</h5></div>
+                            </div>
+                        </motion.div>
+                    );
+                })}
             </div>
         </div>
-        
     </section>
     <Marquee />
   </>

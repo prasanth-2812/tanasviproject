@@ -1,3 +1,5 @@
+// Replace the original file content with this
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -36,7 +38,7 @@ const ServiceSection: React.FC = () => {
                 </div>
                 <div className="row">
                     {services.map((service, index) => (
-                        <motion.div className="col-xl-3 col-lg-4 col-md-6" key={index}
+                        <motion.div className="col-lg-3 col-md-6 col-12" key={index} // UPDATED CLASS
                             initial={{ opacity: 0, y: 50 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.5, delay: index * 0.2 }}

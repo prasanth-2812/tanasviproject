@@ -38,53 +38,56 @@ const Career: React.FC = () => {
                                 </p>
                             </motion.div>
 
-                            <motion.form 
-                                className="contact-form-items"
-                                initial="hidden"
-                                whileInView="visible"
-                                viewport={{ once: true, amount: 0.2 }}
-                                transition={{ staggerChildren: 0.1, delayChildren: 0.3 }}
-                                onSubmit={e => e.preventDefault()}
-                            >
-                                <div className="row g-4">
-                                    <motion.div className="col-lg-6" variants={formVariants}>
-                                        <div className="form-clt">
-                                            <input type="text" placeholder="Your Name*" required />
-                                        </div>
-                                    </motion.div>
-                                    <motion.div className="col-lg-6" variants={formVariants}>
-                                        <div className="form-clt">
-                                            <input type="email" placeholder="Your Email*" required />
-                                        </div>
-                                    </motion.div>
-                                    <motion.div className="col-lg-6" variants={formVariants}>
-                                        <div className="form-clt">
-                                            <input type="text" placeholder="Phone Number*" required />
-                                        </div>
-                                    </motion.div>
-                                    <motion.div className="col-lg-6" variants={formVariants}>
-                                        <div className="form-clt">
-                                            <input type="text" placeholder="Position Applying For*" required />
-                                        </div>
-                                    </motion.div>
-                                    <motion.div className="col-lg-12" variants={formVariants}>
-                                        <div className="form-clt">
-                                            <label htmlFor='resume-upload' style={{ marginBottom: '10px', display: 'block', textAlign: 'left', color: '#555' }}>Upload Your Resume*</label>
-                                            <input type="file" id='resume-upload' className="form-control" required />
-                                        </div>
-                                    </motion.div>
-                                    <motion.div className="col-lg-12" variants={formVariants}>
-                                        <div className="form-clt">
-                                            <textarea placeholder="Write a Message (Optional)"></textarea>
-                                        </div>
-                                    </motion.div>
-                                    <motion.div className="col-lg-7" variants={formVariants}>
-                                        <button type="submit" className="theme-btn">
-                                            Submit Application <i className="fa-solid fa-arrow-right-long"></i>
-                                        </button>
-                                    </motion.div>
-                                </div>
-                            </motion.form>
+                            {/* ADDED a wrapper div for styling the form background and container */}
+                            <div className="career-form-wrapper">
+                                <motion.form 
+                                    className="contact-form-items"
+                                    initial="hidden"
+                                    whileInView="visible"
+                                    viewport={{ once: true, amount: 0.2 }}
+                                    transition={{ staggerChildren: 0.1, delayChildren: 0.3 }}
+                                    onSubmit={e => e.preventDefault()}
+                                >
+                                    <div className="row g-4">
+                                        <motion.div className="col-lg-6" variants={formVariants}>
+                                            <div className="form-clt">
+                                                <input type="text" name="name" placeholder="Your Name*" required />
+                                            </div>
+                                        </motion.div>
+                                        <motion.div className="col-lg-6" variants={formVariants}>
+                                            <div className="form-clt">
+                                                <input type="email" name="email" placeholder="Your Email*" required />
+                                            </div>
+                                        </motion.div>
+                                        <motion.div className="col-lg-6" variants={formVariants}>
+                                            <div className="form-clt">
+                                                <input type="text" name="phone" placeholder="Phone Number*" required />
+                                            </div>
+                                        </motion.div>
+                                        <motion.div className="col-lg-6" variants={formVariants}>
+                                            <div className="form-clt">
+                                                <input type="text" name="position" placeholder="Position Applying For*" required />
+                                            </div>
+                                        </motion.div>
+                                        <motion.div className="col-lg-12" variants={formVariants}>
+                                            <div className="form-clt">
+                                                <label htmlFor='resume-upload' className="form-label">Upload Your Resume*</label>
+                                                <input type="file" id='resume-upload' name="resume" className="form-control" required />
+                                            </div>
+                                        </motion.div>
+                                        <motion.div className="col-lg-12" variants={formVariants}>
+                                            <div className="form-clt">
+                                                <textarea name="message" placeholder="Write a Message (Optional)"></textarea>
+                                            </div>
+                                        </motion.div>
+                                        <motion.div className="col-lg-7" variants={formVariants}>
+                                            <button type="submit" className="theme-btn">
+                                                Submit Application <i className="fa-solid fa-arrow-right-long"></i>
+                                            </button>
+                                        </motion.div>
+                                    </div>
+                                </motion.form>
+                            </div>
                         </div>
                     </div>
                 </div>

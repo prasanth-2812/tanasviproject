@@ -174,3 +174,315 @@ html {
     color: #555; /* Soft color for readability */
     margin-bottom: 0;
 }
+
+/* ===================================
+   Project Detail Page Styles
+====================================== */
+
+.project-banner {
+    height: 50vh;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    text-align: center;
+}
+
+.project-banner::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(6, 23, 56, 0.7); /* Dark overlay */
+}
+
+.project-banner .container {
+    position: relative;
+    z-index: 2;
+}
+
+.project-banner h1 {
+    font-size: 3.5rem;
+    color: #fff;
+    font-weight: 700;
+}
+
+.project-content-card {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    margin-top: -80px; /* Pulls the card up over the banner */
+    position: relative;
+    z-index: 3;
+}
+
+.project-content-card h3 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #007bff; /* Your primary color */
+}
+
+.project-content-card p {
+    font-size: 16px;
+    line-height: 1.7;
+    margin-bottom: 15px;
+    color: #444;
+}
+
+.project-content-card ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.project-content-card ul li {
+    font-size: 16px;
+    padding: 10px 0 10px 30px;
+    position: relative;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.project-content-card ul li:last-child {
+    border-bottom: none;
+}
+
+.project-content-card ul li::before {
+    content: '\2713'; /* Checkmark icon */
+    position: absolute;
+    left: 0;
+    top: 10px;
+    color: #28a745; /* Success green */
+    font-weight: bold;
+}
+
+.btn-modern {
+    background-color: #007bff;
+    color: #fff;
+    padding: 12px 30px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-modern:hover {
+    background-color: #0056b3;
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+/* ===================================
+   Career Page Form Styles
+====================================== */
+/* ===================================================
+   Career Page Form Styles (REVISED FOR VISIBILITY)
+====================================================== */
+
+/* Styles for the form container */
+.career-form-wrapper {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 50px rgba(0, 0, 0, 0.07);
+    border: 1px solid #eef0f3;
+}
+
+/* General styles for all input fields and text areas to match the image */
+.contact-form-items .form-clt input[type="text"],
+.contact-form-items .form-clt input[type="email"],
+.contact-form-items .form-clt textarea {
+    width: 100%;
+    border: 1px solid #e0e5f1; /* A light but visible border */
+    background-color: #f7f9fc; /* Light background as in the image */
+    color: #222; /* Dark text color for user input */
+    padding: 16px;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+/* Change border color on focus for better user experience */
+.contact-form-items .form-clt input[type="text"]:focus,
+.contact-form-items .form-clt input[type="email"]:focus,
+.contact-form-items .form-clt textarea:focus {
+    outline: none;
+    border-color: #007bff; /* Your theme's primary color */
+    background-color: #fff;
+}
+
+/*
+  ==============================================================
+  FIX FOR INVISIBLE PLACEHOLDER
+  ==============================================================
+  This uses a darker color and vendor prefixes to ensure the
+  placeholder text is visible in all browsers.
+*/
+.contact-form-items .form-clt input::placeholder,
+.contact-form-items .form-clt textarea::placeholder {
+    color: #99a5b5 !important; /* A clearly visible grey color */
+    opacity: 1; /* Ensures placeholder is not transparent */
+}
+.contact-form-items .form-clt input::-webkit-input-placeholder,
+.contact-form-items .form-clt textarea::-webkit-input-placeholder {
+    color: #99a5b5 !important;
+}
+.contact-form-items .form-clt input::-moz-placeholder,
+.contact-form-items .form-clt textarea::-moz-placeholder {
+    color: #99a5b5 !important;
+    opacity: 1;
+}
+/* ============================================================== */
+
+
+/* Specific styling for the resume upload label */
+.contact-form-items .form-label {
+    margin-bottom: 10px;
+    display: block;
+    text-align: left;
+    color: #333;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+/* Specific styling for the file input field */
+.contact-form-items .form-clt input[type="file"].form-control {
+    color: #555; /* Set text color for "No file chosen" */
+    background-color: #f7f9fc;
+    border: 1px solid #e0e5f1;
+    padding: 12px;
+    border-radius: 8px;
+}
+
+/* Styling for the file input button (browser-specific) */
+.contact-form-items .form-clt input[type="file"]::file-selector-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-right: 15px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+.contact-form-items .form-clt input[type="file"]::file-selector-button:hover {
+    background-color: #0056b3;
+}
+
+/* Ensure the submit button matches the image */
+.theme-btn {
+    display: inline-block;
+    padding: 16px 40px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.theme-btn:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+/* ===================================================
+   Page Transition Loader Styles
+====================================================== */
+.page-transition-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #ffffff;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+    color: #0b1a38;
+}
+
+.page-transition-loader .loader-logo {
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: 5px;
+}
+
+.page-transition-loader .loader-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(11, 26, 56, 0.2);
+    border-top-color: #0b1a38;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Style for "Our Offering" Icons */
+.offer-items .icon {
+    margin-bottom: 15px;
+    line-height: 1; /* Helps with alignment */
+}
+
+/* Target the SVG element directly */
+.offer-items .icon svg {
+    height: 36px;
+    width: 36px;
+    transition: all 0.3s ease;
+}
+
+/* Change the fill color of the SVG paths */
+.offer-items .icon svg path {
+    fill: #384BFF; /* The original blue color */
+}
+
+/* On hover, change the fill color to white */
+.offer-items:hover .icon svg path,
+.offer-items.active .icon svg path {
+    fill: #ffffff;
+}
+
+.offer-items:hover .icon svg {
+    transform: rotate(360deg);
+}
+/* ==========================================================
+   FINAL FIX: Top Header Bar Alignment & Padding
+============================================================= */
+
+/* 1. Target the main top bar container */
+.header-top-section .header-top-wrapper {
+    display: flex;
+    justify-content: space-between; /* This is the key: pushes children to opposite ends */
+    align-items: center;            /* This vertically centers the content */
+    padding: 8px 0;                 /* Adds a little vertical padding */
+}
+
+/* 2. Target the contact list on the left */
+.header-top-wrapper .contact-list {
+    margin-bottom: 0; /* Removes the unwanted bottom margin */
+    display: flex;    /* Ensures list items are in a row */
+    gap: 20px;        /* Adds space between email and phone */
+    align-items: center;
+}
+
+/* 3. Target the social icons on the right */
+.header-top-wrapper .top-right .social-icon {
+    gap: 12px;
+    text-align: right;
+}

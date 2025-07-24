@@ -1,6 +1,4 @@
-// src/components/common/Header.tsx
-
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 
 interface HeaderProps {
@@ -12,16 +10,29 @@ const Header: React.FC<HeaderProps> = ({ onSearchClick, isSticky }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
 
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
+  const handleLinkClick = () => setIsMobileMenuOpen(false);
 
   return (
     <header>
       <div className="header-top-section top-style-3">
         <div className="container">
-          <div className="header-top-wrapper">
+          <div className="header-top-wrapper align-items-center">
+            {/* START: Left side of the top bar */}
             <ul className="contact-list">
-              <li><i className="far fa-envelope"></i><a href="mailto:info@tanasvi.com" className="link">info@tanasvi.com</a></li>
-              <li><i className="fa-solid fa-phone-volume"></i><a href="tel:+91-9392562193">+91-9392562193</a></li>
+              <li>
+                <i className="far fa-envelope me-2"></i>
+                <a href="mailto:info@tanasvi.com" className="link">info@tanasvi.com</a>
+              </li>
+              <li>
+                <i className="fa-solid fa-phone-volume me-2"></i>
+                <a href="tel:+91-9392562193">+91-9392562193</a>
+              </li>
             </ul>
+            {/* END: Left side of the top bar */}
+            
+            {/* ========================================================== */}
+            {/* START: This is the primary fix. The "top-right" div now contains the "Follow Us" section. */}
+            {/* ========================================================== */}
             <div className="top-right">
               <div className="social-icon d-flex align-items-center">
                 <span>Follow Us:</span>
@@ -30,6 +41,9 @@ const Header: React.FC<HeaderProps> = ({ onSearchClick, isSticky }) => {
                 <a href="https://in.linkedin.com/company/tanasvi-technologies" target="_blank" rel="noopener noreferrer"><i className="fa-brands fa-linkedin-in"></i></a>
               </div>
             </div>
+            {/* ========================================================== */}
+            {/* END: Fix */}
+            {/* ========================================================== */}
           </div>
         </div>
       </div>
@@ -40,7 +54,7 @@ const Header: React.FC<HeaderProps> = ({ onSearchClick, isSticky }) => {
               <div className="header-left">
                 <div className="logo">
                   <Link to="/" className="header-logo">
-                    <img src="/assets/img/logo.jpg" alt="logo-img" /> 
+                    <img src="/assets/img/logo.jpg" alt="logo-img" />
                   </Link>
                 </div>
               </div>
@@ -49,13 +63,12 @@ const Header: React.FC<HeaderProps> = ({ onSearchClick, isSticky }) => {
                   <div className={`main-menu ${isMobileMenuOpen ? 'show-menu' : ''}`}>
                     <nav id="mobile-menu">
                       <ul>
-                        {/* CORRECTED: Added the 'end' prop to the Home NavLink */}
-                        <li><NavLink to="/" end onClick={() => setIsMobileMenuOpen(false)}>Home</NavLink></li>
-                        <li><NavLink to="/about.html" onClick={() => setIsMobileMenuOpen(false)}>About</NavLink></li>
-                        <li><NavLink to="/service.html" onClick={() => setIsMobileMenuOpen(false)}>Services</NavLink></li>
-                        <li><NavLink to="/project.html" onClick={() => setIsMobileMenuOpen(false)}>Projects</NavLink></li>
-                        <li><NavLink to="/team.html" onClick={() => setIsMobileMenuOpen(false)}>Career</NavLink></li>
-                        <li><NavLink to="/contact.html" onClick={() => setIsMobileMenuOpen(false)}>Contact</NavLink></li>
+                        <li><NavLink to="/" end onClick={handleLinkClick}>Home</NavLink></li>
+                        <li><NavLink to="/about.html" onClick={handleLinkClick}>About</NavLink></li>
+                        <li><NavLink to="/service.html" onClick={handleLinkClick}>Services</NavLink></li>
+                        <li><NavLink to="/project.html" onClick={handleLinkClick}>Projects</NavLink></li>
+                        <li><NavLink to="/team.html" onClick={handleLinkClick}>Career</NavLink></li>
+                        <li><NavLink to="/contact.html" onClick={handleLinkClick}>Contact</NavLink></li>
                       </ul>
                     </nav>
                   </div>
