@@ -84,12 +84,12 @@ function App() {
         <Routes>
           {/* Main Page Routes */}
           <Route path="/" element={<Home />} />
-          <Route path="/index.html" element={<Home />} />
-          <Route path="/about.html" element={<About />} />
-          <Route path="/service.html" element={<Services />} />
-          <Route path="/project.html" element={<Projects />} />
-          <Route path="/team.html" element={<Career />} />
-          <Route path="/contact.html" element={<Contact />} />
+          <Route path="/index" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/service" element={<Services />} />
+          <Route path="/project" element={<Projects />} />
+          <Route path="/team" element={<Career />} />
+          <Route path="/contact" element={<Contact />} />
           
           {/* Project Detail Routes */}
           <Route path="/project/human-resource-management" element={<Hrm />} />

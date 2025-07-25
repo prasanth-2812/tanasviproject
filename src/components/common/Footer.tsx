@@ -51,11 +51,11 @@ const Footer: React.FC = () => {
                                     <h3 className="widget_title">Quick Links</h3>
                                     <div className="menu-all-pages-container">
                                         <ul className="menu">
-                                            <li><Link to="/about.html"><i className="fa-solid fa-chevrons-right"></i>About</Link></li>
-                                            <li><Link to="/service.html"><i className="fa-solid fa-chevrons-right"></i>Our Services</Link></li>
-                                            <li><Link to="/project.html"><i className="fa-solid fa-chevrons-right"></i>Our Projects</Link></li>
-                                            <li><Link to="/team.html"><i className="fa-solid fa-chevrons-right"></i>Career</Link></li>
-                                            <li><Link to="/contact.html"><i className="fa-solid fa-chevrons-right"></i>Contact Us</Link></li>
+                                            <li><Link to="/about"><i className="fa-solid fa-chevrons-right"></i>About</Link></li>
+                                            <li><Link to="/service"><i className="fa-solid fa-chevrons-right"></i>Our Services</Link></li>
+                                            <li><Link to="/project"><i className="fa-solid fa-chevrons-right"></i>Our Projects</Link></li>
+                                            <li><Link to="/team"><i className="fa-solid fa-chevrons-right"></i>Career</Link></li>
+                                            <li><Link to="/contact"><i className="fa-solid fa-chevrons-right"></i>Contact Us</Link></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -65,11 +65,11 @@ const Footer: React.FC = () => {
                                     <h3 className="widget_title">Our Services</h3>
                                     <div className="menu-all-pages-container">
                                         <ul className="menu">
-                                            <li><Link to="/service.html"><i className="fa-solid fa-chevrons-right"></i>IT Consultancy</Link></li>
-                                            <li><Link to="/service.html"><i className="fa-solid fa-chevrons-right"></i>App Development</Link></li>
-                                            <li><Link to="/service.html"><i className="fa-solid fa-chevrons-right"></i>Database Security</Link></li>
-                                            <li><Link to="/service.html"><i className="fa-solid fa-chevrons-right"></i>AI and ML</Link></li>
-                                            <li><Link to="/service.html"><i className="fa-solid fa-chevrons-right"></i>Cloud Services</Link></li>
+                                            <li><Link to="/service"><i className="fa-solid fa-chevrons-right"></i>IT Consultancy</Link></li>
+                                            <li><Link to="/service"><i className="fa-solid fa-chevrons-right"></i>App Development</Link></li>
+                                            <li><Link to="/service"><i className="fa-solid fa-chevrons-right"></i>Database Security</Link></li>
+                                            <li><Link to="/service"><i className="fa-solid fa-chevrons-right"></i>AI and ML</Link></li>
+                                            <li><Link to="/service"><i className="fa-solid fa-chevrons-right"></i>Cloud Services</Link></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -103,8 +103,8 @@ const Footer: React.FC = () => {
                         </div>
                         <div className="layout-link">
                             <div className="link-wrapper">
-                                <Link to="/contact.html">Terms & Condition</Link>
-                                <Link to="/contact.html">Privacy Policy</Link>
+                                <Link to="/contact">Terms & Condition</Link>
+                                <Link to="/contact">Privacy Policy</Link>
                             </div>
                         </div>
                     </div>

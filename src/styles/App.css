@@ -1,4 +1,10 @@
-/* Global style overrides */
+/* ==========================================================
+   ====== FINAL & CONSOLIDATED STYLESHEET ======
+============================================================= */
+
+/* ----------------------------------------------------------
+   1. Global & Root Styles
+------------------------------------------------------------- */
 html {
   scroll-behavior: smooth;
 }
@@ -15,249 +21,12 @@ html {
 }
 
 @keyframes slideInDown {
-  from {
-    transform: translateY(-100%);
-  }
-  to {
-    transform: translateY(0);
-  }
+  from { transform: translateY(-100%); }
+  to { transform: translateY(0); }
 }
 
-.main-menu.show-menu {
-  display: block !important;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
-  background-color: #fff;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  padding: 10px 0;
-}
-
-
-.mouse-cursor {
-  position: fixed;
-  left: 0;
-  top: 0;
-  pointer-events: none;
-  border-radius: 50%;
-  transform: translateZ(0);
-  visibility: hidden; /* JS will make this visible */
-}
-
-.cursor-inner {
-  width: 6px;
-  height: 6px;
-  z-index: 10000001;
-  background-color: #3c72fc; /* Replaced var(--theme) */
-  transition: width 0.3s ease-in-out, height 0.3s ease-in-out, margin 0.3s ease-in-out, opacity 0.3s ease-in-out;
-}
-
-.cursor-inner.cursor-hover {
-  margin-left: -35px;
-  margin-top: -35px;
-  width: 70px;
-  height: 70px;
-  background-color: #3c72fc; /* Replaced var(--theme) */
-  opacity: 0.3;
-}
-
-.cursor-outer {
-  margin-left: -12px;
-  margin-top: -12px;
-  width: 30px;
-  height: 30px;
-  border: 1px solid #3c72fc; /* Replaced var(--theme) */
-  box-sizing: border-box;
-  z-index: 10000000;
-  opacity: 0.5;
-  transition: all 0.08s ease-out;
-}
-
-.cursor-outer.cursor-hover {
-  opacity: 0;
-}
-
-/* Marquee / Ticker Styles */
-.marque-section-3 {
-    padding-top: 120px;
-    padding-bottom: 120px;
-}
-
-.marquee-wrapper.style-2 .marquee-inner {
-    max-width: 100%;
-}
-
-.marquee-inner.to-left .marqee-list {
-    animation: marqueeInner 40s linear infinite;
-}
-
-.marquee-item.style-2 .text-slider {
-    font-size: 60px;
-    line-height: 1;
-    font-weight: 600;
-    margin: 0 40px;
-}
-
-.marquee-item.style-2 .text-slider.text-style {
-    font-family: var(--body-font);
-    color: var(--primary-color);
-}
-
-@keyframes marqueeInner {
-    from {
-        transform: translateX(0%);
-    }
-    to {
-        transform: translateX(-50%);
-    }
-}
-.text-slider{
-  
-  color: black;
-}
-
-/* Active Navigation Link Style */
 .main-menu nav ul li a.active {
-  color: #3c72fc !important; /* This is the theme's primary blue color */
-}
-
-/* ===================================
-   Project Section Styles
-====================================== */
-/* ===================================================
-   Unified Info Card (Services & Projects) Styles
-====================================================== */
-
-/* Ensures equal height columns */
-.info-card-section .row {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-/* Main card container for left-aligned layout */
-.info-card-section .service-box-items {
-    display: flex; /* Aligns icon and content side-by-side */
-    align-items: flex-start; /* Aligns items to the top */
-    text-align: left; /* Aligns all text to the left */
-    padding: 25px; /* Adds internal padding */
-    height: 100%; /* Ensures the card fills the column height */
-}
-
-/* Styling for the icon wrapper */
-.info-card-section .service-box-items .icon {
-    margin-right: 20px; /* Creates space between icon and text */
-    flex-shrink: 0; /* Prevents the icon from shrinking */
-}
-
-.info-card-section .service-box-items .icon img {
-    width: 50px; /* Sets a consistent size for all icons */
-    height: auto;
-}
-
-/* Styling for the content (title and description) wrapper */
-.info-card-section .service-box-items .content {
-    flex-grow: 1; /* Allows the content to fill the remaining space */
-}
-
-/* Title styling */
-.info-card-section .service-box-items .content h4 {
-    margin-bottom: 8px;
-    font-size: 18px;
-    font-weight: 600;
-}
-
-/* Description styling */
-.info-card-section .card-description {
-    font-size: 15px;
-    line-height: 1.6;
-    color: #555; /* Soft color for readability */
-    margin-bottom: 0;
-}
-
-/* ===================================
-   Project Detail Page Styles
-====================================== */
-
-.project-banner {
-    height: 50vh;
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    text-align: center;
-}
-
-.project-banner::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(6, 23, 56, 0.7); /* Dark overlay */
-}
-
-.project-banner .container {
-    position: relative;
-    z-index: 2;
-}
-
-.project-banner h1 {
-    font-size: 3.5rem;
-    color: #fff;
-    font-weight: 700;
-}
-
-.project-content-card {
-    background-color: #fff;
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
-    margin-top: -80px; /* Pulls the card up over the banner */
-    position: relative;
-    z-index: 3;
-}
-
-.project-content-card h3 {
-    font-size: 1.8rem;
-    font-weight: 600;
-    margin-bottom: 20px;
-    color: #007bff; /* Your primary color */
-}
-
-.project-content-card p {
-    font-size: 16px;
-    line-height: 1.7;
-    margin-bottom: 15px;
-    color: #444;
-}
-
-.project-content-card ul {
-    list-style: none;
-    padding-left: 0;
-}
-
-.project-content-card ul li {
-    font-size: 16px;
-    padding: 10px 0 10px 30px;
-    position: relative;
-    border-bottom: 1px solid #f0f0f0;
-}
-
-.project-content-card ul li:last-child {
-    border-bottom: none;
-}
-
-.project-content-card ul li::before {
-    content: '\2713'; /* Checkmark icon */
-    position: absolute;
-    left: 0;
-    top: 10px;
-    color: #28a745; /* Success green */
-    font-weight: bold;
+  color: #3c72fc !important;
 }
 
 .btn-modern {
@@ -269,113 +38,12 @@ html {
     font-weight: 500;
     transition: all 0.3s ease;
 }
-
 .btn-modern:hover {
     background-color: #0056b3;
     color: #fff;
     transform: translateY(-2px);
 }
 
-/* ===================================
-   Career Page Form Styles
-====================================== */
-/* ===================================================
-   Career Page Form Styles (REVISED FOR VISIBILITY)
-====================================================== */
-
-/* Styles for the form container */
-.career-form-wrapper {
-    background-color: #ffffff;
-    padding: 40px;
-    border-radius: 12px;
-    box-shadow: 0 10px 50px rgba(0, 0, 0, 0.07);
-    border: 1px solid #eef0f3;
-}
-
-/* General styles for all input fields and text areas to match the image */
-.contact-form-items .form-clt input[type="text"],
-.contact-form-items .form-clt input[type="email"],
-.contact-form-items .form-clt textarea {
-    width: 100%;
-    border: 1px solid #e0e5f1; /* A light but visible border */
-    background-color: #f7f9fc; /* Light background as in the image */
-    color: #222; /* Dark text color for user input */
-    padding: 16px;
-    border-radius: 8px;
-    font-size: 16px;
-    transition: all 0.3s ease;
-}
-
-/* Change border color on focus for better user experience */
-.contact-form-items .form-clt input[type="text"]:focus,
-.contact-form-items .form-clt input[type="email"]:focus,
-.contact-form-items .form-clt textarea:focus {
-    outline: none;
-    border-color: #007bff; /* Your theme's primary color */
-    background-color: #fff;
-}
-
-/*
-  ==============================================================
-  FIX FOR INVISIBLE PLACEHOLDER
-  ==============================================================
-  This uses a darker color and vendor prefixes to ensure the
-  placeholder text is visible in all browsers.
-*/
-.contact-form-items .form-clt input::placeholder,
-.contact-form-items .form-clt textarea::placeholder {
-    color: #99a5b5 !important; /* A clearly visible grey color */
-    opacity: 1; /* Ensures placeholder is not transparent */
-}
-.contact-form-items .form-clt input::-webkit-input-placeholder,
-.contact-form-items .form-clt textarea::-webkit-input-placeholder {
-    color: #99a5b5 !important;
-}
-.contact-form-items .form-clt input::-moz-placeholder,
-.contact-form-items .form-clt textarea::-moz-placeholder {
-    color: #99a5b5 !important;
-    opacity: 1;
-}
-/* ============================================================== */
-
-
-/* Specific styling for the resume upload label */
-.contact-form-items .form-label {
-    margin-bottom: 10px;
-    display: block;
-    text-align: left;
-    color: #333;
-    font-size: 16px;
-    font-weight: 500;
-}
-
-/* Specific styling for the file input field */
-.contact-form-items .form-clt input[type="file"].form-control {
-    color: #555; /* Set text color for "No file chosen" */
-    background-color: #f7f9fc;
-    border: 1px solid #e0e5f1;
-    padding: 12px;
-    border-radius: 8px;
-}
-
-/* Styling for the file input button (browser-specific) */
-.contact-form-items .form-clt input[type="file"]::file-selector-button {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    margin-right: 15px;
-    cursor: pointer;
-    font-weight: 500;
-    transition: background-color 0.3s ease;
-}
-
-.contact-form-items .form-clt input[type="file"]::file-selector-button:hover {
-    background-color: #0056b3;
-}
-
-/* Ensure the submit button matches the image */
 .theme-btn {
     display: inline-block;
     padding: 16px 40px;
@@ -389,100 +57,312 @@ html {
     text-align: center;
     transition: all 0.3s ease;
 }
-
 .theme-btn:hover {
     background-color: #0056b3;
     transform: translateY(-2px);
 }
-/* ===================================================
-   Page Transition Loader Styles
-====================================================== */
-.page-transition-loader {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: #ffffff;
-    z-index: 9999;
+
+
+/* ----------------------------------------------------------
+   2. Header & Top Bar
+------------------------------------------------------------- */
+.header-top-section .header-top-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+}
+.header-top-wrapper .contact-list {
+    margin-bottom: 0;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+.header-top-wrapper .top-right .social-icon {
+    gap: 12px;
+}
+
+
+/* ----------------------------------------------------------
+   3. Service & Project Cards (Unified Style)
+------------------------------------------------------------- */
+.info-card-section .row {
+    display: flex;
+    flex-wrap: wrap;
+}
+.info-card-section .service-box-items {
+    display: flex;
+    align-items: flex-start;
+    text-align: left;
+    padding: 25px;
+    height: 100%;
+}
+.info-card-section .service-box-items .icon {
+    margin-right: 20px;
+    flex-shrink: 0;
+}
+.info-card-section .service-box-items .icon img {
+    width: 50px;
+    height: auto;
+}
+.info-card-section .service-box-items .content {
+    flex-grow: 1;
+}
+.info-card-section .service-box-items .content h4 {
+    margin-bottom: 8px;
+    font-size: 18px;
+    font-weight: 600;
+}
+.info-card-section .card-description {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 0;
+}
+
+/* ----------------------------------------------------------
+   4. Project & Service Detail Pages
+------------------------------------------------------------- */
+.project-banner {
+    height: 50vh;
+    background-size: cover;
+    background-position: center;
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
-    gap: 20px;
-    color: #0b1a38;
+    position: relative;
+    text-align: center;
 }
-
-.page-transition-loader .loader-logo {
-    font-size: 2.5rem;
+.project-banner::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(6, 23, 56, 0.7);
+}
+.project-banner .container {
+    position: relative;
+    z-index: 2;
+}
+.project-banner h1 {
+    font-size: 3.5rem;
+    color: #fff;
     font-weight: 700;
-    letter-spacing: 5px;
 }
-
-.page-transition-loader .loader-spinner {
-    width: 40px;
-    height: 40px;
-    border: 4px solid rgba(11, 26, 56, 0.2);
-    border-top-color: #0b1a38;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
+.project-content-card {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    margin-top: -80px;
+    position: relative;
+    z-index: 3;
 }
-
-@keyframes spin {
-    to {
-        transform: rotate(360deg);
-    }
+.project-content-card h3 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #007bff;
 }
-
-/* Style for "Our Offering" Icons */
-.offer-items .icon {
+.project-content-card p {
+    font-size: 16px;
+    line-height: 1.7;
     margin-bottom: 15px;
-    line-height: 1; /* Helps with alignment */
+    color: #444;
+}
+.project-content-card .feature-list {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 20px;
+}
+.project-content-card .feature-list li {
+    font-size: 16px;
+    padding: 12px 0 12px 35px;
+    position: relative;
+    border-bottom: 1px solid #f0f0f0;
+    color: #555 !important;
+}
+.project-content-card .feature-list li:last-child {
+    border-bottom: none;
+}
+.project-content-card .feature-list li b {
+    color: #1a202c !important;
+    display: block;
+    margin-bottom: 4px;
+}
+.project-content-card .feature-list li::before {
+    content: '\f058';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    position: absolute;
+    left: 0;
+    top: 15px;
+    color: #007bff;
+    font-size: 20px;
 }
 
-/* Target the SVG element directly */
-.offer-items .icon svg {
-    height: 36px;
-    width: 36px;
+/* ----------------------------------------------------------
+   5. Career Page Form
+------------------------------------------------------------- */
+.career-form-wrapper {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 50px rgba(0, 0, 0, 0.07);
+    border: 1px solid #eef0f3;
+}
+.career-form-wrapper .form-clt input,
+.career-form-wrapper .form-clt textarea {
+    width: 100%;
+    border: 1px solid #e0e5f1;
+    background-color: #f7f9fc;
+    color: #222;
+    padding: 16px;
+    border-radius: 8px;
+    font-size: 16px;
     transition: all 0.3s ease;
 }
-
-/* Change the fill color of the SVG paths */
-.offer-items .icon svg path {
-    fill: #384BFF; /* The original blue color */
+.career-form-wrapper .form-clt input:focus,
+.career-form-wrapper .form-clt textarea:focus {
+    outline: none;
+    border-color: #007bff;
+    background-color: #fff;
+}
+.career-form-wrapper .form-clt input::placeholder,
+.career-form-wrapper .form-clt textarea::placeholder {
+    color: #99a5b5 !important;
+    opacity: 1;
+}
+.career-form-wrapper .form-label {
+    margin-bottom: 10px; display: block; text-align: left;
+    color: #333; font-size: 16px; font-weight: 500;
+}
+.career-form-wrapper .form-clt input[type="file"].form-control {
+    color: #555; padding: 12px;
+}
+.career-form-wrapper .form-clt input[type="file"]::file-selector-button {
+    background-color: #007bff; color: #fff; border: none;
+    padding: 10px 20px; border-radius: 5px; margin-right: 15px;
+    cursor: pointer; font-weight: 500; transition: background-color 0.3s ease;
+}
+.career-form-wrapper .form-clt input[type="file"]::file-selector-button:hover {
+    background-color: #0056b3;
 }
 
-/* On hover, change the fill color to white */
-.offer-items:hover .icon svg path,
-.offer-items.active .icon svg path {
-    fill: #ffffff;
-}
 
-.offer-items:hover .icon svg {
-    transform: rotate(360deg);
+/* ----------------------------------------------------------
+   6. Contact Page (Final, Exact Version)
+------------------------------------------------------------- */
+.contact-page-section {
+    background: #ffffff !important;
+    padding: 120px 0 !important;
 }
-/* ==========================================================
-   FINAL FIX: Top Header Bar Alignment & Padding
-============================================================= */
-
-/* 1. Target the main top bar container */
-.header-top-section .header-top-wrapper {
+.contact-page-section .row {
+    align-items: stretch;
+}
+.contact-info-panel {
+    background: #384bff !important;
+    padding: 50px 40px !important;
+    border-radius: 20px 0 0 20px !important;
+    height: 100%;
     display: flex;
-    justify-content: space-between; /* This is the key: pushes children to opposite ends */
-    align-items: center;            /* This vertically centers the content */
-    padding: 8px 0;                 /* Adds a little vertical padding */
+    flex-direction: column;
+    justify-content: center;
+}
+.contact-info-block {
+    display: flex; align-items: center; gap: 20px;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+.contact-info-block:last-child { border-bottom: none !important; }
+.icon-wrapper {
+    flex-shrink: 0; width: 60px; height: 60px;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 22px; color: #fff;
+    border: 2px dashed rgba(255, 255, 255, 0.5) !important;
+    transition: transform 0.4s ease, border-style 0.3s ease !important;
+}
+.contact-info-block:hover .icon-wrapper {
+    transform: rotate(360deg);
+    border-style: solid !important;
+}
+.content-wrapper span { color: #bbd0ff; font-size: 15px; margin-bottom: 5px; }
+.content-wrapper h3 { font-size: 20px; font-weight: 500; margin: 0; line-height: 1.4; }
+.content-wrapper h3 a { color: #ffffff; text-decoration: none; }
+.contact-form-wrapper {
+    padding: 40px !important;
+    border: 1px solid #eef0f3;
+    border-left: none !important;
+    border-radius: 0 20px 20px 0 !important;
+    height: 100%;
+}
+#contact-form-page .form-group label { display: block; font-weight: 500; margin-bottom: 8px; color: #555; font-size: 15px; }
+#contact-form-page .form-group input,
+#contact-form-page .form-group textarea {
+    width: 100%; border: 1px solid #e0e5f1 !important;
+    background-color: #f7f9fc !important;
+    color: #333 !important;
+    padding: 14px 18px !important; border-radius: 8px !important; font-size: 16px !important;
+}
+#contact-form-page .form-group ::placeholder { color: #d0d5dd !important; opacity: 1; }
+#contact-form-page .form-group input:focus,
+#contact-form-page .form-group textarea:focus { outline: none !important; border-color: #384bff !important; background-color: #fff !important; }
+#contact-form-page .form-group textarea { min-height: 140px; resize: vertical; }
+
+/* ----------------------------------------------------------
+   7. FINAL RESPONSIVE STYLES (Off-Canvas Menu Included)
+------------------------------------------------------------- */
+
+/* Off-Canvas Menu Base Styles */
+.offcanvas__info {
+    position: fixed; top: 0; right: 0; height: 100vh;
+    width: 320px; background-color: #ffffff; z-index: 1050;
+    transform: translateX(100%); transition: transform 0.4s ease-in-out;
+    overflow-y: auto;
+}
+.offcanvas__info.active { transform: translateX(0); }
+.offcanvas__wrapper { padding: 30px; }
+.offcanvas__close button { background: none; border: none; font-size: 24px; color: #1a202c; }
+.mobile-menu-offcanvas nav ul { list-style: none; padding: 0; margin: 0; }
+.mobile-menu-offcanvas nav ul li a { display: block; padding: 12px 0; font-size: 18px; font-weight: 500; color: #1a202c; border-bottom: 1px solid #eef0f3; transition: color 0.3s ease; }
+.mobile-menu-offcanvas nav ul li a:hover,
+.mobile-menu-offcanvas nav ul li a.active { color: #007bff; }
+.offcanvas__contact h4 { font-size: 20px; margin-bottom: 15px; }
+.offcanvas__contact ul { list-style: none; padding: 0; margin: 0; }
+.offcanvas__contact ul li { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.offcanvas__contact ul li i { color: #007bff; }
+.offcanvas__overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); z-index: 1040;
+    opacity: 0; visibility: hidden; transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+.offcanvas__overlay.active { opacity: 1; visibility: visible; }
+
+/* Tablet Styles (Screens smaller than 992px) */
+@media (max-width: 991.98px) {
+    .section-padding { padding: 80px 0; }
+    h1, .hero-3 .title { font-size: 2.8rem !important; line-height: 1.2; }
+    h2, .section-title .title { font-size: 2.2rem !important; }
+    .header-top-wrapper { flex-direction: column; gap: 8px; padding: 10px 0; }
+    .mean__menu-wrapper .main-menu { display: none !important; }
+    .header__hamburger { display: flex !important; align-items: center; cursor: pointer; }
+    .contact-info-panel { border-radius: 20px 20px 0 0 !important; }
+    .contact-form-wrapper { padding: 40px 20px !important; border-radius: 0 0 20px 20px !important; border-left: 1px solid #eef0f3 !important; border-top: none !important; }
 }
 
-/* 2. Target the contact list on the left */
-.header-top-wrapper .contact-list {
-    margin-bottom: 0; /* Removes the unwanted bottom margin */
-    display: flex;    /* Ensures list items are in a row */
-    gap: 20px;        /* Adds space between email and phone */
-    align-items: center;
-}
-
-/* 3. Target the social icons on the right */
-.header-top-wrapper .top-right .social-icon {
-    gap: 12px;
-    text-align: right;
+/* Mobile Phone Styles (Screens smaller than 768px) */
+@media (max-width: 767.98px) {
+    .section-padding { padding: 60px 0; }
+    h1, .hero-3 .title { font-size: 2.2rem !important; line-height: 1.3; }
+    h2, .section-title .title { font-size: 1.8rem !important; line-height: 1.4; }
+    .header-button { display: none !important; }
+    .hero-content { text-align: center; }
+    .hero-button { justify-content: center; flex-direction: column; gap: 15px; }
+    .project-banner h1 { font-size: 2.5rem; }
+    .project-content-card { padding: 25px; margin-top: -60px; }
+    .footer-layout .row, .copyright-layout { flex-direction: column; text-align: center; gap: 15px; }
+    .footer-widget { margin-bottom: 30px; }
+    .contact-info-area { flex-direction: column; gap: 20px; }
 }
