@@ -31,7 +31,7 @@ const AboutSection: React.FC = () => {
                                 </motion.p>
                                 <div className="about-author">
                                     <motion.div className="about-button" initial={{ opacity: 0, scale: 0.8 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, delay: 0.6 }} viewport={{ once: true }}>
-                                        <Link to="/about.html" className="theme-btn">Explore More<i className="fa-solid fa-arrow-right-long"></i></Link>
+                                        <Link to="/about" className="theme-btn">Explore More<i className="fa-solid fa-arrow-right-long"></i></Link>
                                     </motion.div>
                                     <motion.div className="author-icon" initial={{ opacity: 0, x: 50 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.8 }} viewport={{ once: true }}>
                                         <div className="icon"><i className="fa-solid fa-phone"></i></div>

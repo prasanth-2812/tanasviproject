@@ -1,50 +1,53 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { projectList } from './projectData';
+import SeoHelmet from '../components/common/SeoHelmet';
+import { motion } from 'framer-motion';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 
 const Crm: React.FC = () => {
     const project = projectList.find(p => p.slug === 'customer-relationship-management');
-
-    if (!project) {
-        return <div className="container section-padding">Project details not found!</div>;
-    }
-
-    const { title, image, content } = project.details;
+    if (!project) return null;
+    const { title, bannerImage, sections, galleryImages } = project.details;
 
     return (
-        <div className="project-detail-page">
-            <section className="project-banner" style={{ backgroundImage: `url(${image})` }}>
-                <div className="container">
-                    <h1>{title}</h1>
-                </div>
-            </section>
-
-            <section className="project-content-section section-padding">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-lg-10 offset-lg-1">
-                            <div className="project-content-card">
-                                <h3>Project Overview</h3>
-                                <p>{content[0]}</p>
-                                <p>{content[1]}</p>
-
-                                <h3>Key Capabilities</h3>
-                                <ul>
-                                    <li><b>360-Degree Customer View:</b> Consolidate all customer interactions, history, and data into a single, unified profile.</li>
-                                    <li><b>Sales Pipeline Automation:</b> Automate tasks, track deals through stages, and forecast revenue with precision.</li>
-                                    <li><b>Marketing Integration:</b> Manage campaigns, capture leads from multiple channels, and measure marketing ROI.</li>
-                                    <li><b>Customer Service & Support:</b> Streamline support tickets, manage cases, and provide faster, more personalized service.</li>
-                                </ul>
-                                <div className="text-center mt-4">
-                                     <Link to="/" className="btn-modern">Back to Home</Link>
+        <>
+            <SeoHelmet title={`Tanasvi Technologies Pvt Ltd${project.name} | Tanasvi Project`} description={project.cardDescription} ogImage={bannerImage} />
+            <div className="detail-page-alternating-layout">
+                <section className="project-banner-cyient" style={{ backgroundImage: `url(${bannerImage})` }}>
+                    <div className="container"><div className="banner-content"><p className="breadcrumb-link"><Link to="/project">Projects</Link> / {project.name}</p><h1>{title}</h1></div></div>
+                </section>
+                <section className="content-section-cyient section-padding">
+                    <div className="container">
+                        {sections.map((section, index) => (
+                            <div className="alternating-content-block" key={index}>
+                                <div className={`row align-items-center ${section.layout === 'imageRight' ? 'flex-row-reverse' : ''}`}>
+                                     <motion.div className="col-lg-6" initial={{ opacity: 0, x: section.layout === 'imageRight' ? 50 : -50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}>
+                                                                            {/* THIS IS THE KEY CHANGE: The img is now inside a wrapper div */}
+                                                                            <div className="content-image-wrapper">
+                                                                                <img src={section.image} alt={section.title} className="content-image" />
+                                                                            </div>
+                                                                        </motion.div>
+                                    <motion.div className="col-lg-6" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.2 }}>
+                                        <div className="content-text"><h3>{section.title}</h3>{section.text.map((p, i) => <p key={i}>{p}</p>)}</div>
+                                    </motion.div>
                                 </div>
                             </div>
-                        </div>
+                        ))}
+                        <motion.div className="detail-page-gallery" initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}>
+                            <Swiper modules={[Navigation, Pagination, Autoplay]} spaceBetween={20} slidesPerView={1} loop={true} autoplay={{ delay: 3000, disableOnInteraction: false }} pagination={{ clickable: true }} navigation={true} className="detail-gallery-slider">
+                                {galleryImages.map((imgSrc, index) => (<SwiperSlide key={index}><div className="gallery-image-bg" style={{ backgroundImage: `url(${imgSrc})` }}></div></SwiperSlide>))}
+                            </Swiper>
+                        </motion.div>
+                        <motion.div className="text-center mt-5" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.5 }}><Link to="/contact" className="btn-modern">Discuss a Similar Project</Link></motion.div>
                     </div>
-                </div>
-            </section>
-        </div>
+                </section>
+            </div>
+        </>
     );
 };
-
 export default Crm;

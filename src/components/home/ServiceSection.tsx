@@ -30,7 +30,7 @@ const ServiceSection: React.FC = () => {
                     </div>
                     <div className="col-xl-5 d-flex align-items-end justify-content-end">
                         <motion.div className="btn-wrapper" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 0.5, delay: 0.4 }} viewport={{ once: true }}>
-                            <Link to="/service.html" className="theme-btn">
+                            <Link to="/service" className="theme-btn">
                                 See all Services <i className="fa-solid fa-arrow-right-long"></i>
                             </Link>
                         </motion.div>

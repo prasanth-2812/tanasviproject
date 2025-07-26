@@ -48,8 +48,8 @@ const HeroSlider: React.FC = () => {
                                             At Tanasvi Technologies, we believe IT is more than just tools – it's the invisible magic that transforms businesses,<br /> empowers people, and shapes a brighter digital tomorrow.
                                         </motion.p>
                                         <motion.div className="hero-button" initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.9 }} viewport={{ once: true }}>
-                                            <Link to="/about.html" className="theme-btn hover-white">Explore More<i className="fa-solid fa-arrow-right-long"></i></Link>
-                                            <Link to="/contact.html" className="theme-btn border-white">Contact Us<i className="fa-solid fa-arrow-right-long"></i></Link>
+                                            <Link to="/about" className="theme-btn hover-white">Explore More<i className="fa-solid fa-arrow-right-long"></i></Link>
+                                            <Link to="/contact" className="theme-btn border-white">Contact Us<i className="fa-solid fa-arrow-right-long"></i></Link>
                                         </motion.div>
                                     </div>
                                 </div>

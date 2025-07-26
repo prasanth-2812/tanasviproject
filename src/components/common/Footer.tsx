@@ -98,7 +98,7 @@ const Footer: React.FC = () => {
                     <div className="copyright-layout">
                         <div className="layout-text">
                             <p className="copyright">
-                                <i className="fal fa-copyright"></i> All Copyright 2024 by <Link to="/">Tanasvi Technologies Pvt Ltd</Link>
+                                <i className="fal fa-copyright"></i> All Copyright 2024 by <Link to="/home">Tanasvi Technologies Pvt Ltd</Link>
                             </p>
                         </div>
                         <div className="layout-link">

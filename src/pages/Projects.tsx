@@ -2,12 +2,19 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { projectList, Project } from '../data/projectData';
+import SeoHelmet from '../components/common/SeoHelmet';
 
 const Projects: React.FC = () => {
   return (
     <>
-      {/* ADDED the same universal class for consistent styling */}
-      <section className="service-section info-card-section fix section-padding">
+      <SeoHelmet
+        title="Our Projects | Tanasvi Technologies Portfolio"
+        description="Browse our portfolio of innovative and customized solutions. See how Tanasvi Technologies has delivered success for clients across various industries."
+        keywords="our projects, case studies, technology portfolio, client work"
+      />
+      
+      {/* THIS IS THE KEY: We are using a unique class for this page */}
+      <section className="projects-page section-padding">
         <div className="container">
           <div className="section-title title-area mx-auto mb-20">
             <div className="subtitle d-flex justify-content-center">
@@ -22,16 +29,15 @@ const Projects: React.FC = () => {
             <div className="row">
               {projectList.map((project: Project) => (
                 <motion.div
-                  className="col-xl-4 col-lg-6 col-md-6 mb-4"
+                  className="col-lg-4 col-md-6 col-12 mb-4"
                   key={project.slug}
                   initial={{ opacity: 0, y: 50 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: project.delay }}
                   viewport={{ once: true }}
                 >
-                  <Link to={`/project/${project.slug}`} className="text-decoration-none d-block h-100">
-                    {/* UPDATED: Card structure now matches the service cards for left alignment */}
-                    <div className="service-box-items box-shadow h-100">
+                  <Link to={`/project/${project.slug}`} className="text-decoration-none d-block h-100 project-card-link">
+                    <div className="service-box-items h-100">
                       <div className="icon">
                         <img
                           src={project.icon}
