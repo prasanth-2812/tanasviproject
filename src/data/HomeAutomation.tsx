@@ -16,7 +16,7 @@ const HomeAutomation: React.FC = () => {
 
     return (
         <>
-            <SeoHelmet title={`${project.name} | Tanasvi Project`} description={project.cardDescription} ogImage={bannerImage} />
+            <SeoHelmet title={`Tanasvi Technologies Pvt Ltd${project.name} | Tanasvi Project`} description={project.cardDescription} ogImage={bannerImage} />
             <div className="detail-page-alternating-layout">
                 <section className="project-banner-cyient" style={{ backgroundImage: `url(${bannerImage})` }}>
                     <div className="container"><div className="banner-content"><p className="breadcrumb-link"><Link to="/project">Projects</Link> / {project.name}</p><h1>{title}</h1></div></div>

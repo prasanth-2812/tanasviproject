@@ -32,10 +32,11 @@ const Contact: React.FC = () => {
     return (
         <>
             <SeoHelmet
-              title="Tanasvi Technologies Pvt Ltd"
-              description="Get in touch with Tanasvi Technologies for a consultation or to request a quote."
-              keywords="contact us, get a quote, IT support, Tanasvi contact"
-            />
+  title="Tanasvi Technologies Pvt Ltd | Custom Software, AI, CRM & IoT Solutions"
+  description="Tanasvi Technologies Pvt Ltd is a leading IT company delivering AI-powered software, mobile and web apps, CRM/HRM systems, and end-to-end digital transformation solutions for startups and enterprises."
+  keywords="Tanasvi Technologies, custom software development, AI solutions, mobile app development, CRM software, IoT development, HRM systems, web development, IT consulting, business automation, digital transformation"
+/>
+
             
             <section className="contact-page-section section-padding">
                 <div className="container">

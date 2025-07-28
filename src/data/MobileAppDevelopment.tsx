@@ -10,7 +10,7 @@ const MobileAppDevelopment: React.FC = () => {
 
     return (
         <>
-            <SeoHelmet title={`${service.title} | Tanasvi Service`} description={service.description} ogImage={image} />
+            <SeoHelmet title={`Tanasvi Technologies Pvt Ltd${service.title} | Tanasvi Service`} description={service.description} ogImage={image} />
             <div className="service-detail-page">
                 <section className="service-detail-banner" style={{ backgroundImage: `url(${image})` }}>
                     <div className="container"><h1>{title}</h1></div>

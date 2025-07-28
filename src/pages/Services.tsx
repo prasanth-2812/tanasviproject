@@ -7,11 +7,12 @@ import SeoHelmet from '../components/common/SeoHelmet';
 const Services: React.FC = () => {
     return (
         <>
-            <SeoHelmet
-                title="Our IT Services | Tanasvi Technologies"
-                description="Explore our comprehensive IT services including AI Development, IT Consultancy, Cyber Security, Web & Mobile App Development, ERP Applications, and BPO."
-                keywords="IT services, AI development, cyber security, mobile app development, web development"
-            />
+           <SeoHelmet
+  title="Tanasvi Technologies Pvt Ltd | Custom Software, AI, CRM & IoT Solutions"
+  description="Tanasvi Technologies Pvt Ltd is a leading IT company delivering AI-powered software, mobile and web apps, CRM/HRM systems, and end-to-end digital transformation solutions for startups and enterprises."
+  keywords="Tanasvi Technologies, custom software development, AI solutions, mobile app development, CRM software, IoT development, HRM systems, web development, IT consulting, business automation, digital transformation"
+/>
+
             
             {/* THIS IS THE KEY CHANGE: Added the unique "services-page" class */}
             <section className="services-page section-padding">

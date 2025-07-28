@@ -8,10 +8,11 @@ const Projects: React.FC = () => {
   return (
     <>
       <SeoHelmet
-        title="Our Projects | Tanasvi Technologies Portfolio"
-        description="Browse our portfolio of innovative and customized solutions. See how Tanasvi Technologies has delivered success for clients across various industries."
-        keywords="our projects, case studies, technology portfolio, client work"
-      />
+  title="Tanasvi Technologies Pvt Ltd | Custom Software, AI, CRM & IoT Solutions"
+  description="Tanasvi Technologies Pvt Ltd is a leading IT company delivering AI-powered software, mobile and web apps, CRM/HRM systems, and end-to-end digital transformation solutions for startups and enterprises."
+  keywords="Tanasvi Technologies, custom software development, AI solutions, mobile app development, CRM software, IoT development, HRM systems, web development, IT consulting, business automation, digital transformation"
+/>
+
       
       {/* THIS IS THE KEY: We are using a unique class for this page */}
       <section className="projects-page section-padding">

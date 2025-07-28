@@ -34,6 +34,7 @@ const sliderData = [
 
 const HeroSlider: React.FC = () => {
   return (
+    
     <section className="hero-section fix hero-3">
       <div className="bottom-shape">
         <img src="assets/img/hero/bottom-shape.png" alt="shape-img" />

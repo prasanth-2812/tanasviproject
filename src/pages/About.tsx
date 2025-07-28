@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
 import Marquee from '../components/common/Marquee';
+import SeoHelmet from '../components/common/SeoHelmet';
 
 // Import the SVG Icon components
 import WebsiteIcon from '../components/icons/WebsiteIcon';
@@ -45,6 +46,13 @@ const offerings = [
 
 const About: React.FC = () => (
   <>
+  <SeoHelmet
+  title="Tanasvi Technologies Pvt Ltd | Custom Software, AI, CRM & IoT Solutions"
+  description="Tanasvi Technologies Pvt Ltd is a leading IT company delivering AI-powered software, mobile and web apps, CRM/HRM systems, and end-to-end digital transformation solutions for startups and enterprises."
+  keywords="Tanasvi Technologies, custom software development, AI solutions, mobile app development, CRM software, IoT development, HRM systems, web development, IT consulting, business automation, digital transformation"
+/>
+
+  
     <section className="about-section section-padding fix bg-cover" style={{ backgroundImage: "url('/assets/img/service/service-bg-2.jpg')" }}>
         <div className="container">
             <div className="about-wrapper style-2">

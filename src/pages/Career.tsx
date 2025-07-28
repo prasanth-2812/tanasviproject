@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import SeoHelmet from '../components/common/SeoHelmet';
 
 const formVariants = {
     hidden: { opacity: 0, y: 30 },
@@ -9,6 +10,12 @@ const formVariants = {
 const Career: React.FC = () => {
     return (
         <>
+         <SeoHelmet
+  title="Tanasvi Technologies Pvt Ltd | Custom Software, AI, CRM & IoT Solutions"
+  description="Tanasvi Technologies Pvt Ltd is a leading IT company delivering AI-powered software, mobile and web apps, CRM/HRM systems, and end-to-end digital transformation solutions for startups and enterprises."
+  keywords="Tanasvi Technologies, custom software development, AI solutions, mobile app development, CRM software, IoT development, HRM systems, web development, IT consulting, business automation, digital transformation"
+/>
+
             <section className="contact-section fix section-padding">
                 <div className="container">
                     <div className="section-title title-area mx-auto mb-20 text-center">
