@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import SeoHelmet from '../components/common/SeoHelmet';
 
@@ -7,7 +7,41 @@ const formVariants = {
     visible: { opacity: 1, y: 0 }
 };
 
+const initialForm = {
+    name: '',
+    email: '',
+    phone: '',
+    position: '',
+    resume: null,
+    message: ''
+};
+
 const Career: React.FC = () => {
+    const [form, setForm] = useState(initialForm);
+    const [submitted, setSubmitted] = useState(false);
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value, type } = e.target;
+        if (type === 'file') {
+            setForm({ ...form, [name]: (e.target as HTMLInputElement).files?.[0] || null });
+        } else {
+            setForm({ ...form, [name]: value });
+        }
+    };
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        setLoading(true);
+        setError('');
+        // Simulate async submit
+        setTimeout(() => {
+            setLoading(false);
+            setSubmitted(true);
+        }, 1200);
+    };
+
     return (
         <>
          <SeoHelmet
@@ -27,74 +61,88 @@ const Career: React.FC = () => {
                         <h2 className="title"> Join Our Team & Build Your Future </h2>
                     </div>
 
-                    <div className="row justify-content-center">
-                        <div className="col-lg-10">
-                            <motion.div 
-                                className="text-center mb-5"
+                    <div className="d-flex flex-column align-items-center justify-content-center career-center-wrap">
+                        {/* Illustration/Visual */}
+                        <motion.div 
+                            className="text-center mb-4"
+                            initial="hidden"
+                            whileInView="visible"
+                            viewport={{ once: true, amount: 0.5 }}
+                            transition={{ duration: 0.5, delay: 0.2 }}
+                            variants={formVariants}
+                        >
+                            <p>
+                                At Tanasvi Technologies, we are always looking for passionate, innovative, and dedicated individuals to join our team. Whether you're a fresher or an experienced professional, we offer challenging opportunities in various fields of technology.
+                            </p>
+                            <p>
+                                To apply, email your updated resume to <a href="mailto:careers@tanasvi.com">careers@tanasvi.com</a> or fill out the form below.
+                            </p>
+                        </motion.div>
+                        <div className="career-form-wrapper w-100" style={{maxWidth: 800}}>
+                            {submitted ? (
+                                <div className="alert alert-success text-center" role="alert">
+                                    Thank you for applying! We have received your application and will get back to you soon.
+                                </div>
+                            ) : (
+                            <motion.form 
+                                className="contact-form-items"
                                 initial="hidden"
                                 whileInView="visible"
-                                viewport={{ once: true, amount: 0.5 }}
-                                transition={{ duration: 0.5, delay: 0.2 }}
-                                variants={formVariants}
+                                viewport={{ once: true, amount: 0.2 }}
+                                transition={{ staggerChildren: 0.1, delayChildren: 0.3 }}
+                                onSubmit={handleSubmit}
+                                autoComplete="off"
                             >
-                                <p>
-                                    At Tanasvi Technologies, we are always looking for passionate, innovative, and dedicated individuals to join our team. Whether you're a fresher or an experienced professional, we offer challenging opportunities in various fields of technology.
-                                </p>
-                                <p>
-                                    To apply, email your updated resume to <a href="mailto:careers@tanasvi.com">careers@tanasvi.com</a> or fill out the form below.
-                                </p>
-                            </motion.div>
-
-                            {/* ADDED a wrapper div for styling the form background and container */}
-                            <div className="career-form-wrapper">
-                                <motion.form 
-                                    className="contact-form-items"
-                                    initial="hidden"
-                                    whileInView="visible"
-                                    viewport={{ once: true, amount: 0.2 }}
-                                    transition={{ staggerChildren: 0.1, delayChildren: 0.3 }}
-                                    onSubmit={e => e.preventDefault()}
-                                >
-                                    <div className="row g-4">
-                                        <motion.div className="col-lg-6" variants={formVariants}>
-                                            <div className="form-clt">
-                                                <input type="text" name="name" placeholder="Your Name*" required />
-                                            </div>
-                                        </motion.div>
-                                        <motion.div className="col-lg-6" variants={formVariants}>
-                                            <div className="form-clt">
-                                                <input type="email" name="email" placeholder="Your Email*" required />
-                                            </div>
-                                        </motion.div>
-                                        <motion.div className="col-lg-6" variants={formVariants}>
-                                            <div className="form-clt">
-                                                <input type="text" name="phone" placeholder="Phone Number*" required />
-                                            </div>
-                                        </motion.div>
-                                        <motion.div className="col-lg-6" variants={formVariants}>
-                                            <div className="form-clt">
-                                                <input type="text" name="position" placeholder="Position Applying For*" required />
-                                            </div>
-                                        </motion.div>
+                                <div className="row g-4">
+                                    <motion.div className="col-lg-6" variants={formVariants}>
+                                        <div className="form-clt">
+                                            <label htmlFor="career-name" className="form-label-career">Full Name*</label>
+                                            <input type="text" id="career-name" name="name" placeholder="Your Name" required value={form.name} onChange={handleChange} />
+                                        </div>
+                                    </motion.div>
+                                    <motion.div className="col-lg-6" variants={formVariants}>
+                                        <div className="form-clt">
+                                            <label htmlFor="career-email" className="form-label-career">Email*</label>
+                                            <input type="email" id="career-email" name="email" placeholder="Your Email" required value={form.email} onChange={handleChange} />
+                                        </div>
+                                    </motion.div>
+                                    <motion.div className="col-lg-6" variants={formVariants}>
+                                        <div className="form-clt">
+                                            <label htmlFor="career-phone" className="form-label-career">Phone Number*</label>
+                                            <input type="text" id="career-phone" name="phone" placeholder="Phone Number" required value={form.phone} onChange={handleChange} />
+                                        </div>
+                                    </motion.div>
+                                    <motion.div className="col-lg-6" variants={formVariants}>
+                                        <div className="form-clt">
+                                            <label htmlFor="career-position" className="form-label-career">Position Applying For*</label>
+                                            <input type="text" id="career-position" name="position" placeholder="Position" required value={form.position} onChange={handleChange} />
+                                        </div>
+                                    </motion.div>
+                                    <motion.div className="col-lg-12" variants={formVariants}>
+                                        <div className="form-clt">
+                                            <label htmlFor='resume-upload' className="form-label-career">Upload Your Resume*</label>
+                                            <input type="file" id='resume-upload' name="resume" className="form-control" required onChange={handleChange} />
+                                        </div>
+                                    </motion.div>
+                                    <motion.div className="col-lg-12" variants={formVariants}>
+                                        <div className="form-clt">
+                                            <label htmlFor="career-message" className="form-label-career">Message (Optional)</label>
+                                            <textarea id="career-message" name="message" placeholder="Write a Message (Optional)" value={form.message} onChange={handleChange}></textarea>
+                                        </div>
+                                    </motion.div>
+                                    {error && (
                                         <motion.div className="col-lg-12" variants={formVariants}>
-                                            <div className="form-clt">
-                                                <label htmlFor='resume-upload' className="form-label">Upload Your Resume*</label>
-                                                <input type="file" id='resume-upload' name="resume" className="form-control" required />
-                                            </div>
+                                            <div className="alert alert-danger text-center" role="alert">{error}</div>
                                         </motion.div>
-                                        <motion.div className="col-lg-12" variants={formVariants}>
-                                            <div className="form-clt">
-                                                <textarea name="message" placeholder="Write a Message (Optional)"></textarea>
-                                            </div>
-                                        </motion.div>
-                                        <motion.div className="col-lg-7" variants={formVariants}>
-                                            <button type="submit" className="theme-btn">
-                                                Submit Application <i className="fa-solid fa-arrow-right-long"></i>
-                                            </button>
-                                        </motion.div>
-                                    </div>
-                                </motion.form>
-                            </div>
+                                    )}
+                                    <motion.div className="col-lg-7 mx-auto" variants={formVariants}>
+                                        <button type="submit" className="theme-btn w-100" disabled={loading}>
+                                            {loading ? 'Submitting...' : (<><span>Submit Application</span> <i className="fa-solid fa-arrow-right-long"></i></>)}
+                                        </button>
+                                    </motion.div>
+                                </div>
+                            </motion.form>
+                            )}
                         </div>
                     </div>
                 </div>

@@ -67,35 +67,35 @@ const Contact: React.FC = () => {
                         {/* Right Column: Contact Form */}
                         <div className="col-lg-7">
                             <motion.div 
-                                className="contact-form-wrapper"
+                                className="contact-form-wrapper style1"
                                 initial="hidden"
                                 whileInView="visible"
                                 viewport={{ once: true, amount: 0.2 }}
                                 transition={{ staggerChildren: 0.2 }}
                             >
-                                <motion.h2 className="form-title" variants={formVariants}>Ready to Get Started?</motion.h2>
+                                <motion.h2 className="form-title mb-4" variants={formVariants}>Ready to Get Started?</motion.h2>
                                 <form id="contact-form-page" method="POST" className="contact-form-items">
                                     <div className="row g-4">
                                         <motion.div className="col-md-6" variants={formVariants}>
                                             <div className="form-group">
                                                 <label htmlFor="name">Your Name*</label>
-                                                <input type="text" name="name" id="name" required placeholder='Enter Your Name '/>
+                                                <input type="text" name="name" id="name" required placeholder='Enter Your Name' className="form-control style1" />
                                             </div>
                                         </motion.div>
                                         <motion.div className="col-md-6" variants={formVariants}>
                                             <div className="form-group">
                                                 <label htmlFor="email">Your Email*</label>
-                                                <input type="email" name="email" id="email" required placeholder='Enter Your Email' />
+                                                <input type="email" name="email" id="email" required placeholder='Enter Your Email' className="form-control style1" />
                                             </div>
                                         </motion.div>
                                         <motion.div className="col-12" variants={formVariants}>
                                             <div className="form-group">
                                                 <label htmlFor="message">Write Message*</label>
-                                                <textarea name="message" id="message" required placeholder='Message Description'></textarea>
+                                                <textarea name="message" id="message" required placeholder='Message Description' className="form-control style1" rows={5}></textarea>
                                             </div>
                                         </motion.div>
                                         <motion.div className="col-12" variants={formVariants}>
-                                            <button type="submit" className="theme-btn">
+                                            <button type="submit" className="theme-btn w-100" style={{padding: '16px 0', fontSize: '1.15rem', borderRadius: '8px', marginTop: '10px'}}>
                                                 Send Message <i className="fa-solid fa-arrow-right-long"></i>
                                             </button>
                                         </motion.div>

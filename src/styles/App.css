@@ -7,6 +7,7 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Sticky Header */
 .sticky {
   position: fixed;
   top: 0;
@@ -27,6 +28,7 @@ html {
   }
 }
 
+/* Main Menu Active Link */
 .main-menu nav ul li a.active {
   color: #3c72fc !important;
 }
@@ -375,6 +377,8 @@ html {
 }
 
 /* 5. Forms & Contact Page */
+
+/* 5.1. Career Form Styles */
 .career-form-wrapper {
   background-color: #fff;
   padding: 40px;
@@ -383,122 +387,324 @@ html {
   border: 1px solid #eef0f3;
 }
 
-/* Placeholder styling */
-#contact-form-page .form-group ::placeholder,
+.career-form-wrapper .form-clt input,
+.career-form-wrapper .form-clt textarea {
+  color: #222 !important;
+  background: #f7f9fa;
+  border: 1px solid #dbe2ea;
+  border-radius: 6px;
+  padding: 14px 16px;
+  font-size: 1rem;
+  margin-bottom: 0;
+  transition: border 0.2s;
+}
+
+.career-form-wrapper .form-clt input:focus,
+.career-form-wrapper .form-clt textarea:focus {
+  border: 1.5px solid #384bff;
+  outline: none;
+  background: #fff;
+}
+
 .career-form-wrapper .form-clt input::placeholder,
 .career-form-wrapper .form-clt textarea::placeholder {
   color: #99a5b5 !important;
   opacity: 1;
 }
 
+.form-label-career {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #384bff;
+  font-size: 1rem;
+  letter-spacing: 0.01em;
+}
+
+.career-visual-img {
+  max-width: 340px;
+  width: 100%;
+  border-radius: 16px;
+  box-shadow: 0 4px 32px rgba(56, 75, 255, 0.08);
+  object-fit: cover;
+}
+
+.career-positions {
+  color: #384bff;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-left: 4px;
+}
+
+.career-form-wrapper .alert {
+  margin-bottom: 0;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.career-flex-wrap {
+  flex-wrap: wrap;
+}
+
+.career-center-wrap {
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.career-visual-img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 24px;
+}
+
+.career-form-wrapper {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* 5.2. Contact Page Styles */
+
+/* General contact page section padding */
 .contact-page-section {
-  background: #fff !important;
-  padding: 120px 0 !important;
+  padding: 100px 0; /* Default padding for contact page */
 }
 
-.contact-page-section .row {
-  align-items: stretch;
-}
-
-/* Contact info panel */
+/* Contact Info Panel (used in Contact.tsx) */
 .contact-info-panel {
-  background: #384bff !important;
-  padding: 50px 40px !important;
-  border-radius: 20px 0 0 20px !important;
+  background-color: #384bff; /* Blue background */
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 10px 50px rgba(0, 0, 0, 0.07);
+  color: #fff;
+  height: 100%; /* Ensure it fills height of column */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center content vertically */
+}
+
+.contact-info-panel .contact-info-block {
+  display: flex;
+  align-items: flex-start; /* Align icon and content */
+  margin-bottom: 30px; /* Space between blocks */
+}
+
+.contact-info-panel .contact-info-block:last-child {
+  margin-bottom: 0; /* No margin for last block */
+}
+
+.contact-info-panel .icon-wrapper {
+  flex-shrink: 0; /* Prevent icon from shrinking */
+  width: 50px; /* Icon container size */
+  height: 50px;
+  background-color: rgba(255, 255, 255, 0.15); /* Slightly transparent white for icon background */
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 20px;
+  font-size: 22px; /* Font Awesome icon size */
+  color: #fff;
+}
+
+.contact-info-panel .content-wrapper span {
+  display: block;
+  font-size: 15px;
+  font-weight: 500;
+  color: #bbd0ff; /* Lighter color for title */
+  margin-bottom: 5px;
+}
+
+.contact-info-panel .content-wrapper h3 {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.4;
+  margin-bottom: 0;
+}
+
+.contact-info-panel .content-wrapper h3 a {
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.contact-info-panel .content-wrapper h3 a:hover {
+  color: #eef0f3; /* Slightly dim on hover */
+}
+
+
+/* Contact Form Wrapper (used in Contact.tsx & base for contact.html) */
+.contact-form-wrapper.style1 { /* For React component */
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 10px 50px rgba(0, 0, 0, 0.07);
+  border: 1px solid #eef0f3;
+  height: 100%; /* Ensure it fills height of column */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* For contact.html's form - a sibling of contact-info-area-2 */
+.contact-content {
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 10px 50px rgba(0, 0, 0, 0.07);
+  border: 1px solid #eef0f3;
+  height: 100%; /* Ensure it fills height of column */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+
+.contact-form-wrapper.style1 .form-title,
+.contact-content h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #1a202c;
+  margin-bottom: 20px;
+}
+
+/* Input/Textarea styles for Contact.tsx form */
+.contact-form-wrapper.style1 .form-group label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #1a202c; /* Different label color than career form */
+  font-size: 1rem;
+  letter-spacing: 0.01em;
+}
+
+.contact-form-wrapper.style1 .form-control.style1 {
+  color: #222 !important;
+  background: #f7f9fa;
+  border: 1px solid #dbe2ea;
+  border-radius: 6px;
+  padding: 14px 16px;
+  font-size: 1rem;
+  margin-bottom: 0; /* Bootstrap's form-control might have margin-bottom */
+  transition: border 0.2s;
+  width: 100%; /* Ensure it takes full width */
+}
+
+.contact-form-wrapper.style1 .form-control.style1:focus {
+  border: 1.5px solid #007bff; /* Blue focus color for contact form */
+  outline: none;
+  background: #fff;
+  box-shadow: none; /* Remove default bootstrap shadow */
+}
+
+.contact-form-wrapper.style1 .form-control.style1::placeholder {
+  color: #99a5b5 !important;
+  opacity: 1;
+}
+
+/* Input/Textarea styles for contact.html form */
+.contact-form-items .form-clt span { /* Label equivalent for HTML form */
+  display: block;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #1a202c;
+  font-size: 1rem;
+  letter-spacing: 0.01em;
+}
+
+.contact-form-items .form-clt input,
+.contact-form-items .form-clt textarea {
+  color: #222 !important;
+  background: #f7f9fa;
+  border: 1px solid #dbe2ea;
+  border-radius: 6px;
+  padding: 14px 16px;
+  font-size: 1rem;
+  margin-bottom: 0;
+  transition: border 0.2s;
+  width: 100%;
+}
+
+.contact-form-items .form-clt input:focus,
+.contact-form-items .form-clt textarea:focus {
+  border: 1.5px solid #007bff;
+  outline: none;
+  background: #fff;
+}
+
+.contact-form-items .form-clt input::placeholder,
+.contact-form-items .form-clt textarea::placeholder {
+  color: #99a5b5 !important;
+  opacity: 1;
+}
+
+/* Contact Info Area for contact.html */
+.contact-info-area-2 {
+  background-color: #3c72fc;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 10px 50px rgba(0, 0, 0, 0.07);
+  color: #fff;
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-.contact-info-block {
+.contact-info-area-2 .contact-info-items {
   display: flex;
-  align-items: center;
-  gap: 20px;
-  padding: 20px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+  align-items: flex-start;
+  margin-bottom: 30px;
+}
+.contact-info-area-2 .contact-info-items:last-child {
+  margin-bottom: 0;
 }
 
-.contact-info-block:last-child {
-  border-bottom: none !important;
-}
-
-.icon-wrapper {
+.contact-info-area-2 .contact-info-items .icon {
   flex-shrink: 0;
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
+  background-color: rgba(255, 255, 255, 0.15);
   border-radius: 50%;
   display: flex;
-  align-items: center;
   justify-content: center;
-  font-size: 22px;
-  color: #fff;
-  border: 2px dashed rgba(255, 255, 255, 0.5) !important;
-  transition: transform 0.4s ease, border-style 0.3s ease !important;
+  align-items: center;
+  margin-right: 20px;
 }
 
-.contact-info-block:hover .icon-wrapper {
-  transform: rotate(360deg);
-  border-style: solid !important;
+.contact-info-area-2 .contact-info-items .icon svg {
+  width: 24px;
+  height: 24px;
 }
 
-.content-wrapper span {
-  color: #bbd0ff;
+.contact-info-area-2 .contact-info-items .content p {
   font-size: 15px;
+  font-weight: 500;
+  color: #bbd0ff;
   margin-bottom: 5px;
 }
 
-.content-wrapper h3 {
-  font-size: 20px;
-  font-weight: 500;
-  margin: 0;
+.contact-info-area-2 .contact-info-items .content h3 {
+  font-size: 18px;
+  font-weight: 600;
   line-height: 1.4;
+  margin-bottom: 0;
 }
 
-.content-wrapper h3 a {
+.contact-info-area-2 .contact-info-items .content h3 a {
   color: #fff;
   text-decoration: none;
+  transition: color 0.3s ease;
 }
 
-/* Contact form wrapper */
-.contact-form-wrapper {
-  padding: 40px !important;
-  border: 1px solid #eef0f3;
-  border-left: none !important;
-  border-radius: 0 20px 20px 0 !important;
-  height: 100%;
+.contact-info-area-2 .contact-info-items .content h3 a:hover {
+  color: #eef0f3;
 }
 
-#contact-form-page .form-group label {
-  display: block;
-  font-weight: 500;
-  margin-bottom: 8px;
-  color: #555;
-  font-size: 15px;
-}
-
-#contact-form-page .form-group input,
-#contact-form-page .form-group textarea {
-  width: 100%;
-  border: 1px solid #e0e5f1 !important;
-  background-color: #f7f9fc !important;
-  color: #333 !important;
-  padding: 14px 18px !important;
-  border-radius: 8px !important;
-  font-size: 16px !important;
-}
-
-#contact-form-page .form-group input:focus,
-#contact-form-page .form-group textarea:focus {
-  outline: 0 !important;
-  border-color: #384bff !important;
-  background-color: #fff !important;
-}
-
-#contact-form-page .form-group textarea {
-  min-height: 140px;
-  resize: vertical;
-}
 
 /* 6. FINAL RESPONSIVE STYLES */
 @media (max-width: 991.98px) {
@@ -632,15 +838,18 @@ html {
     padding: 20px 0;
   }
 
-  .contact-info-panel {
-    border-radius: 20px 20px 0 0 !important;
+  /* Responsive adjustments for contact forms */
+  .contact-info-panel,
+  .contact-info-area-2 { /* Apply to both React & HTML info panels */
+    border-radius: 20px 20px 0 0 !important; /* Top corners rounded, bottom flat */
   }
 
-  .contact-form-wrapper {
+  .contact-form-wrapper.style1,
+  .contact-content { /* Apply to both React & HTML form wrappers */
     padding: 40px 20px !important;
-    border-radius: 0 0 20px 20px !important;
+    border-radius: 0 0 20px 20px !important; /* Bottom corners rounded, top flat */
     border-left: 1px solid #eef0f3 !important;
-    border-top: none !important;
+    border-top: none !important; /* Remove top border if it was present */
   }
 
   .banner-content h1 {
@@ -707,7 +916,9 @@ html {
     margin-bottom: 30px;
   }
 
-  .contact-info-area {
+  /* Contact info area for HTML version also uses contact-info-area, ensure it behaves responsively */
+  .contact-info-area, /* from footer */
+  .contact-info-area-2 { /* from contact.html body */
     flex-direction: column;
     gap: 20px;
   }
@@ -723,5 +934,40 @@ html {
   .alternating-content-block .row,
   .alternating-content-block .row.flex-row-reverse {
     flex-direction: column;
+  }
+
+  /* Career Form Specific Responsive Styles */
+  .career-center-wrap {
+    min-height: unset;
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
+  .career-form-wrapper {
+    padding: 24px 10px;
+  }
+
+  /* Contact Form Specific Responsive Styles */
+  .contact-info-panel,
+  .contact-info-area-2,
+  .contact-form-wrapper.style1,
+  .contact-content {
+    padding: 24px 10px !important; /* Adjust padding for smaller screens */
+  }
+}
+
+@media (max-width: 767.98px) {
+  .career-center-wrap {
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+  .career-form-wrapper {
+    padding: 16px 2px;
+  }
+
+  .contact-info-panel,
+  .contact-info-area-2,
+  .contact-form-wrapper.style1,
+  .contact-content {
+    padding: 16px 2px !important; /* Further reduce padding for very small screens */
   }
 }
