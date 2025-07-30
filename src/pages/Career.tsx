@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import ReCAPTCHA from 'react-google-recaptcha';
 import SeoHelmet from '../components/common/SeoHelmet';
+import Captcha from '../components/Captcha';
 
 const formVariants = {
     hidden: { opacity: 0, y: 30 },
@@ -22,6 +24,7 @@ const Career: React.FC = () => {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const [submissionMessage, setSubmissionMessage] = useState('');
+    const [captchaToken, setCaptchaToken] = useState<string | null>(null);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value, type } = e.target;
@@ -32,8 +35,31 @@ const Career: React.FC = () => {
         }
     };
 
+    
+    const [captchaText, setCaptchaText] = useState('');
+    const [captchaInput, setCaptchaInput] = useState('');
+
+    const generateCaptchaText = (length: number = 5): string => {
+        const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // Skipped similar characters
+        let result = '';
+        for (let i = 0; i < length; i++) {
+            result += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        return result;
+    };
+
+    useEffect(() => {
+        setCaptchaText(generateCaptchaText());
+    }, []);
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        
+        if (!captchaToken) {
+            setError('Please complete the reCAPTCHA verification.');
+            setSubmissionMessage('');
+            return;
+        }
+
         setLoading(true);
         setError('');
         setSubmissionMessage('');
@@ -45,12 +71,13 @@ const Career: React.FC = () => {
             formData.append('phone', form.phone);
             formData.append('position', form.position);
             formData.append('message', form.message);
+            formData.append('captchaToken', captchaToken);
             
             if (form.resume) {
                 formData.append('resume', form.resume);
             }
 
-            const response = await fetch('http://localhost:5000/career', { // 👈 updated here
+            const response = await fetch('http://localhost:5000/career', {
                 method: 'POST',
                 body: formData,
             });
@@ -60,6 +87,7 @@ const Career: React.FC = () => {
                 setSubmitted(true);
                 setForm(initialForm);
                 setError('');
+                setCaptchaToken(null);
             } else {
                 const errorData = await response.json();
                 setError(errorData.message || 'Failed to submit application. Please try again later.');
@@ -161,11 +189,46 @@ const Career: React.FC = () => {
                                             <textarea id="career-message" name="message" placeholder="Write a Message (Optional)" value={form.message} onChange={handleChange}></textarea>
                                         </div>
                                     </motion.div>
+                                 
                                     {error && (
                                         <motion.div className="col-lg-12" variants={formVariants}>
                                             <div className="alert alert-danger text-center" role="alert">{error}</div>
                                         </motion.div>
                                     )}
+                                    <motion.div className="col-12" variants={formVariants}>
+                                            <div className="form-group">
+                                                <label>Enter CAPTCHA:</label>
+                                                <div style={{
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    gap: '10px',
+                                                    marginBottom: '10px'
+                                                }}>
+                                                    <span style={{
+                                                        fontFamily: 'monospace',
+                                                        background: '#f1f1f1',
+                                                        color: '#000',
+                                                        padding: '8px 16px',
+                                                        fontSize: '1.25rem',
+                                                        borderRadius: '6px',
+                                                        letterSpacing: '3px',
+                                                        userSelect: 'none',
+                                                        boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+                                                    }}>{captchaText}</span>
+                                                    <button type="button" onClick={() => setCaptchaText(generateCaptchaText())} className="btn btn-sm btn-outline-primary">
+                                                        <i className="fa fa-refresh"></i>
+                                                    </button>
+                                                </div>
+                                                <input
+                                                    type="text"
+                                                    required
+                                                    className="form-control style1"
+                                                    placeholder="Type the CAPTCHA above"
+                                                    value={captchaInput}
+                                                    onChange={(e) => setCaptchaInput(e.target.value)}
+                                                />
+                                            </div>
+                                        </motion.div>
                                     <motion.div className="col-lg-7 mx-auto" variants={formVariants}>
                                         <button type="submit" className="theme-btn w-100" disabled={loading}>
                                             {loading ? 'Submitting...' : (<><span>Submit Application</span> <i className="fa-solid fa-arrow-right-long"></i></>)}

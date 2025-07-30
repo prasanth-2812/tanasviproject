@@ -69,6 +69,33 @@ html {
   transform: translateY(-2px);
 }
 
+/* reCAPTCHA Styles */
+.recaptcha-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+  padding: 10px 0;
+}
+
+.recaptcha-wrapper .g-recaptcha {
+  transform: scale(1);
+  transform-origin: 0 0;
+}
+
+@media (max-width: 767.98px) {
+  .recaptcha-wrapper .g-recaptcha {
+    transform: scale(0.9);
+    transform-origin: 0 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .recaptcha-wrapper .g-recaptcha {
+    transform: scale(0.8);
+    transform-origin: 0 0;
+  }
+}
+
 /* 2. Header & Top Bar */
 .header-top-section .header-top-wrapper {
   display: flex;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import SeoHelmet from '../components/common/SeoHelmet';
 
@@ -29,15 +29,26 @@ const contactInfo = [
 ];
 
 const Contact: React.FC = () => {
-    const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        message: ''
-    });
-
+    const [formData, setFormData] = useState({ name: '', email: '', message: '' });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submissionMessage, setSubmissionMessage] = useState('');
     const [isError, setIsError] = useState(false);
+
+    const [captchaText, setCaptchaText] = useState('');
+    const [captchaInput, setCaptchaInput] = useState('');
+
+    const generateCaptchaText = (length: number = 5): string => {
+        const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // Skipped similar characters
+        let result = '';
+        for (let i = 0; i < length; i++) {
+            result += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        return result;
+    };
+
+    useEffect(() => {
+        setCaptchaText(generateCaptchaText());
+    }, []);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -47,23 +58,31 @@ const Contact: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
+        if (captchaInput.trim().toUpperCase() !== captchaText.trim().toUpperCase()) {
+            setSubmissionMessage('CAPTCHA incorrect. Please try again.');
+            setIsError(true);
+            setCaptchaText(generateCaptchaText());
+            setCaptchaInput('');
+            return;
+        }
+
         setIsSubmitting(true);
         setSubmissionMessage('');
         setIsError(false);
 
         try {
-            const response = await fetch('http://localhost:5000/send', { // 👈 Corrected API route
+            const response = await fetch('http://localhost:5000/send', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ ...formData }),
             });
 
             if (response.ok) {
                 setSubmissionMessage('Your message has been sent successfully! You will receive a confirmation email shortly.');
                 setIsError(false);
                 setFormData({ name: '', email: '', message: '' });
+                setCaptchaText(generateCaptchaText());
+                setCaptchaInput('');
             } else {
                 const errorData = await response.json();
                 setSubmissionMessage(errorData.message || 'Failed to send message. Please try again later.');
@@ -88,7 +107,6 @@ const Contact: React.FC = () => {
             <section className="contact-page-section section-padding">
                 <div className="container">
                     <div className="row g-0">
-                        {/* Left Column: Info */}
                         <div className="col-lg-5">
                             <motion.div
                                 className="contact-info-panel"
@@ -99,9 +117,7 @@ const Contact: React.FC = () => {
                             >
                                 {contactInfo.map((item, index) => (
                                     <div className="contact-info-block" key={index}>
-                                        <div className="icon-wrapper">
-                                            <i className={item.icon}></i>
-                                        </div>
+                                        <div className="icon-wrapper"><i className={item.icon}></i></div>
                                         <div className="content-wrapper">
                                             <span>{item.title}</span>
                                             <h3><a href={item.href} target="_blank" rel="noopener noreferrer">{item.content}</a></h3>
@@ -111,7 +127,6 @@ const Contact: React.FC = () => {
                             </motion.div>
                         </div>
 
-                        {/* Right Column: Form */}
                         <div className="col-lg-7">
                             <motion.div
                                 className="contact-form-wrapper style1"
@@ -120,9 +135,7 @@ const Contact: React.FC = () => {
                                 viewport={{ once: true, amount: 0.2 }}
                                 transition={{ staggerChildren: 0.2 }}
                             >
-                                <motion.h2 className="form-title mb-4" variants={formVariants}>
-                                    Ready to Get Started?
-                                </motion.h2>
+                                <motion.h2 className="form-title mb-4" variants={formVariants}>Ready to Get Started?</motion.h2>
                                 <form id="contact-form-page" onSubmit={handleSubmit} className="contact-form-items">
                                     <div className="row g-4">
                                         <motion.div className="col-md-6" variants={formVariants}>
@@ -171,22 +184,50 @@ const Contact: React.FC = () => {
                                             </div>
                                         </motion.div>
                                         <motion.div className="col-12" variants={formVariants}>
+                                            <div className="form-group">
+                                                <label>Enter CAPTCHA:</label>
+                                                <div style={{
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    gap: '10px',
+                                                    marginBottom: '10px'
+                                                }}>
+                                                    <span style={{
+                                                        fontFamily: 'monospace',
+                                                        background: '#f1f1f1',
+                                                        color: '#000',
+                                                        padding: '8px 16px',
+                                                        fontSize: '1.25rem',
+                                                        borderRadius: '6px',
+                                                        letterSpacing: '3px',
+                                                        userSelect: 'none',
+                                                        boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+                                                    }}>{captchaText}</span>
+                                                    <button type="button" onClick={() => setCaptchaText(generateCaptchaText())} className="btn btn-sm btn-outline-primary">
+                                                        <i className="fa fa-refresh"></i>
+                                                    </button>
+                                                </div>
+                                                <input
+                                                    type="text"
+                                                    required
+                                                    className="form-control style1"
+                                                    placeholder="Type the CAPTCHA above"
+                                                    value={captchaInput}
+                                                    onChange={(e) => setCaptchaInput(e.target.value)}
+                                                />
+                                            </div>
+                                        </motion.div>
+                                        <motion.div className="col-12" variants={formVariants}>
                                             <button
                                                 type="submit"
                                                 className="theme-btn w-100"
-                                                style={{
-                                                    padding: '16px 0',
-                                                    fontSize: '1.15rem',
-                                                    borderRadius: '8px',
-                                                    marginTop: '10px'
-                                                }}
+                                                style={{ padding: '16px 0', fontSize: '1.15rem', borderRadius: '8px', marginTop: '10px' }}
                                                 disabled={isSubmitting}
                                             >
                                                 {isSubmitting ? 'Sending...' : 'Send Message'} <i className="fa-solid fa-arrow-right-long"></i>
                                             </button>
                                         </motion.div>
 
-                                        {/* Submission Message */}
                                         {submissionMessage && (
                                             <motion.div
                                                 className={`col-12 text-center mt-3 ${isError ? 'text-danger' : 'text-success'}`}
