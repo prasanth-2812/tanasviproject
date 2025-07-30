@@ -21,6 +21,7 @@ const Career: React.FC = () => {
     const [submitted, setSubmitted] = useState(false);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const [submissionMessage, setSubmissionMessage] = useState('');
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value, type } = e.target;
@@ -31,15 +32,45 @@ const Career: React.FC = () => {
         }
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
         setError('');
-        // Simulate async submit
-        setTimeout(() => {
+        setSubmissionMessage('');
+
+        try {
+            const formData = new FormData();
+            formData.append('name', form.name);
+            formData.append('email', form.email);
+            formData.append('phone', form.phone);
+            formData.append('position', form.position);
+            formData.append('message', form.message);
+            
+            if (form.resume) {
+                formData.append('resume', form.resume);
+            }
+
+            const response = await fetch('http://localhost:5000/career', { // 👈 updated here
+                method: 'POST',
+                body: formData,
+            });
+
+            if (response.ok) {
+                setSubmissionMessage('Application submitted successfully! You will receive a confirmation email shortly.');
+                setSubmitted(true);
+                setForm(initialForm);
+                setError('');
+            } else {
+                const errorData = await response.json();
+                setError(errorData.message || 'Failed to submit application. Please try again later.');
+                setSubmissionMessage('');
+            }
+        } catch (error: any) {
+            setError(error?.message || 'Failed to submit application. Please try again later.');
+            setSubmissionMessage('');
+        } finally {
             setLoading(false);
-            setSubmitted(true);
-        }, 1200);
+        }
     };
 
     return (
@@ -81,7 +112,7 @@ const Career: React.FC = () => {
                         <div className="career-form-wrapper w-100" style={{maxWidth: 800}}>
                             {submitted ? (
                                 <div className="alert alert-success text-center" role="alert">
-                                    Thank you for applying! We have received your application and will get back to you soon.
+                                    {submissionMessage || 'Thank you for applying! We have received your application and will get back to you soon.'}
                                 </div>
                             ) : (
                             <motion.form 
@@ -120,8 +151,8 @@ const Career: React.FC = () => {
                                     </motion.div>
                                     <motion.div className="col-lg-12" variants={formVariants}>
                                         <div className="form-clt">
-                                            <label htmlFor='resume-upload' className="form-label-career">Upload Your Resume*</label>
-                                            <input type="file" id='resume-upload' name="resume" className="form-control" required onChange={handleChange} />
+                                            <label htmlFor='resume-upload' className="form-label-career">Upload Your Resume* (PDF, DOC, DOCX - Max 5MB)</label>
+                                            <input type="file" id='resume-upload' name="resume" className="form-control" required onChange={handleChange} accept=".pdf,.doc,.docx" />
                                         </div>
                                     </motion.div>
                                     <motion.div className="col-lg-12" variants={formVariants}>

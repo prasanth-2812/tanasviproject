@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import SeoHelmet from '../components/common/SeoHelmet';
 
@@ -29,21 +29,68 @@ const contactInfo = [
 ];
 
 const Contact: React.FC = () => {
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        message: ''
+    });
+
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submissionMessage, setSubmissionMessage] = useState('');
+    const [isError, setIsError] = useState(false);
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        setIsSubmitting(true);
+        setSubmissionMessage('');
+        setIsError(false);
+
+        try {
+            const response = await fetch('http://localhost:5000/send', { // 👈 Corrected API route
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+
+            if (response.ok) {
+                setSubmissionMessage('Your message has been sent successfully! You will receive a confirmation email shortly.');
+                setIsError(false);
+                setFormData({ name: '', email: '', message: '' });
+            } else {
+                const errorData = await response.json();
+                setSubmissionMessage(errorData.message || 'Failed to send message. Please try again later.');
+                setIsError(true);
+            }
+        } catch (error: any) {
+            setSubmissionMessage(error?.message || 'Failed to send message. Please try again later.');
+            setIsError(true);
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
     return (
         <>
             <SeoHelmet
-  title="Tanasvi Technologies Pvt Ltd | Custom Software, AI, CRM & IoT Solutions"
-  description="Tanasvi Technologies Pvt Ltd is a leading IT company delivering AI-powered software, mobile and web apps, CRM/HRM systems, and end-to-end digital transformation solutions for startups and enterprises."
-  keywords="Tanasvi Technologies, custom software development, AI solutions, mobile app development, CRM software, IoT development, HRM systems, web development, IT consulting, business automation, digital transformation"
-/>
+                title="Tanasvi Technologies Pvt Ltd | Custom Software, AI, CRM & IoT Solutions"
+                description="Tanasvi Technologies Pvt Ltd is a leading IT company delivering AI-powered software, mobile and web apps, CRM/HRM systems, and end-to-end digital transformation solutions for startups and enterprises."
+                keywords="Tanasvi Technologies, custom software development, AI solutions, mobile app development, CRM software, IoT development, HRM systems, web development, IT consulting, business automation, digital transformation"
+            />
 
-            
             <section className="contact-page-section section-padding">
                 <div className="container">
                     <div className="row g-0">
-                        {/* Left Column: Blue Info Panel */}
+                        {/* Left Column: Info */}
                         <div className="col-lg-5">
-                            <motion.div 
+                            <motion.div
                                 className="contact-info-panel"
                                 initial={{ opacity: 0, x: -50 }}
                                 whileInView={{ opacity: 1, x: 0 }}
@@ -64,41 +111,92 @@ const Contact: React.FC = () => {
                             </motion.div>
                         </div>
 
-                        {/* Right Column: Contact Form */}
+                        {/* Right Column: Form */}
                         <div className="col-lg-7">
-                            <motion.div 
+                            <motion.div
                                 className="contact-form-wrapper style1"
                                 initial="hidden"
                                 whileInView="visible"
                                 viewport={{ once: true, amount: 0.2 }}
                                 transition={{ staggerChildren: 0.2 }}
                             >
-                                <motion.h2 className="form-title mb-4" variants={formVariants}>Ready to Get Started?</motion.h2>
-                                <form id="contact-form-page" method="POST" className="contact-form-items">
+                                <motion.h2 className="form-title mb-4" variants={formVariants}>
+                                    Ready to Get Started?
+                                </motion.h2>
+                                <form id="contact-form-page" onSubmit={handleSubmit} className="contact-form-items">
                                     <div className="row g-4">
                                         <motion.div className="col-md-6" variants={formVariants}>
                                             <div className="form-group">
                                                 <label htmlFor="name">Your Name*</label>
-                                                <input type="text" name="name" id="name" required placeholder='Enter Your Name' className="form-control style1" />
+                                                <input
+                                                    type="text"
+                                                    name="name"
+                                                    id="name"
+                                                    required
+                                                    placeholder='Enter Your Name'
+                                                    className="form-control style1"
+                                                    value={formData.name}
+                                                    onChange={handleChange}
+                                                />
                                             </div>
                                         </motion.div>
                                         <motion.div className="col-md-6" variants={formVariants}>
                                             <div className="form-group">
                                                 <label htmlFor="email">Your Email*</label>
-                                                <input type="email" name="email" id="email" required placeholder='Enter Your Email' className="form-control style1" />
+                                                <input
+                                                    type="email"
+                                                    name="email"
+                                                    id="email"
+                                                    required
+                                                    placeholder='Enter Your Email'
+                                                    className="form-control style1"
+                                                    value={formData.email}
+                                                    onChange={handleChange}
+                                                />
                                             </div>
                                         </motion.div>
                                         <motion.div className="col-12" variants={formVariants}>
                                             <div className="form-group">
                                                 <label htmlFor="message">Write Message*</label>
-                                                <textarea name="message" id="message" required placeholder='Message Description' className="form-control style1" rows={5}></textarea>
+                                                <textarea
+                                                    name="message"
+                                                    id="message"
+                                                    required
+                                                    placeholder='Message Description'
+                                                    className="form-control style1"
+                                                    rows={5}
+                                                    value={formData.message}
+                                                    onChange={handleChange}
+                                                ></textarea>
                                             </div>
                                         </motion.div>
                                         <motion.div className="col-12" variants={formVariants}>
-                                            <button type="submit" className="theme-btn w-100" style={{padding: '16px 0', fontSize: '1.15rem', borderRadius: '8px', marginTop: '10px'}}>
-                                                Send Message <i className="fa-solid fa-arrow-right-long"></i>
+                                            <button
+                                                type="submit"
+                                                className="theme-btn w-100"
+                                                style={{
+                                                    padding: '16px 0',
+                                                    fontSize: '1.15rem',
+                                                    borderRadius: '8px',
+                                                    marginTop: '10px'
+                                                }}
+                                                disabled={isSubmitting}
+                                            >
+                                                {isSubmitting ? 'Sending...' : 'Send Message'} <i className="fa-solid fa-arrow-right-long"></i>
                                             </button>
                                         </motion.div>
+
+                                        {/* Submission Message */}
+                                        {submissionMessage && (
+                                            <motion.div
+                                                className={`col-12 text-center mt-3 ${isError ? 'text-danger' : 'text-success'}`}
+                                                initial={{ opacity: 0, y: 10 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                transition={{ duration: 0.3 }}
+                                            >
+                                                {submissionMessage}
+                                            </motion.div>
+                                        )}
                                     </div>
                                 </form>
                             </motion.div>

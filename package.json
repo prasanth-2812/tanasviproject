@@ -8,12 +8,21 @@
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.5.2",
+    "@types/multer": "^2.0.0",
     "@types/node": "^16.18.126",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
     "framer-motion": "^12.23.6",
+    "install": "^0.13.0",
+    "multer": "^2.0.2",
+    "nodemailer": "^7.0.5",
+    "npm": "^11.5.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-google-recaptcha": "^3.1.0",
     "react-helmet": "^6.1.0",
     "react-router-dom": "^7.7.0",
     "react-scripts": "5.0.1",
@@ -23,6 +32,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "server": "node server.js",
+    "dev": "concurrently \"npm run server\" \"npm run start\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -33,6 +44,7 @@
       "react-app/jest"
     ]
   },
+  "proxy": "http://localhost:5000",
   "browserslist": {
     "production": [
       ">0.2%",
@@ -46,6 +58,8 @@
     ]
   },
   "devDependencies": {
-    "@types/react-helmet": "^6.1.11"
+    "@types/react-google-recaptcha": "^2.1.9",
+    "@types/react-helmet": "^6.1.11",
+    "concurrently": "^9.2.0"
   }
 }
