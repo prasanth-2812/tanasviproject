@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import Home from './pages/Home';
 import About from './pages/About';
 import Services from './pages/Services';
+import ServiceDetail from './pages/ServiceDetail';
 import Projects from './pages/Projects';
 import Career from './pages/Career';
 import Contact from './pages/Contact';
@@ -87,6 +88,7 @@ function App() {
           <Route path="/index" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/service" element={<Services />} />
+          <Route path="/services/:serviceSlug" element={<ServiceDetail />} />
           <Route path="/project" element={<Projects />} />
           <Route path="/team" element={<Career />} />
           <Route path="/contact" element={<Contact />} />

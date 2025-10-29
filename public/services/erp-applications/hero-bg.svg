@@ -1,0 +1,15 @@
+<!-- Placeholder SVG for hero background - Replace with actual design -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 600" width="1440" height="600">
+  <defs>
+    <linearGradient id="heroGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4F46E5;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#2563EB;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#06B6D4;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="1440" height="600" fill="url(#heroGrad)" />
+  <circle cx="200" cy="150" r="80" fill="rgba(255,255,255,0.1)" />
+  <circle cx="1200" cy="400" r="120" fill="rgba(255,255,255,0.08)" />
+  <polygon points="600,100 700,200 600,300 500,200" fill="rgba(255,255,255,0.1)" />
+</svg>
+

@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import ReCAPTCHA from 'react-google-recaptcha';
 import SeoHelmet from '../components/common/SeoHelmet';
-import Captcha from '../components/Captcha';
 
 const formVariants = {
     hidden: { opacity: 0, y: 30 },
@@ -24,7 +22,7 @@ const Career: React.FC = () => {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const [submissionMessage, setSubmissionMessage] = useState('');
-    const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+    const fileInputRef = React.useRef<HTMLInputElement>(null);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value, type } = e.target;
@@ -54,9 +52,12 @@ const Career: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         
-        if (!captchaToken) {
-            setError('Please complete the reCAPTCHA verification.');
+        // Validate CAPTCHA
+        if (captchaInput.trim().toUpperCase() !== captchaText.trim().toUpperCase()) {
+            setError('CAPTCHA incorrect. Please try again.');
             setSubmissionMessage('');
+            setCaptchaText(generateCaptchaText());
+            setCaptchaInput('');
             return;
         }
 
@@ -70,32 +71,54 @@ const Career: React.FC = () => {
             formData.append('email', form.email);
             formData.append('phone', form.phone);
             formData.append('position', form.position);
-            formData.append('message', form.message);
-            formData.append('captchaToken', captchaToken);
+            formData.append('message', form.message || '');
             
             if (form.resume) {
                 formData.append('resume', form.resume);
             }
 
-            const response = await fetch('http://localhost:5000/career', {
+            const response = await fetch('/api/career/apply', {
                 method: 'POST',
                 body: formData,
             });
 
             if (response.ok) {
-                setSubmissionMessage('Application submitted successfully! You will receive a confirmation email shortly.');
+                const responseData = await response.json();
+                setSubmissionMessage(responseData.message || 'Application submitted successfully! You will receive a confirmation email shortly.');
                 setSubmitted(true);
                 setForm(initialForm);
                 setError('');
-                setCaptchaToken(null);
+                setCaptchaText(generateCaptchaText());
+                setCaptchaInput('');
+                // Reset file input
+                if (fileInputRef.current) {
+                    fileInputRef.current.value = '';
+                }
             } else {
-                const errorData = await response.json();
-                setError(errorData.message || 'Failed to submit application. Please try again later.');
+                let errorMessage = 'Failed to submit application. Please try again later.';
+                try {
+                    const errorData = await response.json();
+                    errorMessage = errorData.message || errorMessage;
+                    // Show validation errors if available
+                    if (errorData.details && Array.isArray(errorData.details)) {
+                        const validationErrors = errorData.details.map((err: any) => err.msg).join(', ');
+                        if (validationErrors) {
+                            errorMessage = validationErrors;
+                        }
+                    }
+                } catch (e) {
+                    errorMessage = `Server error (${response.status}). Please try again later.`;
+                }
+                setError(errorMessage);
                 setSubmissionMessage('');
+                setCaptchaText(generateCaptchaText());
+                setCaptchaInput('');
             }
         } catch (error: any) {
-            setError(error?.message || 'Failed to submit application. Please try again later.');
+            setError(error?.message || 'Network error. Please check your connection and try again.');
             setSubmissionMessage('');
+            setCaptchaText(generateCaptchaText());
+            setCaptchaInput('');
         } finally {
             setLoading(false);
         }
@@ -180,7 +203,7 @@ const Career: React.FC = () => {
                                     <motion.div className="col-lg-12" variants={formVariants}>
                                         <div className="form-clt">
                                             <label htmlFor='resume-upload' className="form-label-career">Upload Your Resume* (PDF, DOC, DOCX - Max 5MB)</label>
-                                            <input type="file" id='resume-upload' name="resume" className="form-control" required onChange={handleChange} accept=".pdf,.doc,.docx" />
+                                            <input type="file" id='resume-upload' name="resume" className="form-control" required onChange={handleChange} accept=".pdf,.doc,.docx" ref={fileInputRef} />
                                         </div>
                                     </motion.div>
                                     <motion.div className="col-lg-12" variants={formVariants}>

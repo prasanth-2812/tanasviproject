@@ -71,26 +71,44 @@ const Contact: React.FC = () => {
         setIsError(false);
 
         try {
-            const response = await fetch('http://localhost:5000/send', {
+            const response = await fetch('/api/contact/send', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ ...formData }),
             });
 
             if (response.ok) {
-                setSubmissionMessage('Your message has been sent successfully! You will receive a confirmation email shortly.');
+                const responseData = await response.json();
+                setSubmissionMessage(responseData.message || 'Your message has been sent successfully! You will receive a confirmation email shortly.');
                 setIsError(false);
                 setFormData({ name: '', email: '', message: '' });
                 setCaptchaText(generateCaptchaText());
                 setCaptchaInput('');
             } else {
-                const errorData = await response.json();
-                setSubmissionMessage(errorData.message || 'Failed to send message. Please try again later.');
+                let errorMessage = 'Failed to send message. Please try again later.';
+                try {
+                    const errorData = await response.json();
+                    errorMessage = errorData.message || errorMessage;
+                    // Show validation errors if available
+                    if (errorData.details && Array.isArray(errorData.details)) {
+                        const validationErrors = errorData.details.map((err: any) => err.msg).join(', ');
+                        if (validationErrors) {
+                            errorMessage = validationErrors;
+                        }
+                    }
+                } catch (e) {
+                    errorMessage = `Server error (${response.status}). Please try again later.`;
+                }
+                setSubmissionMessage(errorMessage);
                 setIsError(true);
+                setCaptchaText(generateCaptchaText());
+                setCaptchaInput('');
             }
         } catch (error: any) {
-            setSubmissionMessage(error?.message || 'Failed to send message. Please try again later.');
+            setSubmissionMessage(error?.message || 'Network error. Please check your connection and try again.');
             setIsError(true);
+            setCaptchaText(generateCaptchaText());
+            setCaptchaInput('');
         } finally {
             setIsSubmitting(false);
         }
