@@ -10,7 +10,6 @@ const rateLimit = require('express-rate-limit');
 const contactRoutes = require('./routes/contact');
 const careerRoutes = require('./routes/career');
 const blogRoutes = require('./routes/blog');
-const analyticsRoutes = require('./routes/analytics');
 const path = require('path');
 
 const app = express();
@@ -105,7 +104,6 @@ app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')));
 app.use('/api/contact', contactRoutes);
 app.use('/api/career', careerRoutes);
 app.use('/api/blogs', blogRoutes);
-app.use('/api', analyticsRoutes);
 
 // 404 handler
 app.use((req, res) => {
