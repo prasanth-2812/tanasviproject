@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import SeoHelmet from '../components/common/SeoHelmet';
+import { contactService, ApiClientError } from '../services';
 
 const formVariants = {
     hidden: { opacity: 0, y: 30 },
@@ -71,41 +72,29 @@ const Contact: React.FC = () => {
         setIsError(false);
 
         try {
-            const response = await fetch('/api/contact/send', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ ...formData }),
-            });
-
-            if (response.ok) {
-                const responseData = await response.json();
-                setSubmissionMessage(responseData.message || 'Your message has been sent successfully! You will receive a confirmation email shortly.');
-                setIsError(false);
-                setFormData({ name: '', email: '', message: '' });
-                setCaptchaText(generateCaptchaText());
-                setCaptchaInput('');
-            } else {
-                let errorMessage = 'Failed to send message. Please try again later.';
-                try {
-                    const errorData = await response.json();
-                    errorMessage = errorData.message || errorMessage;
-                    // Show validation errors if available
-                    if (errorData.details && Array.isArray(errorData.details)) {
-                        const validationErrors = errorData.details.map((err: any) => err.msg).join(', ');
-                        if (validationErrors) {
-                            errorMessage = validationErrors;
-                        }
-                    }
-                } catch (e) {
-                    errorMessage = `Server error (${response.status}). Please try again later.`;
-                }
-                setSubmissionMessage(errorMessage);
-                setIsError(true);
-                setCaptchaText(generateCaptchaText());
-                setCaptchaInput('');
-            }
+            const response = await contactService.sendContact({ ...formData });
+            setSubmissionMessage(response.message || 'Your message has been sent successfully! You will receive a confirmation email shortly.');
+            setIsError(false);
+            setFormData({ name: '', email: '', message: '' });
+            setCaptchaText(generateCaptchaText());
+            setCaptchaInput('');
         } catch (error: any) {
-            setSubmissionMessage(error?.message || 'Network error. Please check your connection and try again.');
+            let errorMessage = 'Failed to send message. Please try again later.';
+            
+            if (error instanceof ApiClientError) {
+                errorMessage = error.message;
+                // Show validation errors if available
+                if (error.details && Array.isArray(error.details)) {
+                    const validationErrors = error.details.map((err: any) => err.msg).join(', ');
+                    if (validationErrors) {
+                        errorMessage = validationErrors;
+                    }
+                }
+            } else {
+                errorMessage = error?.message || 'Network error. Please check your connection and try again.';
+            }
+            
+            setSubmissionMessage(errorMessage);
             setIsError(true);
             setCaptchaText(generateCaptchaText());
             setCaptchaInput('');

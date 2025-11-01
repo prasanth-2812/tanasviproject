@@ -9,6 +9,9 @@ const rateLimit = require('express-rate-limit');
 // Import routes
 const contactRoutes = require('./routes/contact');
 const careerRoutes = require('./routes/career');
+const blogRoutes = require('./routes/blog');
+const analyticsRoutes = require('./routes/analytics');
+const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -20,7 +23,7 @@ app.use(helmet({
       defaultSrc: ["'self'"],
       styleSrc: ["'self'", "'unsafe-inline'"],
       scriptSrc: ["'self'"],
-      imgSrc: ["'self'", "data:", "https:"],
+      imgSrc: ["'self'", "data:", "https:", "http:"],
     },
   },
 }));
@@ -36,6 +39,8 @@ const corsOptions = {
       'http://localhost:3001',
       'http://127.0.0.1:3000',
       'http://127.0.0.1:3001',
+      'http://localhost:5173',
+      'http://127.0.0.1:5173',
       'https://tanasvi.com',
       'https://www.tanasvi.com'
     ];
@@ -93,9 +98,14 @@ app.get('/health', (req, res) => {
   });
 });
 
+// Static uploads (images for blogs)
+app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')));
+
 // API routes
 app.use('/api/contact', contactRoutes);
 app.use('/api/career', careerRoutes);
+app.use('/api/blogs', blogRoutes);
+app.use('/api', analyticsRoutes);
 
 // 404 handler
 app.use((req, res) => {

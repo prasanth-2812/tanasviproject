@@ -10,6 +10,10 @@ import Projects from './pages/Projects';
 import Career from './pages/Career';
 import Contact from './pages/Contact';
 import NotFound from './pages/NotFound';
+import Blog from './pages/Blog';
+import BlogDetails from './pages/BlogDetails';
+import BlogAdmin from './pages/BlogAdmin';
+import Analytics from './pages/admin/Analytics';
 
 // ==========================================================
 // START: CORRECTED IMPORT PATHS
@@ -24,15 +28,17 @@ import HomeAutomation from './data/HomeAutomation';
 import AiModels from './data/AiModels';
 import Lms from './data/Lms';
 
-// Import Service Detail Pages from ./data
-import AiDevelopment from './data/AiDevelopment';
-import ItConsultancy from './data/ItConsultancy';
-import CyberSecurity from './data/CyberSecurity';
-import MobileAppDevelopment from './data/MobileAppDevelopment';
-import WebDevelopment from './data/WebDevelopment';
-import ErpApplications from './data/ErpApplications';
-import DigitalMarketing from './data/DigitalMarketing';
-import Bpo from './data/Bpo';
+// Import Service Detail Pages
+import ItConsultancy from './pages/services/servicedetails/ItConsultancy';
+import CyberSecurity from './pages/services/servicedetails/CyberSecurity';
+import MobileAppDevelopment from './pages/services/servicedetails/MobileAppDevelopment';
+import WebDevelopment from './pages/services/servicedetails/WebDevelopment';
+import ErpApplications from './pages/services/servicedetails/ErpApplications';
+import DigitalMarketing from './pages/services/servicedetails/DigitalMarketing';
+import Bpo from './pages/services/servicedetails/Bpo';
+import AiDevelopment from './pages/services/servicedetails/AiDevelopment';
+import CloudServices from './pages/services/servicedetails/CloudServices';
+import InternshipTraining from './pages/services/servicedetails/InternshipTraining';
 // ==========================================================
 // END: CORRECTED IMPORT PATHS
 // ==========================================================
@@ -91,6 +97,10 @@ function App() {
           <Route path="/services/:serviceSlug" element={<ServiceDetail />} />
           <Route path="/project" element={<Projects />} />
           <Route path="/team" element={<Career />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<BlogDetails />} />
+          <Route path="/admin/blogs" element={<BlogAdmin />} />
+          <Route path="/admin/analytics" element={<Analytics />} />
           <Route path="/contact" element={<Contact />} />
           
           {/* Project Detail Routes */}
@@ -102,7 +112,7 @@ function App() {
           <Route path="/project/ai-based-models" element={<AiModels />} />
           <Route path="/project/learning-management-system" element={<Lms />} />
 
-          {/* Service Detail Routes */}
+          {/* Service Detail Routes (mirroring Projects module structure) */}
           <Route path="/service/ai-development" element={<AiDevelopment />} />
           <Route path="/service/it-consultancy" element={<ItConsultancy />} />
           <Route path="/service/cyber-security" element={<CyberSecurity />} />
@@ -111,6 +121,8 @@ function App() {
           <Route path="/service/erp-applications" element={<ErpApplications />} />
           <Route path="/service/digital-marketing" element={<DigitalMarketing />} />
           <Route path="/service/bpo" element={<Bpo />} />
+          <Route path="/service/cloud-services" element={<CloudServices />} />
+          <Route path="/service/internship-training" element={<InternshipTraining />} />
           
           <Route path="*" element={<NotFound />} />
         </Routes>

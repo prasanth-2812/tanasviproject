@@ -13,7 +13,7 @@ const Services: React.FC = () => {
                 keywords="Tanasvi Technologies services, IT consultancy, AI development, mobile app development, web development, ERP systems, digital marketing, BPO services, cloud services, business automation"
             />
             {/* Heading (match Projects page style) */}
-            <section className="services-cards-section section-padding pt-0">
+            <section className="services-page section-padding">
                 <div className="container">
                     <div className="section-title title-area mx-auto mb-20">
                         <div className="subtitle d-flex justify-content-center">
@@ -26,43 +26,39 @@ const Services: React.FC = () => {
                 </div>
             </section>
 
-            {/* Services Cards Grid */}
-            <section className="services-cards-section section-padding pt-0">
+            {/* Services Cards Grid (identical to Projects cards) */}
+            <section className="services-page section-padding pt-0">
                 <div className="container">
-                    
-                    <div className="row g-4">
-                        {servicesList.map((service, index) => (
-                            <motion.div
-                                key={service.slug}
-                                className="col-xl-4 col-lg-4 col-md-6 col-12"
-                                initial={{ opacity: 0, y: 50 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.6, delay: index * 0.1 }}
-                                viewport={{ once: true }}
-                            >
-                                <Link 
-                                    to={`/services/${service.slug}`} 
-                                    className="service-card-link text-decoration-none d-block h-100"
+                    <div className="service-wrapper mb-0">
+                        <div className="row">
+                            {servicesList.map((service, index) => (
+                                <motion.div
+                                    className="col-lg-4 col-md-6 col-12 mb-4"
+                                    key={service.slug}
+                                    initial={{ opacity: 0, y: 50 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                                    viewport={{ once: true }}
                                 >
-                                    <div className="service-card h-100">
-                                        <div className="service-card-header">
-                                            <div className="service-head">
-                                                <div className="service-icon">
-                                                    <img src={service.icon} alt={`${service.title} icon`} />
-                                                </div>
-                                                <h3 className="service-title">{service.title}</h3>
+                                    <Link to={`/service/${service.slug}`} className="text-decoration-none d-block h-100 project-card-link">
+                                        <div className="service-box-items h-100">
+                                            <div className="icon">
+                                                <img
+                                                    src={service.icon}
+                                                    alt={`${service.title} icon`}
+                                                />
                                             </div>
-                                            <p className="service-summary">{service.description}</p>
+                                            <div className="content">
+                                                <h4>{service.title}</h4>
+                                                <p className="card-description">
+                                                    {service.description}
+                                                </p>
+                                            </div>
                                         </div>
-                                        <div className="service-card-footer">
-                                            <span className="learn-more-btn">
-                                                Learn More <i className="fas fa-arrow-right ms-2"></i>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </Link>
-                            </motion.div>
-                        ))}
+                                    </Link>
+                                </motion.div>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </section>

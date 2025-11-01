@@ -10,14 +10,14 @@ export const enhancedServicesData: Record<string, EnhancedService> = {
         hero: {
             title: 'IT Consultancy Services',
             subtitle: 'Empowering Businesses with Smart Talent and Technology Solutions. At Tanasvi Technologies Pvt. Ltd., we provide end-to-end IT Consultancy Services that help organizations streamline operations, strengthen their workforce, and accelerate digital transformation.',
-            backgroundImage: '/services/it-consultancy/hero-bg.svg',
-            backgroundSvg: '/services/it-consultancy/hero-bg.svg'
+            backgroundImage: '/services/it-consultancy-banner.jpg',
+            backgroundSvg: '/services/it-consultancy-banner.jpg'
         },
         sections: [
             {
                 heading: 'Our Offerings',
                 content: 'We leverage our own in-house digital platforms and AI-driven tools to deliver superior hiring and HR management experiences.',
-                image: '/services/it-consultancy/offerings.svg',
+                image: '/services/it1.jpg',
                 imagePosition: 'left',
                 listItems: [
                     'Talent Screening & Profile Management - Our dedicated recruitment team meticulously screens candidates',
@@ -30,7 +30,7 @@ export const enhancedServicesData: Record<string, EnhancedService> = {
             {
                 heading: 'Why Choose Tanasvi Technologies for IT Consultancy?',
                 content: 'We offer integrated technology solutions that combine innovation, expertise, and measurable results.',
-                image: '/services/it-consultancy/why-choose.svg',
+                image: '/services/it2.jpg',
                 imagePosition: 'right',
                 listItems: [
                     'Integrated Technology Ecosystem - Complete hiring automation',
@@ -57,14 +57,14 @@ export const enhancedServicesData: Record<string, EnhancedService> = {
         hero: {
             title: 'Business Process Outsourcing (BPO) Services',
             subtitle: 'Driving Business Efficiency Through Smart Outsourcing Solutions. At Tanasvi Technologies Pvt. Ltd., we specialize in delivering end-to-end BPO services designed to optimize operations, enhance customer satisfaction, and reduce operational costs.',
-            backgroundImage: '/services/bpo/hero-bg.svg',
-            backgroundSvg: '/services/bpo/hero-bg.svg'
+            backgroundImage: '/services/bpo-banner.jpg',
+            backgroundSvg: '/services/bpo-banner.jpg'
         },
         sections: [
             {
                 heading: 'Our BPO Capabilities',
                 content: 'We focus on both Inbound Customer Support and Non-Voice Data Processing Services, empowering organizations to streamline workflows and achieve measurable business outcomes.',
-                image: '/services/bpo/capabilities.svg',
+                image: '/services/bpo1.jpg',
                 imagePosition: 'left',
                 listItems: [
                     'Inbound Call Center Services - Customer support, inquiry handling, order management, complaint resolution',
@@ -77,7 +77,7 @@ export const enhancedServicesData: Record<string, EnhancedService> = {
             {
                 heading: 'Why Choose Tanasvi Technologies for BPO Services?',
                 content: 'We combine skilled agents, secure infrastructure, and scalable operations to deliver exceptional results.',
-                image: '/services/bpo/why-choose.svg',
+                image: '/services/bpo2.jpg',
                 imagePosition: 'right',
                 listItems: [
                     'End-to-End Inbound and Non-Voice Solutions under one roof',
@@ -98,14 +98,14 @@ export const enhancedServicesData: Record<string, EnhancedService> = {
         hero: {
             title: 'Artificial Intelligence (AI) Development',
             subtitle: 'Innovating the Future with Intelligent Automation and Smart Solutions. At Tanasvi Technologies Pvt. Ltd., we are building the future through AI innovation. We specialize in developing AI-driven products and custom solutions that help businesses automate processes, make data-driven decisions, and create intelligent user experiences.',
-            backgroundImage: '/services/ai-development/hero-bg.svg',
-            backgroundSvg: '/services/ai-development/hero-bg.svg'
+            backgroundImage: '/services/ai-banner.jpg',
+            backgroundSvg: '/services/ai-banner.jpg'
         },
         sections: [
             {
                 heading: 'Our AI Development Expertise',
                 content: 'We design and develop AI-based products and platforms tailored to different industries and business needs. Our solutions leverage advanced technologies such as machine learning, natural language processing (NLP), computer vision, and predictive analytics.',
-                image: '/services/ai-development/expertise.svg',
+                image: '/services/ai1.jpg',
                 imagePosition: 'left',
                 listItems: [
                     'AI-Powered Product Development - AI-Based Interview Platform, Intelligent HR Analytics System, Smart Resume Screening Engine',
@@ -117,7 +117,7 @@ export const enhancedServicesData: Record<string, EnhancedService> = {
             {
                 heading: 'Why Choose Tanasvi Technologies for AI Development?',
                 content: 'We deliver end-to-end AI expertise from model design and training to deployment and integration.',
-                image: '/services/ai-development/why-choose.svg',
+                image: '/services/ai2.jpg',
                 imagePosition: 'right',
                 listItems: [
                     'End-to-End AI Expertise - From model design to deployment and integration',
@@ -137,14 +137,14 @@ export const enhancedServicesData: Record<string, EnhancedService> = {
         hero: {
             title: 'Mobile Application Development',
             subtitle: 'Transforming Ideas into Powerful Mobile Experiences. At Tanasvi Technologies Pvt. Ltd., we specialize in delivering end-to-end mobile application development services that empower businesses to connect, engage, and grow in the digital age.',
-            backgroundImage: '/services/mobile-app-development/hero-bg.svg',
-            backgroundSvg: '/services/mobile-app-development/hero-bg.svg'
+            backgroundImage: '/services/Mobile-banner.jpg',
+            backgroundSvg: '/services/Mobile-banner.jpg'
         },
         sections: [
             {
                 heading: 'Our Mobile Development Expertise',
                 content: 'From concept to deployment, our team builds high-performance, scalable, and user-friendly mobile apps tailored to your business goals.',
-                image: '/services/mobile-app-development/expertise.svg',
+                image: '/services/Mobile1.jpg',
                 imagePosition: 'left',
                 listItems: [
                     'Native App Development - Android (Kotlin, Java) and iOS (Swift, Objective-C)',
@@ -157,7 +157,7 @@ export const enhancedServicesData: Record<string, EnhancedService> = {
             {
                 heading: 'Why Choose Tanasvi Technologies for Mobile Development?',
                 content: 'We deliver full-cycle development expertise from concept and design to deployment and maintenance.',
-                image: '/services/mobile-app-development/why-choose.svg',
+                image: '/services/mobile2.jpg',
                 imagePosition: 'right',
                 listItems: [
                     'Full-Cycle Development Expertise - From concept to deployment and maintenance',
@@ -178,14 +178,14 @@ export const enhancedServicesData: Record<string, EnhancedService> = {
         hero: {
             title: 'Modern Web Application Development',
             subtitle: 'Building Scalable, Secure, and High-Performance Web Applications. At Tanasvi Technologies Pvt. Ltd., we specialize in designing and developing modern, feature-rich web applications that empower businesses to innovate and grow in the digital age.',
-            backgroundImage: '/services/web-development/hero-bg.svg',
-            backgroundSvg: '/services/web-development/hero-bg.svg'
+            backgroundImage: '/services/web-banner.jpg',
+            backgroundSvg: '/services/web-banner.jpg'
         },
         sections: [
             {
                 heading: 'Our Web Application Development Expertise',
                 content: 'We leverage cutting-edge technologies, cloud infrastructure, and modern development practices to build applications that help organizations streamline operations, engage customers, and achieve long-term success.',
-                image: '/services/web-development/expertise.svg',
+                image: '/services/web1.jpg',
                 imagePosition: 'left',
                 listItems: [
                     'Custom Web Application Development - Scalable architecture, secure authentication, API-first design',
@@ -198,7 +198,7 @@ export const enhancedServicesData: Record<string, EnhancedService> = {
             {
                 heading: 'Why Choose Tanasvi Technologies for Web Application Development?',
                 content: 'We deliver full-stack expertise with modern architecture, security-first approach, and seamless ecosystem integration.',
-                image: '/services/web-development/why-choose.svg',
+                image: '/services/web2.jpg',
                 imagePosition: 'right',
                 listItems: [
                     'Full-Stack Expertise - Skilled in both frontend and backend technologies',
@@ -219,14 +219,14 @@ export const enhancedServicesData: Record<string, EnhancedService> = {
         hero: {
             title: 'ERP Application Development',
             subtitle: 'Empowering Enterprises with Integrated, Intelligent, and Scalable ERP Solutions. At Tanasvi Technologies Pvt. Ltd., we specialize in building custom Enterprise Resource Planning (ERP) applications that help organizations unify their business operations, improve efficiency, and make smarter decisions.',
-            backgroundImage: '/services/erp-applications/hero-bg.svg',
-            backgroundSvg: '/services/erp-applications/hero-bg.svg'
+            backgroundImage: '/services/erp-banner.jpg',
+            backgroundSvg: '/services/erp-banner.jpg'
         },
         sections: [
             {
                 heading: 'Our ERP Development Expertise',
                 content: 'We design and develop custom ERP applications that centralize all key business operations into a single, unified system built for automation, analytics, and real-time collaboration.',
-                image: '/services/erp-applications/expertise.svg',
+                image: '/services/erp1.jpg',
                 imagePosition: 'left',
                 listItems: [
                     'Custom ERP Application Development - HRM, CRM, Finance, Inventory, Projects, Reports modules',
@@ -239,7 +239,7 @@ export const enhancedServicesData: Record<string, EnhancedService> = {
             {
                 heading: 'Why Choose Tanasvi Technologies for ERP Development?',
                 content: 'We deliver custom, modular ERP solutions with high-volume communication capabilities and AI-powered automation.',
-                image: '/services/erp-applications/why-choose.svg',
+                image: '/services/erp2.jpg',
                 imagePosition: 'right',
                 listItems: [
                     'Custom, Modular ERP Solutions - Tailored for your unique business workflows',
@@ -260,14 +260,14 @@ export const enhancedServicesData: Record<string, EnhancedService> = {
         hero: {
             title: 'Digital Marketing Services',
             subtitle: 'Empowering Brands Through Smart Digital Strategies. At Tanasvi Technologies Pvt. Ltd., we help businesses build a powerful online presence and reach their target audience effectively through data-driven digital marketing strategies.',
-            backgroundImage: '/services/digital-marketing/hero-bg.svg',
-            backgroundSvg: '/services/digital-marketing/hero-bg.svg'
+            backgroundImage: '/services/digitalmarketing-banner.jpg',
+            backgroundSvg: '/services/digitalmarketing-banner.jpg'
         },
         sections: [
             {
                 heading: 'Our Digital Marketing Expertise',
                 content: 'With a dedicated and experienced marketing team, we combine creativity, analytics, and technology to deliver measurable results that drive visibility, engagement, and business growth.',
-                image: '/services/digital-marketing/expertise.svg',
+                image: '/services/digitalmarketing1.jpg',
                 imagePosition: 'left',
                 listItems: [
                     'Search Engine Optimization (SEO) - On-page, off-page, technical SEO, local SEO',
@@ -280,7 +280,7 @@ export const enhancedServicesData: Record<string, EnhancedService> = {
             {
                 heading: 'Why Choose Tanasvi Technologies for Digital Marketing?',
                 content: 'We provide integrated, AI-driven marketing solutions with dedicated in-house expertise and measurable ROI.',
-                image: '/services/digital-marketing/why-choose.svg',
+                image: '/services/digitalmarketing2.jpg',
                 imagePosition: 'right',
                 listItems: [
                     'Dedicated In-House Marketing Team - Skilled professionals specializing in SEO, Ads, Design, and Content',
@@ -301,14 +301,14 @@ export const enhancedServicesData: Record<string, EnhancedService> = {
         hero: {
             title: 'Cloud Services',
             subtitle: 'Seamless Cloud Integration, Deployment, and Management. At Tanasvi Technologies Pvt. Ltd., we empower organizations to harness the full potential of the cloud through comprehensive cloud integration, deployment, and management services.',
-            backgroundImage: '/services/cloud-services/hero-bg.svg',
-            backgroundSvg: '/services/cloud-services/hero-bg.svg'
+            backgroundImage: '/services/Cloudservices-banner.jpg',
+            backgroundSvg: '/services/Cloudservices-banner.jpg'
         },
         sections: [
             {
                 heading: 'Our Cloud Service Offerings',
                 content: 'Our expert cloud engineers ensure that your applications, data, and infrastructure are seamlessly deployed and optimized across leading cloud platforms—enabling scalability, security, and cost efficiency.',
-                image: '/services/cloud-services/offerings.svg',
+                image: '/services/Cloudservices1.jpg',
                 imagePosition: 'left',
                 listItems: [
                     'Cloud Consulting and Strategy - Cloud readiness assessment, migration strategy, cost optimization',
@@ -322,7 +322,7 @@ export const enhancedServicesData: Record<string, EnhancedService> = {
             {
                 heading: 'Why Choose Tanasvi Technologies for Cloud Services?',
                 content: 'We provide deployment, integration, and support across multiple cloud ecosystems: Amazon Web Services (AWS), Microsoft Azure, Google Cloud Platform (GCP), DigitalOcean, and Oracle Cloud.',
-                image: '/services/cloud-services/why-choose.svg',
+                image: '/services/Cloudservices2.jpg',
                 imagePosition: 'right',
                 listItems: [
                     'Expert Cloud Engineers - Certified professionals in AWS, Azure, and GCP',
@@ -335,6 +335,47 @@ export const enhancedServicesData: Record<string, EnhancedService> = {
             }
         ],
         mission: 'To help businesses achieve digital agility, scalability, and innovation through intelligent cloud adoption and expert management—ensuring technology drives business success.'
+    },
+    'internship-training': {
+        slug: 'internship-training',
+        title: 'Internship & Training',
+        description: 'Transform Potential into Performance Through Practical Training',
+        hero: {
+            title: 'Internship & Training Programs',
+            subtitle: 'Transform Potential into Performance Through Practical Training. At Tanasvi Technologies Pvt. Ltd., we provide students and professionals with practical exposure to cutting-edge technologies and real-world business challenges through comprehensive internship and training programs.',
+            backgroundImage: '/services/Internship-banner.jpg',
+            backgroundSvg: '/services/Internship-banner.jpg'
+        },
+        sections: [
+            {
+                heading: 'Our Training Programs',
+                content: 'We offer industry-focused internship programs and skill development training designed to bridge the gap between academic learning and professional excellence.',
+                image: '/services/Internship1.jpg',
+                imagePosition: 'left',
+                listItems: [
+                    'Industry-Focused Internship Programs - Live projects with real business challenges',
+                    'Skill Development Training - AI/ML, Web Development, Mobile Development, Cloud, Data Science, Cybersecurity',
+                    'Placement Assistance - Career support and guidance for professional growth',
+                    'Collaboration with Academia - Partnerships with educational institutions',
+                    'Expert Mentorship - Learning from experienced developers and engineers'
+                ]
+            },
+            {
+                heading: 'Why Choose Tanasvi for Training?',
+                content: 'We provide hands-on learning experiences with industry-relevant curriculum and real-world project exposure.',
+                image: '/services/Internship2.jpg',
+                imagePosition: 'right',
+                listItems: [
+                    'Industry-Relevant Curriculum - Designed by professionals',
+                    'Hands-On Learning - Real projects and practical experience',
+                    'Expert Mentorship - Guidance from experienced professionals',
+                    'Certification - Recognition for completed programs',
+                    'Career Launch Support - From training to placement',
+                    'Modern Technologies - Cutting-edge tools and frameworks'
+                ]
+            }
+        ],
+        mission: 'To transform potential into performance through practical training and real-world experience, empowering the next generation of tech professionals.'
     }
 };
 

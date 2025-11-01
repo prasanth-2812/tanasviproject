@@ -15,6 +15,7 @@ export interface Service {
         image: string; // For the detail page banner
         content: string[];
     };
+    sectionImages?: string[]; // For section images in ServiceDetailTemplate
 }
 
 export const servicesList: Service[] = [
@@ -39,41 +40,43 @@ export const servicesList: Service[] = [
         mission: "Operationalize AI to deliver measurable business value and automation.",
         details: {
             title: "Artificial Intelligence & Machine Learning",
-            image: "/assets/img/ai.jpg", // You can reuse or add new images
+            image: "/services/ai-banner.jpg",
             content: [
                 "We harness AI/ML across NLP, computer vision, and predictive analytics to automate processes and unlock insights.",
                 "Solutions integrate cleanly into existing systems and workflows for faster time‑to‑value."
             ]
-        }
+        },
+        sectionImages: ["/services/ai1.jpg", "/services/ai2.jpg"]
     },
     {
         slug: "it-consultancy",
         icon: "/assets/img/service/icon/s-icon-2.svg",
         title: "IT CONSULTANCY SERVICES",
-        description: "Empowers businesses with smart talent and technology solutions.",
+        description: "Empowering businesses with smart talent and technology solutions.",
         delay: 0.2,
-        overview: "End‑to‑end consultancy focused on AI‑driven screening, platforms, and expert teams.",
+        overview: "Empower your business with end-to-end IT Consultancy Services. We combine AI-driven talent screening, proprietary platforms (MyCareerBuild.com, SyncHRM.com), and expert recruitment to deliver the right talent faster and smarter.",
         offerings: [
-            "Talent Screening & Profile Management (AI‑driven evaluation)",
-            "Proprietary platforms: MyCareerBuild.com and SyncHRM.com",
-            "AI‑Based Interview & Assessment Platform",
-            "Dedicated recruitment support and requirement teams"
+            "Talent Screening & Profile Management - Rigorous candidate evaluation ensuring top-tier profile delivery",
+            "AI-Based Interview Platform - Automated assessment with data-driven insights and faster turnaround",
+            "Proprietary Platforms - MyCareerBuild.com (job portal) and SyncHRM.com (HRMS solution)",
+            "Client-Focused Recruitment - Personalized consulting aligned with your business requirements",
+            "Dedicated Requirement Team - Expert HR professionals maintaining active talent database"
         ],
         whyChooseUs: [
-            "Integrated technology ecosystem",
-            "High‑quality, pre‑screened candidates",
-            "Expert teams",
-            "Client‑centric engagement"
+            "Integrated Technology Ecosystem – Job Portal (MyCareerBuild), HRMS (SyncHRM), and AI Interview Platform for complete hiring automation.",
+            "AI-Driven Talent Assessment – Intelligent tools to evaluate and filter the best candidates efficiently.",
+            "Quality-Focused Approach – Rigorous screening and verification processes to ensure top-tier candidate delivery.",
+            "Dedicated Recruitment Experts – Skilled professionals providing personalized and responsive client service.",
+            "Client-Centric Flexibility – Tailored consultancy solutions designed around your business goals.",
+            "Commitment to Excellence – Transparent, result-oriented engagement built for long-term success."
         ],
-        mission: "Deliver integrated, AI‑enabled consultancy that improves hiring efficiency and outcomes.",
+        mission: "To empower organizations with innovative IT consultancy and AI-enabled recruitment solutions that deliver efficiency, quality, and measurable business value.",
         details: {
-            title: "Strategic IT & Digital Consultancy",
-            image: "/assets/img/itconsultancy.jpg",
-            content: [
-                "We align technology strategy with business goals using platforms and AI‑enabled processes.",
-                "Our programs are resilient, scalable, and cost‑optimized."
-            ]
-        }
+            title: "Empowering Businesses with Smart Talent and Technology Solutions",
+            image: "/services/it-consultancy-banner.jpg",
+            content: [] // The overview, offerings, and whyChooseUs now contain the text above.
+        },
+        sectionImages: ["/services/it1.jpg", "/services/it2.jpg"]
     },
     // ... (Repeat this structure for all other services)
     {
@@ -97,12 +100,13 @@ export const servicesList: Service[] = [
         mission: "Deliver engaging mobile experiences that connect users and streamline operations.",
         details: {
             title: "Native & Hybrid Mobile App Development",
-            image: "/assets/img/mobileapp.jpg",
+            image: "/services/Mobile-banner.jpg",
             content: [
                 "We build performant apps tailored to business goals and user expectations.",
                 "Our lifecycle spans design to store deployment with strong QA and security."
             ]
-        }
+        },
+        sectionImages: ["/services/Mobile1.jpg", "/services/mobile2.jpg"]
     },
     {
         slug: "web-development",
@@ -125,12 +129,13 @@ export const servicesList: Service[] = [
         mission: "Build modern web applications powering unified digital ecosystems.",
         details: {
             title: "Modern Web Application Development",
-            image: "/assets/img/webdev.jpg",
+            image: "/services/web-banner.jpg",
             content: [
                 "We create fast, secure, and scalable applications with exceptional UX.",
                 "From portals to complex platforms, we deliver robust, SEO‑friendly solutions."
             ]
-        }
+        },
+        sectionImages: ["/services/web1.jpg", "/services/web2.jpg"]
     },
     {
         slug: "erp-applications",
@@ -152,12 +157,13 @@ export const servicesList: Service[] = [
         mission: "Deliver intelligent ERP that simplifies complexity and accelerates growth.",
         details: {
             title: "Enterprise Resource Planning (ERP)",
-            image: "/assets/img/erp1.jpg",
+            image: "/services/erp-banner.jpg",
             content: [
                 "Unify processes across your organization with real‑time visibility.",
                 "Automate tasks and make data‑driven decisions at scale."
             ]
-        }
+        },
+        sectionImages: ["/services/erp1.jpg", "/services/erp2.jpg"]
     },
     {
         slug: "digital-marketing",
@@ -179,12 +185,13 @@ export const servicesList: Service[] = [
         mission: "Elevate brands with measurable growth through intelligent digital marketing.",
         details: {
             title: "Results-Driven Digital Marketing",
-            image: "/assets/img/digitalmarketing.jpg",
+            image: "/services/digitalmarketing-banner.jpg",
             content: [
                 "Amplify your brand's reach with data‑driven campaigns.",
                 "We deliver measurable results through full‑funnel optimization."
             ]
-        }
+        },
+        sectionImages: ["/services/digitalmarketing1.jpg", "/services/digitalmarketing2.jpg"]
     },
     {
         slug: "bpo",
@@ -207,12 +214,13 @@ export const servicesList: Service[] = [
         mission: "Enable clients to focus on core business while we elevate back‑office and customer ops.",
         details: {
             title: "Business Process Outsourcing (BPO)",
-            image: "/assets/img/bpo.jpg",
+            image: "/services/bpo-banner.jpg",
             content: [
                 "We operate as an extension of your brand across voice and non‑voice processes.",
                 "People, process, and AI tools combine for consistent outcomes."
             ]
-        }
+        },
+        sectionImages: ["/services/bpo1.jpg", "/services/bpo2.jpg"]
     },
     {
         slug: "cloud-services",
@@ -236,12 +244,13 @@ export const servicesList: Service[] = [
         mission: "Accelerate digital transformation with secure, scalable, and cost‑efficient cloud adoption.",
         details: {
             title: "Cloud Integration & Management",
-            image: "/assets/img/cloud.jpg",
+            image: "/services/Cloudservices-banner.jpg",
             content: [
                 "We design and operate reliable, scalable cloud environments tailored to your business.",
                 "Our teams cover CI/CD, observability, security, and cost optimization."
             ]
-        }
+        },
+        sectionImages: ["/services/Cloudservices1.jpg", "/services/Cloudservices2.jpg"]
     },
     {
         slug: "internship-training",
@@ -265,11 +274,12 @@ export const servicesList: Service[] = [
         mission: "Transform potential into performance through practical training and real-world experience.",
         details: {
             title: "Internship & Training Programs",
-            image: "/assets/img/internship.jpg",
+            image: "/services/Internship-banner.jpg",
             content: [
                 "We provide students and professionals with practical exposure to cutting-edge technologies and real-world business challenges.",
                 "From training to placement, we support your entire career journey."
             ]
-        }
+        },
+        sectionImages: ["/services/Internship1.jpg", "/services/Internship2.jpg"]
     },
 ];

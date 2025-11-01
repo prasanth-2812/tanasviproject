@@ -55,6 +55,7 @@ const Header: React.FC<HeaderProps> = ({ onSearchClick, isSticky }) => {
                           <li><NavLink to="/service">Services</NavLink></li>
                           <li><NavLink to="/project">Projects</NavLink></li>
                           <li><NavLink to="/team">Career</NavLink></li>
+                          <li><NavLink to="/blog">Blog</NavLink></li>
                           <li><NavLink to="/contact">Contact</NavLink></li>
                         </ul>
                       </nav>
@@ -101,6 +102,7 @@ const Header: React.FC<HeaderProps> = ({ onSearchClick, isSticky }) => {
                   <li><NavLink to="/service" onClick={handleLinkClick}>Services</NavLink></li>
                   <li><NavLink to="/project" onClick={handleLinkClick}>Projects</NavLink></li>
                   <li><NavLink to="/team" onClick={handleLinkClick}>Career</NavLink></li>
+                  <li><NavLink to="/blog" onClick={handleLinkClick}>Blog</NavLink></li>
                   <li><NavLink to="/contact" onClick={handleLinkClick}>Contact</NavLink></li>
                 </ul>
               </nav>
@@ -108,7 +110,7 @@ const Header: React.FC<HeaderProps> = ({ onSearchClick, isSticky }) => {
             <div className="offcanvas__contact mt-5">
               <h4>Contact Info</h4>
               <ul>
-                <li className="d-flex align-items-center"><i className="fa-solid fa-location-dot"></i><a href="#">Visakhapatnam, AP, India</a></li>
+                <li className="d-flex align-items-center"><i className="fa-solid fa-location-dot"></i><span>Visakhapatnam, AP, India</span></li>
                 <li className="d-flex align-items-center"><i className="fa-solid fa-phone"></i><a href="tel:+919392562193">+91-9392562193</a></li>
                 <li className="d-flex align-items-center"><i className="fa-regular fa-envelope"></i><a href="mailto:info@tanasvi.com">info@tanasvi.com</a></li>
               </ul>

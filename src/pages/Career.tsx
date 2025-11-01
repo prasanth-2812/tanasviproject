@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import SeoHelmet from '../components/common/SeoHelmet';
+import { careerService, ApiClientError } from '../services';
 
 const formVariants = {
     hidden: { opacity: 0, y: 30 },
@@ -66,56 +67,42 @@ const Career: React.FC = () => {
         setSubmissionMessage('');
 
         try {
-            const formData = new FormData();
-            formData.append('name', form.name);
-            formData.append('email', form.email);
-            formData.append('phone', form.phone);
-            formData.append('position', form.position);
-            formData.append('message', form.message || '');
-            
-            if (form.resume) {
-                formData.append('resume', form.resume);
-            }
-
-            const response = await fetch('/api/career/apply', {
-                method: 'POST',
-                body: formData,
+            const response = await careerService.applyCareer({
+                name: form.name,
+                email: form.email,
+                phone: form.phone,
+                position: form.position,
+                message: form.message || '',
+                resume: form.resume,
             });
 
-            if (response.ok) {
-                const responseData = await response.json();
-                setSubmissionMessage(responseData.message || 'Application submitted successfully! You will receive a confirmation email shortly.');
-                setSubmitted(true);
-                setForm(initialForm);
-                setError('');
-                setCaptchaText(generateCaptchaText());
-                setCaptchaInput('');
-                // Reset file input
-                if (fileInputRef.current) {
-                    fileInputRef.current.value = '';
-                }
-            } else {
-                let errorMessage = 'Failed to submit application. Please try again later.';
-                try {
-                    const errorData = await response.json();
-                    errorMessage = errorData.message || errorMessage;
-                    // Show validation errors if available
-                    if (errorData.details && Array.isArray(errorData.details)) {
-                        const validationErrors = errorData.details.map((err: any) => err.msg).join(', ');
-                        if (validationErrors) {
-                            errorMessage = validationErrors;
-                        }
-                    }
-                } catch (e) {
-                    errorMessage = `Server error (${response.status}). Please try again later.`;
-                }
-                setError(errorMessage);
-                setSubmissionMessage('');
-                setCaptchaText(generateCaptchaText());
-                setCaptchaInput('');
+            setSubmissionMessage(response.message || 'Application submitted successfully! You will receive a confirmation email shortly.');
+            setSubmitted(true);
+            setForm(initialForm);
+            setError('');
+            setCaptchaText(generateCaptchaText());
+            setCaptchaInput('');
+            // Reset file input
+            if (fileInputRef.current) {
+                fileInputRef.current.value = '';
             }
         } catch (error: any) {
-            setError(error?.message || 'Network error. Please check your connection and try again.');
+            let errorMessage = 'Failed to submit application. Please try again later.';
+            
+            if (error instanceof ApiClientError) {
+                errorMessage = error.message;
+                // Show validation errors if available
+                if (error.details && Array.isArray(error.details)) {
+                    const validationErrors = error.details.map((err: any) => err.msg).join(', ');
+                    if (validationErrors) {
+                        errorMessage = validationErrors;
+                    }
+                }
+            } else {
+                errorMessage = error?.message || 'Network error. Please check your connection and try again.';
+            }
+            
+            setError(errorMessage);
             setSubmissionMessage('');
             setCaptchaText(generateCaptchaText());
             setCaptchaInput('');
