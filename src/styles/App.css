@@ -257,6 +257,29 @@
   margin-bottom: 1rem;
 }
 
+/* Reduce top spacing for section-title title-area on all pages */
+.section-title.title-area {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+/* Reduce top padding for sections containing section-title title-area */
+.section-padding:has(.section-title.title-area) {
+  padding-top: 60px;
+}
+
+@media (max-width: 1199px) {
+  .section-padding:has(.section-title.title-area) {
+    padding-top: 50px;
+  }
+}
+
+@media (max-width: 991px) {
+  .section-padding:has(.section-title.title-area) {
+    padding-top: 40px;
+  }
+}
+
 .service-overview-text {
   font-size: 1.2rem;
   color: #495057;
@@ -1166,6 +1189,7 @@ html {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
   transition: all 0.3s ease;
   height: 100%;
+  min-height: 400px;
   display: flex;
   flex-direction: column;
 }
@@ -1183,17 +1207,41 @@ html {
   overflow: hidden;
   position: relative;
   background: #f8f9fa;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .blog-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
   transition: transform 0.5s ease;
+  display: block;
+  min-width: 100%;
+  min-height: 100%;
 }
 
 .blog-card-link:hover .blog-image {
   transform: scale(1.1);
+}
+
+/* Blog Image Placeholder */
+.blog-image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  color: #adb5bd;
+  font-size: 48px;
+}
+
+.blog-image-placeholder i {
+  opacity: 0.5;
 }
 
 /* Blog Card Content */
@@ -1686,83 +1734,215 @@ html {
 
 /* General contact page section padding */
 .contact-page-section {
-  padding: 100px 0; /* Default padding for contact page */
+  padding: 80px 0; /* Reduced padding */
 }
 
 /* Contact Info Panel (used in Contact.tsx) */
 .contact-info-panel {
-  background-color: #384bff; /* Blue background */
-  padding: 40px;
-  border-radius: 12px;
-  box-shadow: 0 10px 50px rgba(0, 0, 0, 0.07);
+  background: linear-gradient(135deg, #384bff 0%, #2d3cd6 100%);
+  padding: 35px 30px;
+  border-radius: 16px;
+  box-shadow: 0 10px 50px rgba(56, 75, 255, 0.15);
   color: #fff;
-  height: 100%; /* Ensure it fills height of column */
+  height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Center content vertically */
+  position: relative;
+  overflow: hidden;
+}
+
+/* Decorative background pattern */
+.contact-info-panel::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 30px 30px;
+  opacity: 0.3;
+  animation: movePattern 20s linear infinite;
+}
+
+@keyframes movePattern {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(30px, 30px); }
+}
+
+.contact-info-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 8px;
+  position: relative;
+  z-index: 1;
+}
+
+.contact-info-description {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 25px;
+  position: relative;
+  z-index: 1;
+}
+
+.contact-info-blocks {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  justify-content: flex-start;
 }
 
 .contact-info-panel .contact-info-block {
   display: flex;
-  align-items: flex-start; /* Align icon and content */
-  margin-bottom: 30px; /* Space between blocks */
+  align-items: flex-start;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  margin-bottom: 0;
 }
 
-.contact-info-panel .contact-info-block:last-child {
-  margin-bottom: 0; /* No margin for last block */
+.contact-info-panel .contact-info-block:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .contact-info-panel .icon-wrapper {
-  flex-shrink: 0; /* Prevent icon from shrinking */
-  width: 50px; /* Icon container size */
+  flex-shrink: 0;
+  width: 50px;
   height: 50px;
-  background-color: rgba(255, 255, 255, 0.15); /* Slightly transparent white for icon background */
-  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: 20px;
-  font-size: 22px; /* Font Awesome icon size */
+  margin-right: 18px;
+  font-size: 20px;
   color: #fff;
+  transition: all 0.3s ease;
+}
+
+.contact-info-panel .contact-info-block:hover .icon-wrapper {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+.contact-info-panel .content-wrapper {
+  flex: 1;
+  min-width: 0; /* Allow text to wrap */
 }
 
 .contact-info-panel .content-wrapper span {
   display: block;
-  font-size: 15px;
-  font-weight: 500;
-  color: #bbd0ff; /* Lighter color for title */
-  margin-bottom: 5px;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .contact-info-panel .content-wrapper h3 {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
-  line-height: 1.4;
+  line-height: 1.5;
   margin-bottom: 0;
 }
 
 .contact-info-panel .content-wrapper h3 a {
   color: #fff;
   text-decoration: none;
-  transition: color 0.3s ease;
+  transition: all 0.3s ease;
+  word-break: break-word;
+  display: inline-block;
 }
 
 .contact-info-panel .content-wrapper h3 a:hover {
-  color: #eef0f3; /* Slightly dim on hover */
+  color: #eef0f3;
+  text-decoration: underline;
+}
+
+/* Internships & Training Section */
+.internship-section {
+  margin-top: 30px;
+  padding-top: 25px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  z-index: 1;
+}
+
+.internship-section-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.internship-section-title::before {
+  content: '';
+  width: 3px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 2px;
+}
+
+.internship-section-description {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.75);
+  margin-bottom: 18px;
+}
+
+.internship-contacts {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.contact-info-block.internship-block {
+  padding: 18px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.contact-info-block.internship-block:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.contact-info-block.internship-block .icon-wrapper {
+  background: rgba(255, 255, 255, 0.15);
+  width: 45px;
+  height: 45px;
+  font-size: 18px;
+}
+
+.contact-info-block.internship-block:hover .icon-wrapper {
+  background: rgba(255, 255, 255, 0.25);
 }
 
 
 /* Contact Form Wrapper (used in Contact.tsx & base for contact.html) */
 .contact-form-wrapper.style1 { /* For React component */
   background-color: #fff;
-  padding: 40px;
-  border-radius: 12px;
+  padding: 35px 30px;
+  border-radius: 16px;
   box-shadow: 0 10px 50px rgba(0, 0, 0, 0.07);
   border: 1px solid #eef0f3;
-  height: 100%; /* Ensure it fills height of column */
+  height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
 }
 
 /* For contact.html's form - a sibling of contact-info-area-2 */
@@ -1781,13 +1961,24 @@ html {
 
 .contact-form-wrapper.style1 .form-title,
 .contact-content h2 {
-  font-size: 2rem;
-  font-weight: 600;
+  font-size: 1.75rem;
+  font-weight: 700;
   color: #1a202c;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
+}
+
+.contact-form-wrapper.style1 .form-subtitle {
+  font-size: 1rem;
+  color: #6c757d;
+  margin-bottom: 0;
+  line-height: 1.6;
 }
 
 /* Input/Textarea styles for Contact.tsx form */
+.contact-form-wrapper.style1 .form-group {
+  margin-bottom: 0;
+}
+
 .contact-form-wrapper.style1 .form-group label {
   display: block;
   font-weight: 500;
@@ -1797,15 +1988,23 @@ html {
   letter-spacing: 0.01em;
 }
 
+/* Input Wrapper for Icons */
+.contact-form-wrapper.style1 .input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
 .contact-form-wrapper.style1 .form-control.style1 {
   color: #222 !important;
   background: #f7f9fa;
   border: 1px solid #dbe2ea;
   border-radius: 6px;
   padding: 14px 16px;
+  padding-right: 45px; /* Space for icon */
   font-size: 1rem;
   margin-bottom: 0; /* Bootstrap's form-control might have margin-bottom */
-  transition: border 0.2s;
+  transition: all 0.3s ease;
   width: 100%; /* Ensure it takes full width */
 }
 
@@ -1813,12 +2012,112 @@ html {
   border: 1.5px solid #007bff; /* Blue focus color for contact form */
   outline: none;
   background: #fff;
-  box-shadow: none; /* Remove default bootstrap shadow */
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
 }
 
 .contact-form-wrapper.style1 .form-control.style1::placeholder {
   color: #99a5b5 !important;
   opacity: 1;
+}
+
+/* Error State */
+.contact-form-wrapper.style1 .form-control.style1.error {
+  border-color: #dc3545;
+  background: #fff5f5;
+  padding-right: 45px;
+}
+
+.contact-form-wrapper.style1 .form-control.style1.error:focus {
+  border-color: #dc3545;
+  box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
+}
+
+/* Success State */
+.contact-form-wrapper.style1 .form-control.style1.success {
+  border-color: #28a745;
+  background: #f5fff5;
+  padding-right: 45px;
+}
+
+.contact-form-wrapper.style1 .form-control.style1.success:focus {
+  border-color: #28a745;
+  box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.1);
+}
+
+/* Textarea specific styling */
+.contact-form-wrapper.style1 textarea.form-control.style1 {
+  padding-right: 45px;
+  resize: vertical;
+}
+
+.contact-form-wrapper.style1 textarea.form-control.style1.error {
+  padding-right: 45px;
+}
+
+.contact-form-wrapper.style1 textarea.form-control.style1.success {
+  padding-right: 45px;
+}
+
+/* Error and Success Icons */
+.contact-form-wrapper.style1 .error-icon,
+.contact-form-wrapper.style1 .success-icon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.contact-form-wrapper.style1 .error-icon {
+  color: #dc3545;
+}
+
+.contact-form-wrapper.style1 .success-icon {
+  color: #28a745;
+}
+
+.contact-form-wrapper.style1 .textarea-icon {
+  top: 20px;
+  transform: none;
+}
+
+/* Error Message */
+.contact-form-wrapper.style1 .error-message {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #dc3545;
+  font-size: 0.875rem;
+  margin-top: 6px;
+  margin-bottom: 0;
+  animation: slideDown 0.3s ease;
+}
+
+.contact-form-wrapper.style1 .error-message i {
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+/* Character Count */
+.contact-form-wrapper.style1 .char-count {
+  color: #6c757d;
+  font-size: 0.875rem;
+  margin-top: 6px;
+  text-align: right;
+  margin-bottom: 0;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Input/Textarea styles for contact.html form */
@@ -2056,16 +2355,16 @@ html {
   /* Responsive adjustments for contact forms */
   .contact-info-panel,
   .contact-info-area-2 { /* Apply to both React & HTML info panels */
-    border-radius: 20px 20px 0 0 !important; /* Top corners rounded, bottom flat */
+    border-radius: 16px !important;
+    margin-bottom: 20px;
   }
 
   .contact-form-wrapper.style1,
   .contact-content { /* Apply to both React & HTML form wrappers */
-    padding: 40px 20px !important;
-    border-radius: 0 0 20px 20px !important; /* Bottom corners rounded, top flat */
-    border-left: 1px solid #eef0f3 !important;
-    border-top: none !important; /* Remove top border if it was present */
+    padding: 30px 20px !important;
+    border-radius: 16px !important;
   }
+
 
   .banner-content h1 {
     font-size: 2.5rem;
@@ -2166,8 +2465,9 @@ html {
   .contact-info-area-2,
   .contact-form-wrapper.style1,
   .contact-content {
-    padding: 24px 10px !important; /* Adjust padding for smaller screens */
+    padding: 24px 20px !important; /* Adjust padding for smaller screens */
   }
+
 }
 
 @media (max-width: 767.98px) {
@@ -2183,6 +2483,15 @@ html {
   .contact-info-area-2,
   .contact-form-wrapper.style1,
   .contact-content {
-    padding: 16px 2px !important; /* Further reduce padding for very small screens */
+    padding: 20px 15px !important; /* Further reduce padding for very small screens */
+  }
+
+
+  .contact-info-title {
+    font-size: 1.25rem;
+  }
+
+  .contact-form-wrapper.style1 .form-title {
+    font-size: 1.5rem;
   }
 }

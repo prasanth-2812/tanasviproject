@@ -17,7 +17,7 @@ const Projects: React.FC = () => {
       {/* THIS IS THE KEY: We are using a unique class for this page */}
       <section className="projects-page section-padding">
         <div className="container">
-          <div className="section-title title-area mx-auto mb-20">
+          <div className="section-title title-area mx-auto mb-8">
             <div className="subtitle d-flex justify-content-center">
               <img src="/assets/img/icon/arrowLeft.svg" alt="arrow-left" />
               <span> OUR PROJECTS </span>

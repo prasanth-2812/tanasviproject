@@ -1,8 +1,9 @@
 import React from 'react';
-import '../styles/Blog.css';
-import { Helmet } from 'react-helmet';
-import { useParams, useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { blogService, BlogPost } from '../services';
+import SeoHelmet from '../components/common/SeoHelmet';
+import './BlogDetails.css';
 
 const BlogDetails: React.FC = () => {
   const { slug = '' } = useParams();
@@ -41,52 +42,180 @@ const BlogDetails: React.FC = () => {
     : (post?.coverImageUrl ? blogService.resolveImageUrl(post.coverImageUrl) : '');
   const html = React.useMemo(() => blogService.rewriteContentImageSrc(post?.content || ''), [post?.content]);
 
+  const formatDate = (dateString?: string) => {
+    if (!dateString) return '';
+    return new Date(dateString).toLocaleDateString('en-US', { 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
+    });
+  };
+
   return (
-    <div className="blog-wrap">
-      <Helmet>
-        <title>{post?.metaTitle || post?.title || 'Blog'}</title>
-        <meta name="description" content={post?.metaDescription || post?.shortDescription || ''} />
-      </Helmet>
+    <>
+      <SeoHelmet
+        title={post?.metaTitle || post?.title || 'Blog Post | Tanasvi Technologies'}
+        description={post?.metaDescription || post?.shortDescription || 'Read our latest blog post'}
+        keywords={post?.tags?.join(', ') || 'blog, article, insights'}
+      />
 
-      {/* Hero banner using the service/project detail style */}
-      <section
-        className="project-banner-cyient"
-        style={{ backgroundImage: coverSrc ? `url(${coverSrc})` : undefined, position: 'relative', overflow: 'hidden' }}
-      >
-        <div className="container">
-          <div className="banner-content">
-            <h1>{post?.title || (loading ? 'Loading…' : 'Article')}</h1>
+      <div className="blog-details-page">
+        {/* Loading State */}
+        {loading && (
+          <div className="blog-loading">
+            <div className="loading-spinner"></div>
+            <p>Loading article...</p>
           </div>
-        </div>
-      </section>
+        )}
 
-      {/* Main content section styled like service details alternating block */}
-      <section className="content-section-cyient section-padding" style={{ position: 'relative', paddingTop: 24 }}>
-        <div className="container">
-          <div
-            className="alternating-content-block"
-            style={{
-              background: 'linear-gradient(180deg, rgba(136,160,255,0.06) 0%, rgba(255,255,255,0) 100%), radial-gradient(800px 400px at 10% 20%, rgba(56,75,255,0.05), transparent)',
-              borderRadius: 16
-            }}
-          >
-            <article className="prose" style={{ background: 'rgba(255,255,255,0.9)', boxShadow: '0 10px 26px rgba(0,59,149,0.08)' }}>
-              {loading && <p>Loading…</p>}
-              {!loading && error && <p>We could not find this post.</p>}
-              {!loading && !error && post && (
-                <div dangerouslySetInnerHTML={{ __html: html }} />
-              )}
-            </article>
+        {/* Error State */}
+        {!loading && error && (
+          <div className="blog-error">
+            <div className="error-content">
+              <i className="fa-solid fa-exclamation-circle"></i>
+              <h2>Article Not Found</h2>
+              <p>We couldn't find the article you're looking for.</p>
+              <button className="theme-btn" onClick={() => navigate('/blog')}>
+                <i className="fa-solid fa-arrow-left"></i> Back to Blog
+              </button>
+            </div>
           </div>
+        )}
 
-          <div className="details-actions" style={{ marginTop: 16, marginBottom: 72, justifyContent: 'center' }}>
-            <button className="theme-btn" onClick={() => navigate('/blog')}>
-              <span>Back to Blog List<i className="fa-solid fa-arrow-left-long" style={{ marginLeft: 8 }}></i></span>
-            </button>
-          </div>
-        </div>
-      </section>
-    </div>
+        {/* Blog Content */}
+        {!loading && !error && post && (
+          <>
+            {/* Hero Banner with Background Image - Matching Project Details Page */}
+            <section 
+              className="project-banner-cyient" 
+              style={{ 
+                backgroundImage: coverSrc ? `url(${coverSrc})` : undefined,
+                position: 'relative',
+                overflow: 'hidden'
+              }}
+            >
+              <div className="container">
+                <div className="banner-content">
+                  <p className="breadcrumb-link">
+                    <Link to="/blog" onClick={(e) => { e.preventDefault(); navigate('/blog'); }}>Blog</Link> / {post.title}
+                  </p>
+                  <h1>{post.title}</h1>
+                </div>
+              </div>
+            </section>
+
+            {/* Main Content */}
+            <section className="blog-content-section section-padding">
+              <div className="container">
+                <div className="blog-content-wrapper">
+                  {/* Article Meta Info */}
+                  <motion.div
+                    className="blog-meta-section"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    <div className="blog-meta-row">
+                      {post.category && (
+                        <div className="blog-meta-item">
+                          <i className="fa-solid fa-tag"></i>
+                          <span>{post.category}</span>
+                        </div>
+                      )}
+                      {post.author && (
+                        <div className="blog-meta-item">
+                          <i className="fa-solid fa-user"></i>
+                          <span>{post.author}</span>
+                        </div>
+                      )}
+                      {post.publishedDate && (
+                        <div className="blog-meta-item">
+                          <i className="fa-solid fa-calendar"></i>
+                          <span>{formatDate(post.publishedDate)}</span>
+                        </div>
+                      )}
+                    </div>
+                    {post.tags && post.tags.length > 0 && (
+                      <div className="blog-tags-section">
+                        <i className="fa-solid fa-hashtag"></i>
+                        <div className="blog-tags">
+                          {post.tags.map((tag, index) => (
+                            <span key={index} className="blog-tag">{tag}</span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                    {post.shortDescription && (
+                      <p className="blog-excerpt">{post.shortDescription}</p>
+                    )}
+                  </motion.div>
+
+                  {/* Article Content */}
+                  <motion.article
+                    className="blog-article"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                  >
+                    <div 
+                      className="blog-content"
+                      dangerouslySetInnerHTML={{ __html: html }}
+                    />
+                  </motion.article>
+
+                  {/* Article Footer */}
+                  <motion.footer
+                    className="blog-footer"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.5, delay: 0.4 }}
+                  >
+                    <div className="blog-footer-content">
+                      <div className="blog-footer-info">
+                        <h3>Share this article</h3>
+                        <div className="blog-share-buttons">
+                          <a 
+                            href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(post.title)}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="share-button share-twitter"
+                          >
+                            <i className="fa-brands fa-twitter"></i>
+                            Twitter
+                          </a>
+                          <a 
+                            href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="share-button share-facebook"
+                          >
+                            <i className="fa-brands fa-facebook"></i>
+                            Facebook
+                          </a>
+                          <a 
+                            href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="share-button share-linkedin"
+                          >
+                            <i className="fa-brands fa-linkedin"></i>
+                            LinkedIn
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                    <button className="blog-back-bottom" onClick={() => navigate('/blog')}>
+                      <i className="fa-solid fa-arrow-left"></i>
+                      Back to All Articles
+                    </button>
+                  </motion.footer>
+                </div>
+              </div>
+            </section>
+          </>
+        )}
+      </div>
+    </>
   );
 };
 

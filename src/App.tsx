@@ -14,6 +14,7 @@ import Blog from './pages/Blog';
 import BlogDetails from './pages/BlogDetails';
 import BlogAdmin from './pages/BlogAdmin';
 import Analytics from './pages/admin/Analytics';
+import CareerApplications from './pages/admin/CareerApplications';
 
 // ==========================================================
 // START: CORRECTED IMPORT PATHS
@@ -101,6 +102,7 @@ function App() {
           <Route path="/blog/:slug" element={<BlogDetails />} />
           <Route path="/admin/blogs" element={<BlogAdmin />} />
           <Route path="/admin/analytics" element={<Analytics />} />
+          <Route path="/admin/careers" element={<CareerApplications />} />
           <Route path="/contact" element={<Contact />} />
           
           {/* Project Detail Routes */}

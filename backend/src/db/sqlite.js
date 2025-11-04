@@ -41,6 +41,26 @@ db.exec(`
   );
   CREATE INDEX IF NOT EXISTS idx_visits_createdAt ON visits(createdAt);
   CREATE INDEX IF NOT EXISTS idx_visits_page ON visits(page);
+  
+  -- Career applications table
+  CREATE TABLE IF NOT EXISTS career_applications (
+    id TEXT PRIMARY KEY,
+    name TEXT NOT NULL,
+    email TEXT NOT NULL,
+    phone TEXT NOT NULL,
+    position TEXT NOT NULL,
+    message TEXT,
+    resumePath TEXT NOT NULL,
+    resumeFileName TEXT NOT NULL,
+    resumeFileSize INTEGER,
+    resumeMimeType TEXT,
+    status TEXT CHECK(status IN ('New','Reviewed','Contacted','Rejected','Hired')) NOT NULL DEFAULT 'New',
+    createdAt TEXT NOT NULL,
+    updatedAt TEXT
+  );
+  CREATE INDEX IF NOT EXISTS idx_career_applications_email ON career_applications(email);
+  CREATE INDEX IF NOT EXISTS idx_career_applications_createdAt ON career_applications(createdAt);
+  CREATE INDEX IF NOT EXISTS idx_career_applications_status ON career_applications(status);
 `);
 
 // Add updatedDate if missing

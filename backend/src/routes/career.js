@@ -3,13 +3,21 @@ const multer = require('multer');
 const path = require('path');
 const { body, validationResult } = require('express-validator');
 const { createTransporter, emailTemplates } = require('../config/email');
+const db = require('../db/sqlite');
+const { nanoid } = require('nanoid');
 
 const router = express.Router();
 
 // Multer configuration for resume uploads
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'uploads/');
+    const uploadsDir = path.join(__dirname, '..', '..', 'uploads');
+    // Ensure uploads directory exists
+    const fs = require('fs');
+    if (!fs.existsSync(uploadsDir)) {
+      fs.mkdirSync(uploadsDir, { recursive: true });
+    }
+    cb(null, uploadsDir);
   },
   filename: (req, file, cb) => {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
@@ -95,6 +103,38 @@ router.post('/apply', upload.single('resume'), careerValidation, async (req, res
       });
     }
 
+    // Save application to database
+    const applicationId = nanoid();
+    const createdAt = new Date().toISOString();
+    const resumePath = `/uploads/${resumeFile.filename}`;
+    
+    try {
+      db.prepare(`
+        INSERT INTO career_applications (
+          id, name, email, phone, position, message, 
+          resumePath, resumeFileName, resumeFileSize, resumeMimeType,
+          status, createdAt, updatedAt
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `).run(
+        applicationId,
+        name.trim(),
+        email.trim().toLowerCase(),
+        phone.trim(),
+        position.trim(),
+        message ? message.trim() : null,
+        resumePath,
+        resumeFile.originalname,
+        resumeFile.size,
+        resumeFile.mimetype,
+        'New',
+        createdAt,
+        createdAt
+      );
+    } catch (dbError) {
+      console.error('Database error saving career application:', dbError);
+      // Continue with email even if DB save fails
+    }
+
     // Create email transporter
     const transporter = createTransporter();
 
@@ -128,8 +168,8 @@ router.post('/apply', upload.single('resume'), careerValidation, async (req, res
     res.status(200).json({
       success: true,
       message: 'Application submitted successfully! You will receive a confirmation email shortly.',
-      applicationId: `#${Date.now().toString().slice(-6)}`,
-      timestamp: new Date().toISOString()
+      applicationId: applicationId,
+      timestamp: createdAt
     });
 
   } catch (error) {
@@ -200,6 +240,152 @@ router.get('/positions', (req, res) => {
     ],
     timestamp: new Date().toISOString()
   });
+});
+
+// GET /api/career/applications - Get all career applications (Admin only)
+router.get('/applications', (req, res) => {
+  try {
+    const adminToken = process.env.ADMIN_TOKEN;
+    const auth = req.headers.authorization || '';
+    const token = auth.startsWith('Bearer ') ? auth.substring(7).trim() : '';
+    
+    if (!adminToken) {
+      console.error('ADMIN_TOKEN environment variable is not set');
+      return res.status(500).json({ error: 'Server configuration error: ADMIN_TOKEN not set' });
+    }
+    
+    if (!token || token !== adminToken) {
+      return res.status(401).json({ error: 'Unauthorized: Invalid admin token' });
+    }
+
+    // Get query parameters
+    const status = req.query.status || '';
+    const page = Math.max(parseInt(req.query.page || '1', 10) || 1, 1);
+    const limit = Math.min(Math.max(parseInt(req.query.limit || '20', 10) || 20, 1), 100);
+    const offset = (page - 1) * limit;
+
+    // Build query
+    let whereClause = '';
+    let params = [];
+    
+    if (status) {
+      whereClause = 'WHERE status = ?';
+      params.push(status);
+    }
+
+    // Get total count
+    const countResult = db.prepare(`SELECT COUNT(*) as count FROM career_applications ${whereClause}`).get(...params);
+    const total = countResult.count || 0;
+
+    // Get applications
+    const applications = db.prepare(`
+      SELECT * FROM career_applications 
+      ${whereClause}
+      ORDER BY createdAt DESC 
+      LIMIT ? OFFSET ?
+    `).all(...params, limit, offset);
+
+    res.json({
+      applications,
+      total,
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit)
+    });
+  } catch (error) {
+    console.error('Error fetching applications:', error);
+    res.status(500).json({ error: 'Failed to fetch applications' });
+  }
+});
+
+// GET /api/career/applications/:id - Get single application
+router.get('/applications/:id', (req, res) => {
+  try {
+    const adminToken = process.env.ADMIN_TOKEN;
+    const auth = req.headers.authorization || '';
+    const token = auth.startsWith('Bearer ') ? auth.substring(7).trim() : '';
+    
+    if (!adminToken || !token || token !== adminToken) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    const { id } = req.params;
+    const application = db.prepare('SELECT * FROM career_applications WHERE id = ?').get(id);
+    
+    if (!application) {
+      return res.status(404).json({ error: 'Application not found' });
+    }
+
+    res.json(application);
+  } catch (error) {
+    console.error('Error fetching application:', error);
+    res.status(500).json({ error: 'Failed to fetch application' });
+  }
+});
+
+// PUT /api/career/applications/:id/status - Update application status
+router.put('/applications/:id/status', express.json(), (req, res) => {
+  try {
+    const adminToken = process.env.ADMIN_TOKEN;
+    const auth = req.headers.authorization || '';
+    const token = auth.startsWith('Bearer ') ? auth.substring(7).trim() : '';
+    
+    if (!adminToken || !token || token !== adminToken) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    const { id } = req.params;
+    const { status } = req.body;
+
+    const validStatuses = ['New', 'Reviewed', 'Contacted', 'Rejected', 'Hired'];
+    if (!status || !validStatuses.includes(status)) {
+      return res.status(400).json({ error: 'Invalid status' });
+    }
+
+    const updatedAt = new Date().toISOString();
+    db.prepare('UPDATE career_applications SET status = ?, updatedAt = ? WHERE id = ?').run(status, updatedAt, id);
+    
+    const updated = db.prepare('SELECT * FROM career_applications WHERE id = ?').get(id);
+    res.json(updated);
+  } catch (error) {
+    console.error('Error updating application status:', error);
+    res.status(500).json({ error: 'Failed to update application status' });
+  }
+});
+
+// DELETE /api/career/applications/:id - Delete application
+router.delete('/applications/:id', (req, res) => {
+  try {
+    const adminToken = process.env.ADMIN_TOKEN;
+    const auth = req.headers.authorization || '';
+    const token = auth.startsWith('Bearer ') ? auth.substring(7).trim() : '';
+    
+    if (!adminToken || !token || token !== adminToken) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    const { id } = req.params;
+    const application = db.prepare('SELECT * FROM career_applications WHERE id = ?').get(id);
+    
+    if (!application) {
+      return res.status(404).json({ error: 'Application not found' });
+    }
+
+    // Delete from database
+    db.prepare('DELETE FROM career_applications WHERE id = ?').run(id);
+
+    // Optionally delete file (uncomment if you want to delete files too)
+    // const fs = require('fs');
+    // const filePath = path.join(__dirname, '..', '..', application.resumePath.replace('/uploads/', ''));
+    // if (fs.existsSync(filePath)) {
+    //   fs.unlinkSync(filePath);
+    // }
+
+    res.json({ success: true, message: 'Application deleted' });
+  } catch (error) {
+    console.error('Error deleting application:', error);
+    res.status(500).json({ error: 'Failed to delete application' });
+  }
 });
 
 module.exports = router;

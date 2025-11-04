@@ -12,10 +12,10 @@ const Services: React.FC = () => {
                 description="Empowering businesses with AI, digital transformation, and IT expertise. Explore our comprehensive services including IT consultancy, AI development, mobile apps, web development, ERP systems, digital marketing, BPO, and cloud services."
                 keywords="Tanasvi Technologies services, IT consultancy, AI development, mobile app development, web development, ERP systems, digital marketing, BPO services, cloud services, business automation"
             />
-            {/* Heading (match Projects page style) */}
+            {/* Heading and Cards (match Projects page style) */}
             <section className="services-page section-padding">
                 <div className="container">
-                    <div className="section-title title-area mx-auto mb-20">
+                    <div className="section-title title-area mx-auto mb-8">
                         <div className="subtitle d-flex justify-content-center">
                             <img src="/assets/img/icon/arrowLeft.svg" alt="arrow-left" />
                             <span> OUR SERVICES </span>
@@ -23,12 +23,7 @@ const Services: React.FC = () => {
                         </div>
                         <h2 className="title text-center">We Provide The Best Quality</h2>
                     </div>
-                </div>
-            </section>
 
-            {/* Services Cards Grid (identical to Projects cards) */}
-            <section className="services-page section-padding pt-0">
-                <div className="container">
                     <div className="service-wrapper mb-0">
                         <div className="row">
                             {servicesList.map((service, index) => (

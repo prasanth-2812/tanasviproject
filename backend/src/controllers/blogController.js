@@ -48,11 +48,25 @@ async function getBlogBySlug(req, res) {
 // POST /api/blogs (multipart)
 async function createBlog(req, res) {
   try {
+    // Reload dotenv if ADMIN_TOKEN is not set (in case .env was updated)
+    if (!process.env.ADMIN_TOKEN) {
+      const path = require('path');
+      require('dotenv').config({ path: path.join(__dirname, '..', '..', '.env') });
+    }
+    
     const adminToken = process.env.ADMIN_TOKEN;
     const auth = req.headers.authorization || '';
-    const token = auth.startsWith('Bearer ') ? auth.substring(7) : '';
-    if (!adminToken || token !== adminToken) {
-      return res.status(401).json({ error: 'Unauthorized' });
+    const token = auth.startsWith('Bearer ') ? auth.substring(7).trim() : '';
+    
+    if (!adminToken) {
+      console.error('ADMIN_TOKEN environment variable is not set');
+      console.error('Current working directory:', process.cwd());
+      console.error('Environment variables loaded:', Object.keys(process.env).filter(k => k.includes('ADMIN') || k.includes('EMAIL')));
+      return res.status(500).json({ error: 'Server configuration error: ADMIN_TOKEN not set. Please check your .env file in the backend directory.' });
+    }
+    
+    if (!token || token !== adminToken) {
+      return res.status(401).json({ error: 'Unauthorized: Invalid admin token' });
     }
 
     const {
@@ -103,11 +117,23 @@ async function createBlog(req, res) {
 // PUT /api/blogs/:id (JSON body)
 async function updateBlog(req, res) {
   try {
+    // Reload dotenv if ADMIN_TOKEN is not set (in case .env was updated)
+    if (!process.env.ADMIN_TOKEN) {
+      const path = require('path');
+      require('dotenv').config({ path: path.join(__dirname, '..', '..', '.env') });
+    }
+    
     const adminToken = process.env.ADMIN_TOKEN;
     const auth = req.headers.authorization || '';
-    const token = auth.startsWith('Bearer ') ? auth.substring(7) : '';
-    if (!adminToken || token !== adminToken) {
-      return res.status(401).json({ error: 'Unauthorized' });
+    const token = auth.startsWith('Bearer ') ? auth.substring(7).trim() : '';
+    
+    if (!adminToken) {
+      console.error('ADMIN_TOKEN environment variable is not set');
+      return res.status(500).json({ error: 'Server configuration error: ADMIN_TOKEN not set. Please check your .env file in the backend directory.' });
+    }
+    
+    if (!token || token !== adminToken) {
+      return res.status(401).json({ error: 'Unauthorized: Invalid admin token' });
     }
 
     const { id } = req.params;
@@ -163,11 +189,23 @@ async function updateBlog(req, res) {
 // DELETE /api/blogs/:id
 async function deleteBlog(req, res) {
   try {
+    // Reload dotenv if ADMIN_TOKEN is not set (in case .env was updated)
+    if (!process.env.ADMIN_TOKEN) {
+      const path = require('path');
+      require('dotenv').config({ path: path.join(__dirname, '..', '..', '.env') });
+    }
+    
     const adminToken = process.env.ADMIN_TOKEN;
     const auth = req.headers.authorization || '';
-    const token = auth.startsWith('Bearer ') ? auth.substring(7) : '';
-    if (!adminToken || token !== adminToken) {
-      return res.status(401).json({ error: 'Unauthorized' });
+    const token = auth.startsWith('Bearer ') ? auth.substring(7).trim() : '';
+    
+    if (!adminToken) {
+      console.error('ADMIN_TOKEN environment variable is not set');
+      return res.status(500).json({ error: 'Server configuration error: ADMIN_TOKEN not set. Please check your .env file in the backend directory.' });
+    }
+    
+    if (!token || token !== adminToken) {
+      return res.status(401).json({ error: 'Unauthorized: Invalid admin token' });
     }
     const { id } = req.params;
     const existing = db.prepare(`SELECT * FROM blogs WHERE id = ?`).get(id);

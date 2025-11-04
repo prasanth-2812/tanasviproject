@@ -1,4 +1,13 @@
-require('dotenv').config();
+const path = require('path');
+// Load environment variables from backend directory (only if not already loaded by start.js)
+// This ensures dotenv is loaded even if app.js is run directly
+if (!process.env.ADMIN_TOKEN) {
+  const envResult = require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
+  if (envResult.error && process.env.NODE_ENV !== 'test') {
+    console.warn('⚠️  Warning: Could not load .env file:', envResult.error.message);
+  }
+}
+
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
@@ -12,27 +21,15 @@ const careerRoutes = require('./routes/career');
 const blogRoutes = require('./routes/blog');
 const analyticsRoutes = require('./routes/analytics');
 const trackRoutes = require('./routes/track');
-const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Trust proxy for correct IP detection (important for production)
-app.set('trust proxy', true);
+// Use 1 for single proxy hop instead of true to avoid rate-limit warnings
+app.set('trust proxy', process.env.NODE_ENV === 'production' ? 1 : false);
 
-// Security middleware
-app.use(helmet({
-  contentSecurityPolicy: {
-    directives: {
-      defaultSrc: ["'self'"],
-      styleSrc: ["'self'", "'unsafe-inline'"],
-      scriptSrc: ["'self'"],
-      imgSrc: ["'self'", "data:", "https:", "http:"],
-    },
-  },
-}));
-
-// CORS configuration
+// CORS configuration - MUST be before other middleware
 const corsOptions = {
   origin: function (origin, callback) {
     // Allow requests with no origin (like mobile apps or curl requests)
@@ -76,10 +73,25 @@ const corsOptions = {
   ],
   exposedHeaders: ['Content-Range', 'X-Content-Range'],
   preflightContinue: false,
-  optionsSuccessStatus: 204
+  optionsSuccessStatus: 204,
+  maxAge: 86400 // Cache preflight requests for 24 hours
 };
 
+// Apply CORS middleware (automatically handles OPTIONS preflight requests)
 app.use(cors(corsOptions));
+
+// Security middleware (after CORS to not interfere with CORS headers)
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      scriptSrc: ["'self'"],
+      imgSrc: ["'self'", "data:", "https:", "http:"],
+    },
+  },
+  crossOriginResourcePolicy: { policy: "cross-origin" }, // Allow cross-origin requests
+}));
 
 // Rate limiting
 const limiter = rateLimit({
@@ -166,8 +178,11 @@ app.use((error, req, res, next) => {
 app.listen(PORT, () => {
   console.log(`🚀 Tanasvi Technologies Backend API running on http://localhost:${PORT}`);
   console.log(`📧 Email service: ${process.env.EMAIL_USER ? 'Configured' : 'Not configured'}`);
+  console.log(`🔐 Admin token: ${process.env.ADMIN_TOKEN ? 'Set' : 'NOT SET - Blog admin will not work!'}`);
+  console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
   console.log(`🔒 CORS enabled for: ${process.env.NODE_ENV === 'production' ? 'Production domains' : 'Development domains'}`);
   console.log(`📊 Health check: http://localhost:${PORT}/health`);
+  console.log(`✅ CORS allows: https://tanasvi.com, https://www.tanasvi.com`);
 });
 
 module.exports = app;

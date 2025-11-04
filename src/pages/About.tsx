@@ -55,6 +55,14 @@ const About: React.FC = () => (
   
     <section className="about-section section-padding fix bg-cover" style={{ backgroundImage: "url('/assets/img/service/service-bg-2.jpg')" }}>
         <div className="container">
+            <div className="section-title title-area mx-auto mb-8">
+                <div className="subtitle d-flex justify-content-center">
+                    <img alt="icon" src="/assets/img/icon/arrowLeft.svg" />
+                    <span> ABOUT TANASVI TECHNOLOGIES PVT LTD </span>
+                    <img alt="icon" src="/assets/img/icon/arrowRight.svg" />
+                </div>
+                <h2 className="title text-center">We Are Increasing Business Success With <span>Technology</span></h2>
+            </div>
             <div className="about-wrapper style-2">
                 <div className="row">
                     <motion.div className="col-lg-6" initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
@@ -72,10 +80,6 @@ const About: React.FC = () => (
                     </motion.div>
                     <div className="col-lg-6 mt-4 mt-lg-0">
                         <div className="about-content">
-                            <motion.div className="section-title mb-3" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }}>
-                                <div className="subtitle"><img alt="icon" src="/assets/img/icon/arrowLeft.svg" /> <span>ABOUT TANASVI TECHNOLOGIES PVT LTD </span><img alt="icon" src="/assets/img/icon/arrowRight.svg" /></div>
-                                <h2 className="title">We Are Increasing Business Success With <span>Technology</span></h2>
-                            </motion.div>
                             <motion.p className="mt-3" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.4 }}>
                                 Tanasvi Technologies is the best in Product development and IT consultancy firm that provides a wide range of services in various domains of information technology. We have expertise in IT software, data communication, automation, artificial intelligence and natural language processing. We are committed to excellence in research and development, innovation and leadership in computer science and modern mathematics. We also aim to foster universal understanding and communication through our work.
                             </motion.p>

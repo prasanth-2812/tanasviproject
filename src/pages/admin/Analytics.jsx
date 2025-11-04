@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import './Analytics.css';
 
 const getBaseUrl = () => {
   if (typeof import.meta !== 'undefined' && import.meta.env?.VITE_API_URL) return import.meta.env.VITE_API_URL;
@@ -42,58 +43,148 @@ const Analytics = () => {
   }, [summary]);
 
   return (
-    <div className="px-6 py-8">
-      <div className="max-w-6xl mx-auto">
-        <h1 className="text-2xl font-semibold text-[#003B95] mb-4">Analytics Dashboard</h1>
-        {loading && <div className="text-gray-600">Loading…</div>}
-        {error && <div className="text-red-600">{error}</div>}
+    <div className="analytics-page">
+      <div className="analytics-container">
+        <div className="analytics-header">
+          <h1 className="analytics-title">
+            <i className="fa-solid fa-chart-line"></i>
+            Analytics Dashboard
+          </h1>
+          <p className="analytics-subtitle">Track and analyze website visitor data</p>
+        </div>
+
+        {loading && (
+          <div className="analytics-loading">
+            <div className="loading-spinner"></div>
+            <p className="loading-text">Loading analytics data...</p>
+          </div>
+        )}
+
+        {error && (
+          <div className="analytics-error">
+            <i className="fa-solid fa-circle-exclamation"></i>
+            <span>{error}</span>
+          </div>
+        )}
+
         {!loading && !error && (
           <>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-              <div className="bg-white shadow rounded p-4">
-                <div className="text-sm text-gray-500">Total Visits</div>
-                <div className="text-3xl font-bold text-[#003B95]">{summary.total || 0}</div>
+            <div className="analytics-stats-grid">
+              <div className="stat-card stat-card-primary">
+                <div className="stat-icon">
+                  <i className="fa-solid fa-users"></i>
+                </div>
+                <div className="stat-content">
+                  <div className="stat-label">Total Visits</div>
+                  <div className="stat-value">{summary.total || 0}</div>
+                </div>
               </div>
-              <div className="bg-white shadow rounded p-4 md:col-span-2">
-                <div className="text-sm text-gray-500 mb-2">Most Visited Pages</div>
-                <div className="space-y-2">
-                  {topPages.length === 0 && <div className="text-gray-500">No data</div>}
-                  {topPages.map((row) => (
-                    <div key={row.page} className="flex items-center gap-3">
-                      <div className="w-40 text-sm text-gray-700 truncate">{row.page}</div>
-                      <div className="flex-1 h-3 bg-[#EAF4FF] rounded">
-                        <div className="h-3 bg-[#3c72fc] rounded" style={{ width: `${Math.min(100, (row.count / (topPages[0]?.count || 1)) * 100)}%` }} />
-                      </div>
-                      <div className="w-10 text-right text-sm text-gray-600">{row.count}</div>
-                    </div>
-                  ))}
+
+              <div className="stat-card stat-card-secondary">
+                <div className="stat-icon">
+                  <i className="fa-solid fa-file-lines"></i>
+                </div>
+                <div className="stat-content">
+                  <div className="stat-label">Pages Tracked</div>
+                  <div className="stat-value">{topPages.length}</div>
+                </div>
+              </div>
+
+              <div className="stat-card stat-card-tertiary">
+                <div className="stat-icon">
+                  <i className="fa-solid fa-clock"></i>
+                </div>
+                <div className="stat-content">
+                  <div className="stat-label">Recent Visits</div>
+                  <div className="stat-value">{Math.min(visits.length, 50)}</div>
                 </div>
               </div>
             </div>
 
-            <div className="bg-white shadow rounded p-4">
-              <div className="text-sm text-gray-500 mb-3">Recent Visits</div>
-              <div className="overflow-x-auto">
-                <table className="min-w-full text-sm">
-                  <thead>
-                    <tr className="text-left text-gray-500 border-b">
-                      <th className="py-2 pr-4">Page</th>
-                      <th className="py-2 pr-4">IP</th>
-                      <th className="py-2 pr-4">User-Agent</th>
-                      <th className="py-2 pr-4">Time</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {(visits || []).slice(0, 50).map((v) => (
-                      <tr key={v._id} className="border-b last:border-0">
-                        <td className="py-2 pr-4 text-[#003B95] font-medium">{v.page}</td>
-                        <td className="py-2 pr-4">{v.ip}</td>
-                        <td className="py-2 pr-4 truncate max-w-[420px]">{v.userAgent}</td>
-                        <td className="py-2 pr-4">{new Date(v.createdAt).toLocaleString()}</td>
-                      </tr>
+            <div className="analytics-card">
+              <div className="card-header">
+                <h2 className="card-title">
+                  <i className="fa-solid fa-fire"></i>
+                  Most Visited Pages
+                </h2>
+              </div>
+              <div className="card-body">
+                {topPages.length === 0 ? (
+                  <div className="empty-state">
+                    <i className="fa-solid fa-inbox"></i>
+                    <p>No page visit data available</p>
+                  </div>
+                ) : (
+                  <div className="top-pages-list">
+                    {topPages.map((row, index) => (
+                      <div key={row.page} className="top-page-item">
+                        <div className="page-rank">#{index + 1}</div>
+                        <div className="page-info">
+                          <div className="page-name">{row.page}</div>
+                          <div className="page-visits">{row.count} {row.count === 1 ? 'visit' : 'visits'}</div>
+                        </div>
+                        <div className="page-bar-container">
+                          <div 
+                            className="page-bar" 
+                            style={{ width: `${Math.min(100, (row.count / (topPages[0]?.count || 1)) * 100)}%` }}
+                          ></div>
+                        </div>
+                      </div>
                     ))}
-                  </tbody>
-                </table>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className="analytics-card">
+              <div className="card-header">
+                <h2 className="card-title">
+                  <i className="fa-solid fa-list"></i>
+                  Recent Visits (Last 50)
+                </h2>
+              </div>
+              <div className="card-body">
+                {visits.length === 0 ? (
+                  <div className="empty-state">
+                    <i className="fa-solid fa-inbox"></i>
+                    <p>No visit records available</p>
+                  </div>
+                ) : (
+                  <div className="table-wrapper">
+                    <table className="analytics-table">
+                      <thead>
+                        <tr>
+                          <th>Page</th>
+                          <th>IP Address</th>
+                          <th>User Agent</th>
+                          <th>Timestamp</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {visits.slice(0, 50).map((v, index) => (
+                          <tr key={v._id || index}>
+                            <td className="page-cell">
+                              <i className="fa-solid fa-file"></i>
+                              <span>{v.page}</span>
+                            </td>
+                            <td className="ip-cell">
+                              <i className="fa-solid fa-network-wired"></i>
+                              <span>{v.ip}</span>
+                            </td>
+                            <td className="user-agent-cell">
+                              <i className="fa-solid fa-desktop"></i>
+                              <span title={v.userAgent}>{v.userAgent}</span>
+                            </td>
+                            <td className="time-cell">
+                              <i className="fa-solid fa-clock"></i>
+                              <span>{new Date(v.createdAt).toLocaleString()}</span>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
               </div>
             </div>
           </>

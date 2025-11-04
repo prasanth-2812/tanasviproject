@@ -19,8 +19,24 @@ if (!fs.existsSync(envPath) && !fs.existsSync(testEnvPath)) {
   process.exit(1);
 }
 
-// Load environment variables
-require('dotenv').config();
+// Load environment variables from backend directory
+const envResult = require('dotenv').config({ path: path.join(__dirname, '.env') });
+
+if (envResult.error) {
+  console.error('❌ Error loading .env file:', envResult.error.message);
+  console.error('📝 Make sure .env file exists in the backend directory');
+  process.exit(1);
+}
+
+// Debug: Log loaded environment variables (without sensitive data)
+console.log('📋 Loaded environment variables:');
+console.log(`   - NODE_ENV: ${process.env.NODE_ENV || 'not set'}`);
+console.log(`   - PORT: ${process.env.PORT || 'not set'}`);
+console.log(`   - EMAIL_USER: ${process.env.EMAIL_USER ? 'set' : 'not set'}`);
+console.log(`   - ADMIN_TOKEN: ${process.env.ADMIN_TOKEN ? 'set ✓' : 'NOT SET ✗'}`);
+if (process.env.ADMIN_TOKEN) {
+  console.log(`   - ADMIN_TOKEN length: ${process.env.ADMIN_TOKEN.length} characters`);
+}
 
 // Validate required environment variables
 const requiredVars = ['EMAIL_USER', 'EMAIL_PASS', 'OWNER_EMAIL'];
@@ -33,6 +49,12 @@ if (missingVars.length > 0) {
   });
   console.log('\n📝 Please configure these variables in your .env file.');
   process.exit(1);
+}
+
+// Warn if ADMIN_TOKEN is missing
+if (!process.env.ADMIN_TOKEN) {
+  console.log('⚠️  WARNING: ADMIN_TOKEN is not set. Blog admin functionality will not work!');
+  console.log('📝 Add ADMIN_TOKEN to your .env file in the backend directory.');
 }
 
 // Create uploads directory if it doesn't exist
