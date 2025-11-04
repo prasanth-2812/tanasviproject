@@ -268,35 +268,42 @@ const Contact: React.FC = () => {
                                     ))}
                                 </div>
 
-                                {/* Internships & Training Section */}
-                                <div className="internship-section">
-                                    <h4 className="internship-section-title">for Internships Contact</h4>
-                                    <p className="internship-section-description">Contact us for internship and training opportunities</p>
-                                    <div className="internship-contacts">
-                                        <motion.div 
-                                            className="contact-info-block internship-block"
-                                            whileHover={{ scale: 1.02 }}
-                                            transition={{ duration: 0.2 }}
-                                        >
-                                            <div className="icon-wrapper"><i className="fa-solid fa-user-graduate"></i></div>
-                                            <div className="content-wrapper">
-                                                <span>Aswini</span>
-                                                <h3><a href="tel:+919392562193" target="_blank" rel="noopener noreferrer">+91-9392562193</a></h3>
-                                            </div>
-                                        </motion.div>
-                                        <motion.div 
-                                            className="contact-info-block internship-block"
-                                            whileHover={{ scale: 1.02 }}
-                                            transition={{ duration: 0.2 }}
-                                        >
-                                            <div className="icon-wrapper"><i className="fa-solid fa-user-graduate"></i></div>
-                                            <div className="content-wrapper">
-                                                <span>Nageswar</span>
-                                                <h3><a href="tel:+919392562193" target="_blank" rel="noopener noreferrer">+91-9392562193</a></h3>
-                                            </div>
-                                        </motion.div>
+                                {/* Additional Info Section */}
+                                <motion.div
+                                    className="contact-additional-info"
+                                    initial={{ opacity: 0 }}
+                                    whileInView={{ opacity: 1 }}
+                                    transition={{ duration: 0.5, delay: 0.4 }}
+                                    viewport={{ once: true }}
+                                >
+                                    <div className="info-item">
+                                        <div className="info-icon">
+                                            <i className="fa-solid fa-bolt"></i>
+                                        </div>
+                                        <div className="info-content">
+                                            <span className="info-title">Quick Response</span>
+                                            <span className="info-detail">We respond within 24 hours</span>
+                                        </div>
                                     </div>
-                                </div>
+                                    <div className="info-item">
+                                        <div className="info-icon">
+                                            <i className="fa-solid fa-globe"></i>
+                                        </div>
+                                        <div className="info-content">
+                                            <span className="info-title">Global Reach</span>
+                                            <span className="info-detail">Serving clients worldwide</span>
+                                        </div>
+                                    </div>
+                                    <div className="info-item">
+                                        <div className="info-icon">
+                                            <i className="fa-solid fa-shield"></i>
+                                        </div>
+                                        <div className="info-content">
+                                            <span className="info-title">Secure & Reliable</span>
+                                            <span className="info-detail">Your data is safe with us</span>
+                                        </div>
+                                    </div>
+                                </motion.div>
                             </motion.div>
                         </div>
 
