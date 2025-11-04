@@ -10,10 +10,15 @@ const rateLimit = require('express-rate-limit');
 const contactRoutes = require('./routes/contact');
 const careerRoutes = require('./routes/career');
 const blogRoutes = require('./routes/blog');
+const analyticsRoutes = require('./routes/analytics');
+const trackRoutes = require('./routes/track');
 const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+// Trust proxy for correct IP detection (important for production)
+app.set('trust proxy', true);
 
 // Security middleware
 app.use(helmet({
@@ -41,7 +46,9 @@ const corsOptions = {
       'http://localhost:5173',
       'http://127.0.0.1:5173',
       'https://tanasvi.com',
-      'https://www.tanasvi.com'
+      'https://www.tanasvi.com',
+      'https://tanasvi-technologies.vercel.app',
+      'https://tanasvi-technologies.netlify.app'
     ];
     
     if (allowedOrigins.indexOf(origin) !== -1) {
@@ -51,14 +58,25 @@ const corsOptions = {
       if (process.env.NODE_ENV === 'development') {
         callback(null, true);
       } else {
+        console.warn(`CORS: Blocked request from origin: ${origin}`);
         callback(new Error('Not allowed by CORS'));
       }
     }
   },
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
-  optionsSuccessStatus: 200
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+  allowedHeaders: [
+    'Content-Type', 
+    'Authorization', 
+    'X-Requested-With',
+    'Accept',
+    'Origin',
+    'Access-Control-Request-Method',
+    'Access-Control-Request-Headers'
+  ],
+  exposedHeaders: ['Content-Range', 'X-Content-Range'],
+  preflightContinue: false,
+  optionsSuccessStatus: 204
 };
 
 app.use(cors(corsOptions));
@@ -104,6 +122,8 @@ app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')));
 app.use('/api/contact', contactRoutes);
 app.use('/api/career', careerRoutes);
 app.use('/api/blogs', blogRoutes);
+app.use('/api/track', trackRoutes); // POST /api/track
+app.use('/api/analytics', analyticsRoutes); // GET /api/analytics and /api/analytics/summary
 
 // 404 handler
 app.use((req, res) => {
@@ -113,7 +133,13 @@ app.use((req, res) => {
     availableEndpoints: [
       'GET /health',
       'POST /api/contact/send',
-      'POST /api/career/apply'
+      'GET /api/contact/status',
+      'POST /api/career/apply',
+      'GET /api/blogs',
+      'GET /api/blogs/:slug',
+      'POST /api/track',
+      'GET /api/analytics',
+      'GET /api/analytics/summary'
     ]
   });
 });
