@@ -270,7 +270,7 @@ const Contact: React.FC = () => {
 
                                 {/* Internships & Training Section */}
                                 <div className="internship-section">
-                                    <h4 className="internship-section-title">Internships & Training</h4>
+                                    <h4 className="internship-section-title">for Internships Contact</h4>
                                     <p className="internship-section-description">Contact us for internship and training opportunities</p>
                                     <div className="internship-contacts">
                                         <motion.div 

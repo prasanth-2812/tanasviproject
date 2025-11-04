@@ -379,6 +379,12 @@
   transition: all 0.3s ease;
   border: none;
   cursor: pointer;
+  outline: none;
+}
+
+.resume-btn:focus {
+  outline: 2px solid #384bff;
+  outline-offset: 2px;
 }
 
 .view-btn {
@@ -392,6 +398,10 @@
   box-shadow: 0 4px 12px rgba(56, 75, 255, 0.3);
 }
 
+.view-btn:active {
+  transform: translateY(0);
+}
+
 .download-btn {
   background: #28a745;
   color: #ffffff;
@@ -401,6 +411,10 @@
   background: #218838;
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+}
+
+.download-btn:active {
+  transform: translateY(0);
 }
 
 /* Pagination */

@@ -42,6 +42,7 @@ const Footer: React.FC = () => {
                                         <div className="gt-social style2">
                                             <a href="https://www.facebook.com/p/Tanasvi-Technologies-100077635476112/" target="_blank" rel="noopener noreferrer"><i className="fab fa-facebook-f"></i></a>
                                             <a href="https://in.linkedin.com/company/tanasvi-technologies" target="_blank" rel="noopener noreferrer"><i className="fab fa-linkedin-in"></i></a>
+                                            <a href="https://www.instagram.com/tanasvitechnologies" target="_blank" rel="noopener noreferrer"><i className="fab fa-instagram"></i></a>
                                         </div>
                                     </div>
                                 </div>

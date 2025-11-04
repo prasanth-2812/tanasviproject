@@ -2,19 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import './CareerApplications.css';
 
-const API = (
-  typeof import.meta !== 'undefined' && (import.meta as any).env && (import.meta as any).env.VITE_API_URL
-) || (process as any).env?.REACT_APP_API_URL || 'http://localhost:5000';
-
-const getBaseUrl = () => {
-  if (typeof window !== 'undefined') {
-    return window.location.origin;
+const getAPI = () => {
+  if (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_API_URL) {
+    return import.meta.env.VITE_API_URL;
   }
-  return API;
+  if (typeof process !== 'undefined' && process.env && process.env.REACT_APP_API_URL) {
+    return process.env.REACT_APP_API_URL;
+  }
+  return 'http://localhost:5000';
 };
 
-const CareerApplications: React.FC = () => {
-  const [applications, setApplications] = useState<any[]>([]);
+const API = getAPI();
+
+const CareerApplications = () => {
+  const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [token, setToken] = useState('');
@@ -22,7 +23,7 @@ const CareerApplications: React.FC = () => {
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
-  const [selectedApplication, setSelectedApplication] = useState<any>(null);
+  const [selectedApplication, setSelectedApplication] = useState(null);
 
   useEffect(() => {
     const existing = sessionStorage.getItem('ADMIN_TOKEN') || '';
@@ -69,14 +70,14 @@ const CareerApplications: React.FC = () => {
       setApplications(data.applications || []);
       setTotal(data.total || 0);
       setTotalPages(data.totalPages || 1);
-    } catch (e: any) {
+    } catch (e) {
       setError(e?.message || 'Failed to load applications');
     } finally {
       setLoading(false);
     }
   };
 
-  const updateStatus = async (id: string, newStatus: string) => {
+  const updateStatus = async (id, newStatus) => {
     try {
       const res = await fetch(`${API}/api/career/applications/${id}/status`, {
         method: 'PUT',
@@ -90,12 +91,12 @@ const CareerApplications: React.FC = () => {
       if (!res.ok) throw new Error('Failed to update status');
       
       await loadApplications();
-    } catch (e: any) {
+    } catch (e) {
       alert('Failed to update status: ' + (e?.message || 'Unknown error'));
     }
   };
 
-  const deleteApplication = async (id: string) => {
+  const deleteApplication = async (id) => {
     if (!window.confirm('Are you sure you want to delete this application?')) return;
 
     try {
@@ -109,20 +110,20 @@ const CareerApplications: React.FC = () => {
       if (!res.ok) throw new Error('Failed to delete application');
       
       await loadApplications();
-    } catch (e: any) {
+    } catch (e) {
       alert('Failed to delete: ' + (e?.message || 'Unknown error'));
     }
   };
 
-  const formatFileSize = (bytes: number) => {
+  const formatFileSize = (bytes) => {
     if (!bytes) return 'Unknown';
     if (bytes < 1024) return bytes + ' B';
     if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
     return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
   };
 
-  const getStatusColor = (status: string) => {
-    const colors: any = {
+  const getStatusColor = (status) => {
+    const colors = {
       'New': '#384bff',
       'Reviewed': '#17a2b8',
       'Contacted': '#ffc107',
@@ -132,10 +133,49 @@ const CareerApplications: React.FC = () => {
     return colors[status] || '#6c757d';
   };
 
-  const getResumeUrl = (resumePath: string) => {
+  // Get resume URL - use API base URL since uploads are served from backend
+  const getResumeUrl = (resumePath) => {
     if (!resumePath) return '';
     if (resumePath.startsWith('http')) return resumePath;
-    return `${getBaseUrl()}${resumePath}`;
+    // Ensure API URL doesn't have trailing slash
+    const apiBase = API.replace(/\/$/, '');
+    // Ensure resumePath starts with /
+    const path = resumePath.startsWith('/') ? resumePath : `/${resumePath}`;
+    return `${apiBase}${path}`;
+  };
+
+  // Handle view resume - open in new tab
+  const handleViewResume = (resumePath) => {
+    const url = getResumeUrl(resumePath);
+    if (url) {
+      window.open(url, '_blank', 'noopener,noreferrer');
+    }
+  };
+
+  // Handle download resume
+  const handleDownloadResume = async (resumePath, fileName) => {
+    const url = getResumeUrl(resumePath);
+    if (!url) return;
+
+    try {
+      // Fetch the file as blob
+      const response = await fetch(url);
+      if (!response.ok) throw new Error('Failed to download resume');
+      
+      const blob = await response.blob();
+      const blobUrl = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = blobUrl;
+      link.download = fileName || 'resume.pdf';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(blobUrl);
+    } catch (e) {
+      alert('Failed to download resume: ' + (e?.message || 'Unknown error'));
+      // Fallback: open in new tab
+      window.open(url, '_blank', 'noopener,noreferrer');
+    }
   };
 
   return (
@@ -280,21 +320,20 @@ const CareerApplications: React.FC = () => {
                         <span className="resume-size">({formatFileSize(app.resumeFileSize)})</span>
                       </div>
                       <div className="resume-actions">
-                        <a
-                          href={getResumeUrl(app.resumePath)}
-                          target="_blank"
-                          rel="noopener noreferrer"
+                        <button
+                          onClick={() => handleViewResume(app.resumePath)}
                           className="resume-btn view-btn"
+                          title="View resume in new tab"
                         >
                           <i className="fa-solid fa-eye"></i> View
-                        </a>
-                        <a
-                          href={getResumeUrl(app.resumePath)}
-                          download={app.resumeFileName}
+                        </button>
+                        <button
+                          onClick={() => handleDownloadResume(app.resumePath, app.resumeFileName)}
                           className="resume-btn download-btn"
+                          title="Download resume"
                         >
                           <i className="fa-solid fa-download"></i> Download
-                        </a>
+                        </button>
                       </div>
                     </div>
                   </motion.div>
