@@ -9,7 +9,7 @@ const getAPI = () => {
   if (typeof process !== 'undefined' && process.env && process.env.REACT_APP_API_URL) {
     return process.env.REACT_APP_API_URL;
   }
-  return 'http://localhost:5000';
+  return 'https://backend.mcb5.in';
 };
 
 const API = getAPI();

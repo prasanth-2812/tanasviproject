@@ -4,7 +4,7 @@ import '../styles/BlogAdmin.css';
 
 const API = (
   typeof import.meta !== 'undefined' && (import.meta as any).env && (import.meta as any).env.VITE_API_URL
-) || (process as any).env?.REACT_APP_API_URL || 'http://localhost:5000';
+) || (process as any).env?.REACT_APP_API_URL || 'https://backend.mcb5.in';
 
 type Blog = {
   id: string;

@@ -7,7 +7,7 @@ const getBaseUrl = (): string => {
   if (typeof import.meta !== 'undefined' && import.meta.env?.VITE_API_URL) {
     return import.meta.env.VITE_API_URL;
   }
-  return 'http://localhost:5000';
+  return 'https://backend.mcb5.in';
 };
 
 export interface ApiError {

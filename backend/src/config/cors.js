@@ -41,9 +41,7 @@ const corsOptions = {
       
       const allowedOrigins = [
         'https://tanasvi.com',
-        'https://www.tanasvi.com',
-        'https://tanasvi-technologies.vercel.app',
-        'https://tanasvi-technologies.netlify.app'
+        'https://www.tanasvi.com'
       ];
       
       if (allowedOrigins.indexOf(origin) !== -1) {

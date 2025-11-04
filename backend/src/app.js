@@ -43,9 +43,7 @@ const corsOptions = {
       'http://localhost:5173',
       'http://127.0.0.1:5173',
       'https://tanasvi.com',
-      'https://www.tanasvi.com',
-      'https://tanasvi-technologies.vercel.app',
-      'https://tanasvi-technologies.netlify.app'
+      'https://www.tanasvi.com'
     ];
     
     if (allowedOrigins.indexOf(origin) !== -1) {
